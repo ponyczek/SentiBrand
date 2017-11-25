@@ -1,3 +1,8 @@
+from django.conf.urls import include, url
+from django.contrib.auth import views
+from accounts.forms import LoginForm
+from django.contrib import admin
+
 """SentiBrand URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -13,9 +18,10 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'', include('accounts.urls')),
+    url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm , 'redirect_authenticated_user': True}, name='login'),
+    url(r'^logout/$', views.logout, {'next_page': '/login'}),
 ]
