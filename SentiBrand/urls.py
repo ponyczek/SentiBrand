@@ -2,6 +2,9 @@ from django.conf.urls import include, url
 from django.contrib.auth import views
 from accounts.forms import LoginForm
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 """SentiBrand URL Configuration
 
@@ -22,6 +25,8 @@ Including another URLconf
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('accounts.urls')),
+    url(r'', include('static_pages.urls')),
     url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm , 'redirect_authenticated_user': True}, name='login'),
-    url(r'^logout/$', views.logout, {'next_page': '/login'}),
-]
+    url(r'^logout/$', views.logout, {'next_page': '/login'}, name='logout'),
+
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

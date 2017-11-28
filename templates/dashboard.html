@@ -1,13 +1,25 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-    <div class="container">
-        <div class="row">
-            <div class="jumbotron">
-                <h1>Hello</h1>
-                <p>You are on your Dashboard</p>
+{% extends 'base.html' %} {% block content %}
+<div class="dashboard-page">
+    {% comment %}
+    <div class="container">{% endcomment %}
+        <div class="row equal-sides">
+            <div class="col-sm-2 trim-right">
+                <div class="dashboard-left">
+                    <h1 class="text-center">Ryan G.</h1>
+                    <div class = "text-center">
+                        <img src="/static/img/ryan.jpg" alt="Thumbnail Image" class="rounded-circle img-raised dashboard-profile-pic">
+                    </div>
+                    <p>You are on your Dashboard</p>
+                </div>
             </div>
+            <div class="col-sm-10 trim-left">
+                <div class="dashboard-main ">
+                    <h1>Hello</h1>
+                    <p>You are on your Dashboard</p>
+                </div>
+            </div>
+
         </div>
-    </div>
+        {% comment %}</div>{% endcomment %}
+</div>
 {% endblock %}

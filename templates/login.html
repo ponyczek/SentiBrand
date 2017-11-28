@@ -2,6 +2,7 @@
 
 
 {% block content %}
+<div class ="login-page">
     {% if form.errors %}
 
         <p>Your username and password didn't match. Please try again.</p>
@@ -17,43 +18,52 @@
             <p>Please login to see this page.</p>
         {% endif %}
     {% endif %}
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+    <div class ="container">
+    <div class ="row">
+    {% comment %}<div class="page-header-image" style="background-image:url(../assets/img/login.jpg)"></div>{% endcomment %}
+    
+    <div class="container col-md-4 login-container">
+            <div class="card card-login card-plain">
+                <form class="form" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="header header-primary text-center">
+                        <div class="logo-container">
+                            <img src="/static/img/now-logo.png" alt="">
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <form method="post" action="{% url 'login' %}">
-                            {% csrf_token %}
-
-                            <p class="bs-component">
-                            <table>
-                                <tr>
-                                    <td>{{ form.username.label_tag }}</td>
-                                    <td>{{ form.username }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form.password.label_tag }}</td>
-                                    <td>{{ form.password }}</td>
-                                </tr>
-                            </table>
-                            </p>
-                            <p class="bs-component">
-                            <center>
-                                <input class="btn btn-success btn-sm" type="submit" value="login"/>
-                            </center>
-                            </p>
-                            <input type="hidden" name="next" value="{{ next }}"/>
-                        </form>
+                    <div class="content">
+                        <div class="input-group form-group-no-border input-lg">
+                                <span class="input-group-addon">
+                                    <i class="now-ui-icons users_circle-08"></i>
+                                </span>
+                            {{ form.username }}
+                        </div>
+                        <div class="input-group form-group-no-border input-lg">
+                                <span class="input-group-addon">
+                                    <i class="now-ui-icons text_caps-small"></i>
+                                </span>
+                            <input type="password" placeholder="Password" class="form-control" name="password"/>
+                        </div>
                     </div>
-                </div>
+                    <div class="footer text-center">
+                        <input class="btn btn-primary btn-round btn-lg btn-block login-btn" type="submit" value="Login">
+                    </div>
+                    <div class="pull-left">
+                        <h6>
+                            <a href="#pablo" class="link">Create Account</a>
+                        </h6>
+                    </div>
+                    <div class="pull-right">
+                        <h6>
+                            <a href="#pablo" class="link">Need Help?</a>
+                        </h6>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
+    </div>
+</div>
 {% endblock %}
 
 {% block javascript %}

@@ -6,6 +6,6 @@ from django.shortcuts import render
 # this login required decorator is to not allow to any
 # view without authenticating
 @login_required(login_url="login/")
-def home(request):
+def dashboard(request):
     return render(request,"dashboard.html")
 
