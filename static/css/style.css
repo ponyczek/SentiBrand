@@ -1,3 +1,9 @@
+.fixed-top {
+  top: auto; }
+
+.alert {
+  margin-bottom: 0px; }
+
 .login-page {
   background-color: #f96332; }
 
@@ -5,30 +11,36 @@
   padding-top: 175px;
   padding-bottom: 270px; }
 
+.login-box {
+  background-color: rgba(242, 242, 242, 0.32);
+  padding: 15px; }
+
 .login-btn {
   border: white solid 1px !important; }
 
 .dashboard-page {
   background-color: #f96332;
-  padding-top: 80px;
+  padding-top: 100px;
   min-height: 840px; }
-
-.dashboard-main {
-  background-color: #f2f2f2; }
-
-.trim-left {
-  padding-left: 0px; }
+  .dashboard-page .dashboard-left {
+    background-color: #f2f2f2;
+    padding: 5px;
+    min-height: 400px; }
+    .dashboard-page .dashboard-left .dashboard-profile-pic {
+      width: 150px; }
+    .dashboard-page .dashboard-left .dashboard-navigation {
+      padding-top: 20px;
+      text-align: center;
+      padding-bottom: 10px; }
+      .dashboard-page .dashboard-left .dashboard-navigation .btn {
+        display: block; }
+  .dashboard-page .dashboard-main {
+    background-color: #f2f2f2;
+    min-height: 600px;
+    padding: 10px; }
 
 .trim-right {
   padding-right: 0px; }
-
-.dashboard-left {
-  background-color: #f2f2f2;
-  border-right: 1px solid #7F7F7F;
-  padding: 5px; }
-
-.dashboard-profile-pic {
-  width: 65%; }
 
 .equal-sides {
   margin-left: 5px;

@@ -2,68 +2,88 @@
 
 
 {% block content %}
-<div class ="login-page">
     {% if form.errors %}
+        <div class="alert alert-warning" role="alert">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="now-ui-icons objects_support-17"></i>
+                </div>
+                <strong>Oh snap!</strong>
+                Your username and password didn't match. Please try again.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </span>
+                </button>
+            </div>
+        </div>
 
-        <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
     {% if next %}
-        {% if user.is_authenticated %}
-
-            <p>Your account doesn't have access to this page. To proceed,
-                please login with an account that has access.</p>
-        {% else %}
-
-            <p>Please login to see this page.</p>
-        {% endif %}
+        <div class="alert alert-warning" role="alert">
+            <div class="container">
+                <div class="alert-icon">
+                    <i class="now-ui-icons objects_support-17"></i>
+                </div>
+                <strong>Oh snap!</strong>
+                {% if user.is_authenticated %}
+                    Your account doesn't have access to this page. To proceed,
+                    please login with an account that has access.
+                {% else %}
+                    Please login to see this page.
+                {% endif %}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </span>
+                </button>
+            </div>
+        </div>
     {% endif %}
-    <div class ="container">
-    <div class ="row">
-    {% comment %}<div class="page-header-image" style="background-image:url(../assets/img/login.jpg)"></div>{% endcomment %}
-    
-    <div class="container col-md-4 login-container">
-            <div class="card card-login card-plain">
-                <form class="form" method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    <div class="header header-primary text-center">
-                        <div class="logo-container">
-                            <img src="/static/img/now-logo.png" alt="">
-                        </div>
-                    </div>
-                    <div class="content">
-                        <div class="input-group form-group-no-border input-lg">
+    <div class="login-page">
+        <div class="container">
+            <div class="row">
+                {% comment %}<div class="page-header-image" style="background-image:url(../assets/img/login.jpg)"></div>{% endcomment %}
+
+                <div class="container col-md-4 login-container">
+                    <div class="card card-login login-box">
+                        <form class="form" method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="header header-primary text-center">
+                                <div class="logo-container">
+                                    <img src="/static/img/now-logo.png" alt="">
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="input-group form-group-no-border input-lg">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons users_circle-08"></i>
                                 </span>
-                            {{ form.username }}
-                        </div>
-                        <div class="input-group form-group-no-border input-lg">
+                                    {{ form.username }}
+                                </div>
+                                <div class="input-group form-group-no-border input-lg">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons text_caps-small"></i>
                                 </span>
-                            <input type="password" placeholder="Password" class="form-control" name="password"/>
-                        </div>
+                                    <input type="password" placeholder="Password" class="form-control" name="password"/>
+                                </div>
+                            </div>
+                            <div class="footer text-center">
+                                <input class="btn btn-primary btn-round btn-lg btn-block login-btn" type="submit"
+                                       value="Login">
+                            </div>
+                            <div class="pull-left">
+                                <h6>
+                                    <a href="{% url 'register' %}" class="link">Create Account</a>
+                                </h6>
+                            </div>
+                        </form>
                     </div>
-                    <div class="footer text-center">
-                        <input class="btn btn-primary btn-round btn-lg btn-block login-btn" type="submit" value="Login">
-                    </div>
-                    <div class="pull-left">
-                        <h6>
-                            <a href="#pablo" class="link">Create Account</a>
-                        </h6>
-                    </div>
-                    <div class="pull-right">
-                        <h6>
-                            <a href="#pablo" class="link">Need Help?</a>
-                        </h6>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block javascript %}

@@ -1,47 +1,69 @@
-.login-page{
+//overwritten the css lib for me
+$toned-white: #f2f2f2;
+
+.fixed-top {
+  top: auto;
+}
+
+.alert {
+  margin-bottom: 0px;
+}
+
+.login-page {
   background-color: #f96332;
 }
 
-.login-container{
+.login-container {
   padding-top: 175px;
   padding-bottom: 270px
 }
 
-.login-btn{
+.login-box {
+  background-color: rgba(242, 242, 242, 0.32);
+  padding: 15px;
+}
+
+.login-btn {
   border: white solid 1px !important;
 }
 
-
-.dashboard-page{
+.dashboard-page {
   background-color: #f96332;
-  padding-top: 80px;
+  padding-top: 100px;
   min-height: 840px;
-}
-
-.dashboard-main{
+  .dashboard-left {
     background-color: #f2f2f2;
+    //border: 1px solid #7F7F7F;
+    padding: 5px;
+    min-height: 400px;
+    .dashboard-profile-pic {
+      width: 150px;
+    }
+    .dashboard-navigation {
+      padding-top: 20px;
+      text-align: center;
+      .btn {
+        display: block;
+      }
+      padding-bottom: 10px;
+    }
+  }
+  .dashboard-main {
+    background-color: #f2f2f2;
+    min-height: 600px;
+    padding: 10px;
+  }
 }
 
-.trim-left{
-  padding-left: 0px;
+.trim-left {
+  //padding-left: 0px;
 }
 
-.trim-right{
+.trim-right {
   padding-right: 0px;
 }
 
-.dashboard-left{
-  background-color: #f2f2f2;
-  border-right: 1px solid #7F7F7F;
-  padding:5px
-}
-
-.dashboard-profile-pic{
-  width:65%;
-}
-
-.equal-sides{
+.equal-sides {
   margin-left: 5px;
   margin-right: 15px;
 }
-

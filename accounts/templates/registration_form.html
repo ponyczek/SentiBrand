@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+
+
+{% block content %}
+    <div class="login-page">
+        <div class="container">
+            <div class="row">
+                {% comment %}<div class="page-header-image" style="background-image:url(../assets/img/login.jpg)"></div>{% endcomment %}
+
+                <div class="container col-md-4 login-container">
+                    <div class="card card-signup login-box">
+                        <form class="form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="header text-center">
+                                <h4 class="title title-up">Sign Up</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="input-group form-group-no-border">
+                                        <span class="input-group-addon">
+                                            <i class="now-ui-icons users_circle-08"></i>
+                                        </span>
+                                    {{ form.username }}
+                                </div>
+                                <div class="input-group form-group-no-border">
+                                        <span class="input-group-addon">
+                                            <i class="now-ui-icons objects_key-25"></i>
+                                        </span>
+                                    <input type="password" placeholder="Password" class="form-control" name="password"/>
+                                </div>
+                                <div class="input-group form-group-no-border">
+                                        <span class="input-group-addon">
+                                            <i class="now-ui-icons ui-1_email-85"></i>
+                                        </span>
+                                    <input type="email" placeholder="Email" class="form-control" name="email"/>
+                                </div>
+                            </div>
+                            <div class="footer text-center">
+                                <input class="btn btn-primary btn-round btn-lg btn-block login-btn" type="submit"
+                                       value="Register">
+                            </div>
+                            <div class="pull-left">
+                                <h6>
+                                    <a href="{% url 'login' %}" class="link">Already a user? Sign in!</a>
+                                </h6>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+
+    <script>
+        {% if not user.is_authenticated %}
+            $("ul.nav.navbar-nav.navbar-right").css("display", "none");
+        {% endif %}
+    </script>
+
+{% endblock %}
