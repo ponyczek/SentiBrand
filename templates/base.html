@@ -55,7 +55,7 @@
         </div>
         <div class="navbar-translate">
             <a class="navbar-brand" href="#" rel="tooltip"
-               title="SentiBrand" data-placement="bottom" target="_blank">
+               title="SentiBrand" data-placement="bottom" >
                 SentiBrand
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
@@ -74,22 +74,21 @@
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" rel="tooltip" title="Profile" data-placement="bottom"
-                           href="{% url 'dashboard' %}" target="_blank">
+                           href="{% url 'dashboard' %}">
                             <i class="fa fa-user-circle"></i>
                             <p class="d-lg-none d-xl-none">Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" rel="tooltip" title="Logout" data-placement="bottom"
-                           href="{% url 'logout' %}" target="_blank">
+                           href="{% url 'logout' %}" >
                             <i class="fa fa-key"></i>
                             <p class="d-lg-none d-xl-none">Logout</p>
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" rel="tooltip" title="Login" data-placement="bottom" href="{% url 'login' %}"
-                           target="_blank">
+                        <a class="nav-link" rel="tooltip" title="Login" data-placement="bottom" href="{% url 'login' %}">
                             <i class="fa fa-user-circle"></i>
                             <p class="d-lg-none d-xl-none">Login</p>
                         </a>
