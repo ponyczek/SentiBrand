@@ -38,6 +38,12 @@
     background-color: #f2f2f2;
     min-height: 600px;
     padding: 10px; }
+    .dashboard-page .dashboard-main .dashboard-search {
+      padding-top: 15px; }
+      .dashboard-page .dashboard-main .dashboard-search .search-input {
+        font-size: 1.3em;
+        background-color: white;
+        color: #f96332; }
 
 .trim-right {
   padding-right: 0px; }

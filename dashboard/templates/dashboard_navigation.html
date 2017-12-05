@@ -1,0 +1,14 @@
+<div class="dashboard-left card">
+    <h2 class="text-center">{{ user.get_username }}</h2>
+    <div class="text-center">
+        <img src="/static/img/ryan.jpg" alt="Thumbnail Image"
+             class="rounded-circle img-raised dashboard-profile-pic">
+    </div>
+    <div class="dashboard-navigation">
+        <a href="{% url 'dashboard' %} button class="btn btn-link">Dashboard</a>
+        <a href="{% url 'search' %} " button class="btn btn-link">Single Search</a>
+        <a href="http://google.com" button class="btn btn-link">Historic Data</a>
+        <a href="http://google.com" button class="btn btn-link">Reports</a>
+        <a href="http://google.com" button class="btn btn-link">Edit your profile</a>
+    </div>
+</div>

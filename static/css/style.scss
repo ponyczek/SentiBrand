@@ -1,5 +1,6 @@
 //overwritten the css lib for me
 $toned-white: #f2f2f2;
+$main-orange: #f96332;
 
 .fixed-top {
   top: auto;
@@ -52,6 +53,14 @@ $toned-white: #f2f2f2;
     background-color: #f2f2f2;
     min-height: 600px;
     padding: 10px;
+    .dashboard-search{
+      padding-top: 15px;
+      .search-input{
+        font-size: 1.3em;
+        background-color: white;
+        color: $main-orange;
+      }
+    }
   }
 }
 
