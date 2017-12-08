@@ -1,21 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="dashboard-page">
-        {% comment %}
-    <div class="container">{% endcomment %}
         <div class="row equal-sides">
             <div class="col-sm-2 trim-right">
                 {% include 'dashboard_navigation.html' %}
             </div>
             <div class="col-sm-10 trim-left">
                 <div class="dashboard-main card">
-                    {% if 'search' in request.path %}
-                        {% include 'search.html' %}
-{#                    {% elsif %}#}
-
-                    {% else %}
-                        <h3>Welcome to your dashboard</h3>
-                    {% endif %}
+                    <h3>Welcome to your dashboard</h3>
                 </div>
             </div>
         </div>

@@ -1,11 +1,35 @@
-<div class = dashboard-search>
-    <h2 class ="text-center">Perform Single Search</h2>
-    <div class="col-sm-12">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="fa fa-search"></i>
-            </span>
-            <input type="text" class="form-control search-input" placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
+{% extends 'base.html' %}
+{% block content %}
+    <div class="dashboard-page">
+        <div class="row equal-sides">
+            <div class="col-sm-2 trim-right">
+                {% include 'dashboard_navigation.html' %}
+            </div>
+            <div class="col-sm-10 trim-left">
+                <div class="dashboard-main card">
+                    <div class="dashboard-search">
+                        <h2 class="text-center">Perform Single Search</h2>
+                        <div class="col-sm-12">
+                            <form class="form" action={% url 'search' %}  method="post" enctype="multipart/form-data">
+                                 {% csrf_token %}
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        <input type="text" class="form-control search-input" name="query_phrase"
+                                               placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
+                                        <button class="btn btn-primary btn-round" type="submit">Round</button>
+                                    </div>
+                            </form>
+                            {% for tweet in tweets %}
+                                <div class="text-left">
+                                    <img src="{{ tweet.user.profile_image_url }}" alt="Thumbnail Image"
+                                         class="rounded-circle img-raised dashboard-profile-pic">
+                                </div><br>
+                                {{ tweet.user.name }}: {{ tweet.text }} <br><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+{% endblock %}
