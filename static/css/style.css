@@ -38,6 +38,9 @@
     background-color: #f2f2f2;
     min-height: 600px;
     padding: 10px; }
+    .dashboard-page .dashboard-main .nav-tabs > .nav-item > .nav-link.active {
+      color: #f96332 !important;
+      border: #f96332 solid 1px; }
     .dashboard-page .dashboard-main .dashboard-search {
       padding-top: 15px; }
       .dashboard-page .dashboard-main .dashboard-search .search-input {

@@ -53,6 +53,11 @@ $main-orange: #f96332;
     background-color: #f2f2f2;
     min-height: 600px;
     padding: 10px;
+
+    .nav-tabs>.nav-item>.nav-link.active {
+      color: $main-orange !important;
+      border: $main-orange solid 1px ;
+    }
     .dashboard-search{
       padding-top: 15px;
       .search-input{
