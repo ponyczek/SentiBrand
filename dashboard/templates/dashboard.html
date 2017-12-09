@@ -49,11 +49,135 @@
                                     possibilities, to show people, this is the level that things could be at. </p>
                             </div>
                             <div class="tab-pane active" id="messages" role="tabpanel" aria-expanded="true">
-                                <p>I think that’s a responsibility that I have, to push possibilities, to show people,
-                                    this is the level that things could be at. So when you get something that has the
-                                    name Kanye West on it, it’s supposed to be pushing the furthest possibilities. I
-                                    will be the leader of a company that ends up being worth billions of dollars,
-                                    because I got the answers. I understand culture. I am the nucleus.</p>
+                                <div id="floating-panel">
+                                    <button class="btn btn-primary btn-round" onclick="toggleHeatmap()" type="button">Toggle Heatmap</button>
+                                    <button class="btn btn-primary btn-round" onclick="changeGradient()" type="button">Change gradient</button>
+                                    <button class="btn btn-primary btn-round" onclick="changeRadius()" type="button">Change radius</button>
+                                    <button class="btn btn-primary btn-round" onclick="changeOpacity()" type="button">Change opacity</button>
+                                </div>
+                                <div id="map" class="map"></div>
+                                <!-- Replace the value of the key parameter with your own API key. -->
+
+                                <ul class="timeline">
+                                    <li>
+                                        <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                                <p>
+                                                    <small class="text-muted"><i class="glyphicon glyphicon-time"></i>
+                                                        11 hours ago via Twitter
+                                                    </small>
+                                                </p>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings
+                                                    elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis,
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-inverted">
+                                        <div class="timeline-badge warning"><i
+                                                class="glyphicon glyphicon-credit-card"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings
+                                                    elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis,
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge danger"><i
+                                                class="glyphicon glyphicon-credit-card"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings
+                                                    elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis,
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-inverted">
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings
+                                                    elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis,
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge info"><i class="glyphicon glyphicon-floppy-disk"></i>
+                                        </div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings
+                                                    elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis,
+                                                    </p>
+                                                <hr>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                                                            data-toggle="dropdown">
+                                                        <i class="glyphicon glyphicon-cog"></i> <span
+                                                            class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Action</a></li>
+                                                        <li><a href="#">Another action</a></li>
+                                                        <li><a href="#">Something else here</a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Separated link</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings
+                                                    elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis,
+                                                    </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="timeline-inverted">
+                                        <div class="timeline-badge success"><i
+                                                class="glyphicon glyphicon-thumbs-up"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                            </div>
+                                            <div class="timeline-body">
+                                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings
+                                                    elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis,
+                                                    espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in
+                                                    elementis mé pra quem é amistosis quis leo. Manduma pindureta quium
+                                                    dia nois paga. Sapien in monti palavris qui num significa nadis i
+                                                    pareci latim. Interessantiss quisso pudia ce receita de bolis, mais
+                                                    bolis eu num gostis.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                             <div class="tab-pane" id="settings" role="tabpanel" aria-expanded="false">
                                 <p>
