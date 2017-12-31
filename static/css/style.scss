@@ -49,6 +49,10 @@ $main-orange: #f96332;
       padding-bottom: 10px;
     }
   }
+
+  .extra-padding-top-60{
+    padding-top: 60px !important;
+  }
   .dashboard-main {
     background-color: #f2f2f2;
     min-height: 600px;
@@ -89,12 +93,37 @@ $main-orange: #f96332;
       color: $main-orange !important;
       border: $main-orange solid 1px;
     }
-    .dashboard-search {
+    .dashboard-search, .dashboard-add-phrase {
       padding-top: 15px;
+      .add-phrase-title{
+        i{
+          color: #1da2ff;
+        }
+      }
       .search-input {
         font-size: 1.3em;
         background-color: white;
         color: $main-orange;
+      }
+      .add-phrase-card{
+        padding: 40px 20px 20px 20px;
+        .form-group{
+          .input-group{
+            ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+              color: #303030;
+              font-weight: 300;
+            }
+            ::-moz-placeholder { /* Firefox 19+ */
+             color: #303030;
+            }
+            :-ms-input-placeholder { /* IE 10+ */
+              color: #303030;
+            }
+            :-moz-placeholder { /* Firefox 18- */
+              color: #303030;
+            }
+          }
+        }
       }
     }
     .timeline {

@@ -1,0 +1,22 @@
+
+{% for field in form %}
+    <div class="form-group">
+        <div class="">
+            <span class="text-danger small">{{ field.errors }}</span>
+        </div>
+        <div class="input-group">
+            {{ field }}
+            <span class="input-group-addon">
+                {% if field.name == 'name' %}
+                    <i class='fa fa-font'></i>
+                {% elif field.name == 'start_date' %}
+                    <i class='fa fa-calendar-o'></i>
+                {% elif field.name == 'phrase' %}
+                    <i class='fa fa-search'></i>
+                {% elif field.name == 'interval_in_sec' %}
+                    <i class='fa fa-clock-o'></i>
+                {% endif %}
+             </span>
+        </div>
+    </div>
+{% endfor %}

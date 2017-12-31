@@ -9,4 +9,7 @@ class User_Phrase(models.Model):
     name = models.CharField(max_length=50)
     start_date = models.DateTimeField(default=datetime.now, editable=True)
     interval_in_sec = models.IntegerField()
-    phrase = models.CharField(max_length=250, default='')
+
+class Phrase(models.Model):
+    phrase = models.CharField(max_length=250, primary_key=True)
+    user_phrase = models.ForeignKey(User_Phrase, on_delete=models.CASCADE)

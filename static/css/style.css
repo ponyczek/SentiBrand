@@ -34,6 +34,8 @@
       padding-bottom: 10px; }
       .dashboard-page .dashboard-left .dashboard-navigation .btn {
         display: block; }
+  .dashboard-page .extra-padding-top-60 {
+    padding-top: 60px !important; }
   .dashboard-page .dashboard-main {
     background-color: #f2f2f2;
     min-height: 600px;
@@ -64,12 +66,29 @@
     .dashboard-page .dashboard-main .nav-tabs > .nav-item > .nav-link.active {
       color: #f96332 !important;
       border: #f96332 solid 1px; }
-    .dashboard-page .dashboard-main .dashboard-search {
+    .dashboard-page .dashboard-main .dashboard-search, .dashboard-page .dashboard-main .dashboard-add-phrase {
       padding-top: 15px; }
-      .dashboard-page .dashboard-main .dashboard-search .search-input {
+      .dashboard-page .dashboard-main .dashboard-search .add-phrase-title i, .dashboard-page .dashboard-main .dashboard-add-phrase .add-phrase-title i {
+        color: #1da2ff; }
+      .dashboard-page .dashboard-main .dashboard-search .search-input, .dashboard-page .dashboard-main .dashboard-add-phrase .search-input {
         font-size: 1.3em;
         background-color: white;
         color: #f96332; }
+      .dashboard-page .dashboard-main .dashboard-search .add-phrase-card, .dashboard-page .dashboard-main .dashboard-add-phrase .add-phrase-card {
+        padding: 40px 20px 20px 20px; }
+        .dashboard-page .dashboard-main .dashboard-search .add-phrase-card .form-group .input-group ::-webkit-input-placeholder, .dashboard-page .dashboard-main .dashboard-add-phrase .add-phrase-card .form-group .input-group ::-webkit-input-placeholder {
+          /* Chrome/Opera/Safari */
+          color: #303030;
+          font-weight: 300; }
+        .dashboard-page .dashboard-main .dashboard-search .add-phrase-card .form-group .input-group ::-moz-placeholder, .dashboard-page .dashboard-main .dashboard-add-phrase .add-phrase-card .form-group .input-group ::-moz-placeholder {
+          /* Firefox 19+ */
+          color: #303030; }
+        .dashboard-page .dashboard-main .dashboard-search .add-phrase-card .form-group .input-group :-ms-input-placeholder, .dashboard-page .dashboard-main .dashboard-add-phrase .add-phrase-card .form-group .input-group :-ms-input-placeholder {
+          /* IE 10+ */
+          color: #303030; }
+        .dashboard-page .dashboard-main .dashboard-search .add-phrase-card .form-group .input-group :-moz-placeholder, .dashboard-page .dashboard-main .dashboard-add-phrase .add-phrase-card .form-group .input-group :-moz-placeholder {
+          /* Firefox 18- */
+          color: #303030; }
     .dashboard-page .dashboard-main .timeline {
       list-style: none;
       padding: 20px 0 20px;
