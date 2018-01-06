@@ -26,7 +26,7 @@ class MyStreamListener(tweepy.StreamListener):
         return True
 
     def on_data(self, tweet):
-        print(json.loads(tweet))
+        return  json.loads(tweet)
     # def on_data(self, status):
     #     self.output[status.id] = {
     #

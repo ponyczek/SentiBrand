@@ -31,7 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
@@ -62,7 +62,7 @@
         </div>
         <div class="navbar-translate">
             <a class="navbar-brand" href="#" rel="tooltip"
-               title="SentiBrand" data-placement="bottom" >
+               title="SentiBrand" data-placement="bottom">
                 SentiBrand
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
@@ -88,14 +88,15 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" rel="tooltip" title="Logout" data-placement="bottom"
-                           href="{% url 'logout' %}" >
+                           href="{% url 'logout' %}">
                             <i class="fa fa-key"></i>
                             <p class="d-lg-none d-xl-none">Logout</p>
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" rel="tooltip" title="Login" data-placement="bottom" href="{% url 'login' %}">
+                        <a class="nav-link" rel="tooltip" title="Login" data-placement="bottom"
+                           href="{% url 'login' %}">
                             <i class="fa fa-user-circle"></i>
                             <p class="d-lg-none d-xl-none">Login</p>
                         </a>
@@ -148,9 +149,9 @@
 <script src="{% static 'js/plugins/jquery.sharrre.js' %} " type="text/javascript"></script>
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="{% static 'js/now-ui-kit.js' %} " type="text/javascript"></script>
-                                <script async defer
-                                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSPQsBJm8Sn0Pr9DGvxmU6Tc1i2IXWwDQ&libraries=visualization&callback=initMap">
-                                </script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSPQsBJm8Sn0Pr9DGvxmU6Tc1i2IXWwDQ&libraries=visualization&callback=initMap">
+</script>
 <script>
 
     var map, heatmap;
@@ -200,7 +201,7 @@
         heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
     }
 
-// Heatmap data: 500 Points
+    // Heatmap data: 500 Points
     function getPoints() {
         return [
             new google.maps.LatLng(37.752986, -122.403112),
@@ -208,6 +209,44 @@
         ];
     }
 
+</script>
+
+<script>
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+
+    var socket = new WebSocket(ws_scheme + '://' + window.location.host + '/dashboard');
+
+{#    console.log(window.location.host);#}
+    socket.onopen = function open() {
+        console.log('WebSockets connection created.');
+    };
+
+    socket.onmessage = function message(event) {
+        var data = JSON.parse(event.data);
+        console.log(data.user.name);
+        // NOTE: We escape JavaScript to prevent XSS attacks.
+        var username = data.user.name;
+        console.log(username);
+        var user = $('li').filter(function () {
+            return $(this).data('username') == username;
+        });
+$( ".inner" ).append( username + '<br>');
+{#        if (data['is_logged_in']) {#}
+{#            user.html(username + ': Online');#}
+{#            console.log('hi');#}
+{#            $( ".inner" ).append( username );#}
+{#        }#}
+{#        else {#}
+{#            user.html(username + ': Offline');#}
+{#            console.log('hi2');#}
+{#                        $( ".inner" ).append( username );#}
+
+{#        }#}
+    };
+
+    if (socket.readyState == WebSocket.OPEN) {
+        socket.onopen();
+    }
 </script>
 
 {% block javascript %}

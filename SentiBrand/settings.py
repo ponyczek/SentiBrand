@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sass_processor',
-    'dashboard'
+    'dashboard',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,20 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = '/dashboard'  # It means home view
 LOGOUT_REDIRECT_URL = '/'
+
+CHANNEL_LAYERS = {
+    "default": {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        "ROUTING": "dashboard.routing.channel_routing",
+    },
+}
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULE = {}
