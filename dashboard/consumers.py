@@ -8,6 +8,8 @@ import time
 from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
 import threading
+import time
+
 
 consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
 consumer_secret = os.environ.get('SENTI_CONSUMER_SECRET')
@@ -38,35 +40,43 @@ class MyStreamListener(tweepy.StreamListener):
         # return True
 
 
-# def send_notification(notification):
-    # Group('notifications').send({'text': json.dumps(notification)})
+class perpetualTimer():
 
-# myStreamListener = MyStreamListener()
-# myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
-# myStream.disconnect()
-# myStreamListener = MyStreamListener()
-# myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
+   def __init__(self,t,hFunction):
+      self.t=t
+      self.hFunction = hFunction
+      # self.query = query
+      self.thread = threading.Timer(self.t,self.handle_function)
 
-def hello_world():
-    tweets = api.search(q='goodnight')
+   def handle_function(self):
+      self.hFunction()
+      self.thread = threading.Timer(self.t,self.handle_function)
+      self.thread.start()
+
+   def start(self):
+      self.thread.start()
+
+   def cancel(self):
+      self.thread.cancel()
+
+
+def hello_world(query_phrase):
+    tweets = api.search(q=query_phrase)
     status = tweets[0]
-    threading.Timer(2.0, hello_world).start()
-    print(status._json);
     Group('dashboard').send({"text": json.dumps(status._json)})
+    print(status)
     # return status
+
+t = perpetualTimer(2, lambda: hello_world("") )
+
+# t = perpetualTimer(2, hello_world)
+# print("hi")
+# t.start()
 
 @channel_session_user_from_http
 def ws_connect(message):
-    hello_world()
-    # tweets = api.search(q='goodnight')
-    # status = tweets[0]
-    # myStreamListener = MyStreamListener()
-    # myStreamListener = MyStreamListener()
-    # myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
-    # myStream.disconnect()
+    print("connected")
 
-    # myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
-    # myStream.filter(track=['goodnight'], async=True)
     message.reply_channel.send({
         "text": json.dumps({
             "action": "reply_channel",
@@ -76,35 +86,19 @@ def ws_connect(message):
     Group('dashboard').add(message.reply_channel)
 
 
-    # tweets = api.search(q='goodnight')
-    # status = tweets[0]
-    # print(status)
-    #
-    # # myStreamListener = MyStreamListener()
-    # # myStream = tweepy.Stream(auth=api.auth, listener=myStreamListener)
-    # # output = myStream.filter(track=['goodnight'], async=True)
-    # Group('dashboard').add(message.reply_channel)
-    # Group('dashboard').send({
-    #     'text': json.dumps(status._json)
-    # })
-    # Group('dashboard').send({
-    #     'text': json.dumps(status._json)
-    # })
-    # Group('dashboard').send({
-    #     'text': json.dumps(status._json)
-    # })
 @channel_session
 def ws_receive(message):
-    print("is it ever called")
     try:
+        print('kek')
         data = json.loads(message['text'])
+        t = perpetualTimer(2, lambda: hello_world(data['text']))
+        t.start()
+        # print(data['text'])
     except ValueError:
        print("ws message isn't json text=%s", message['text'])
        return
-    if data:
-       reply_channel = message.reply_channel.name
-       if data['action'] == "start_sec3":
-           print(data, reply_channel)
+
+
 
 @channel_session_user
 def ws_disconnect(message):
@@ -116,4 +110,5 @@ def ws_disconnect(message):
     })
     Group('dashboard').discard(message.reply_channel)
     # myStream.disconnect()
+    t.cancel()
     print('disconnected')

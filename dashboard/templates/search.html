@@ -10,20 +10,20 @@
                     <div class="dashboard-search">
                         <h2 class="text-center">Perform Single Search</h2>
                         <div class="col-sm-12">
-                            <form class="form" action={% url 'search' %}  method="post" enctype="multipart/form-data">
-                                 {% csrf_token %}
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                        <input type="text" class="form-control search-input" name="query_phrase"
-                                               placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
-                                        <button class="btn btn-primary btn-round" type="submit">Round</button>
-                                    </div>
-                            </form>
-                        <h2>Greetings</h2>
-<div class="container">
-  <div class="inner">Hello</div>
+{#                            <form class="form" action='' method="" enctype="multipart/form-data">#}
+{#                                {% csrf_token %}#}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <input type="text" class="form-control search-input" name="query_phrase" id="query_phrase"
+                                           placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
+                                    <button class="btn btn-primary btn-round" id="search-btn">Round</button>
+                                </div>
+{#                            </form>#}
+                            <h2>Greetings</h2>
+                            <div class="container">
+                                <div class="inner">Hello</div>
 
-</div>
+                            </div>
                             {% for tweet in tweets %}
                                 <div class="text-left">
                                     <img src="{{ tweet.user.profile_image_url }}" alt="Thumbnail Image"
@@ -37,4 +37,56 @@
             </div>
         </div>
     </div>
+    <script>
+        var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+
+        var socket = new WebSocket(ws_scheme + '://' + window.location.host + '/dashboard/search');
+        var input = $('#query_phrase');
+        console.log(input);
+        function sendMessage() {
+            socket.send(JSON.stringify({
+                text: input.val()
+            }));
+{#            input.val('');#}
+        }
+
+        $('#search-btn').click(sendMessage);
+        input.keypress(function(e) {
+          if (e.which == 13) {
+            sendMessage();
+          }
+        });
+        {#    console.log(window.location.host);#}
+        socket.onopen = function open() {
+            console.log('WebSockets connection created.');
+        };
+
+        socket.onmessage = function message(event) {
+            var data = JSON.parse(event.data);
+            console.log(data.user.name);
+            // NOTE: We escape JavaScript to prevent XSS attacks.
+            var username = data.user.name;
+            console.log(username);
+            var user = $('li').filter(function () {
+                return $(this).data('username') == username;
+            });
+            $(".inner").append(username + '<br>');
+            {#        if (data['is_logged_in']) {#}
+            {#            user.html(username + ': Online');#}
+            {#            console.log('hi');#}
+            {#            $( ".inner" ).append( username );#}
+            {#        }#}
+            {#        else {#}
+            {#            user.html(username + ': Offline');#}
+            {#            console.log('hi2');#}
+            {#                        $( ".inner" ).append( username );#}
+
+            {#        }#}
+        };
+
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.onopen();
+        }
+    </script>
 {% endblock %}
+
