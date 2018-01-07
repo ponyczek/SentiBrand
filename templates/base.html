@@ -212,42 +212,7 @@
 </script>
 
 <script>
-    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 
-    var socket = new WebSocket(ws_scheme + '://' + window.location.host + '/dashboard');
-
-{#    console.log(window.location.host);#}
-    socket.onopen = function open() {
-        console.log('WebSockets connection created.');
-    };
-
-    socket.onmessage = function message(event) {
-        var data = JSON.parse(event.data);
-        console.log(data.user.name);
-        // NOTE: We escape JavaScript to prevent XSS attacks.
-        var username = data.user.name;
-        console.log(username);
-        var user = $('li').filter(function () {
-            return $(this).data('username') == username;
-        });
-$( ".inner" ).append( username + '<br>');
-{#        if (data['is_logged_in']) {#}
-{#            user.html(username + ': Online');#}
-{#            console.log('hi');#}
-{#            $( ".inner" ).append( username );#}
-{#        }#}
-{#        else {#}
-{#            user.html(username + ': Offline');#}
-{#            console.log('hi2');#}
-{#                        $( ".inner" ).append( username );#}
-
-{#        }#}
-    };
-
-    if (socket.readyState == WebSocket.OPEN) {
-        socket.onopen();
-    }
-</script>
 
 {% block javascript %}
 {% endblock %}
