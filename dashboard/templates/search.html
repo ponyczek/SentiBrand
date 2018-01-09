@@ -17,7 +17,7 @@
                                 <input type="text" class="form-control search-input" name="query_phrase"
                                        id="query_phrase"
                                        placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
-                                <button class="btn btn-primary btn-round" id="search-btn">Round</button>
+                                <button class="btn btn-primary btn-round" id="search-btn" >Round</button>
                             </div>
                             {#                            </form>#}
                             <h2>Greetings</h2>
@@ -45,18 +45,24 @@
         var input = $('#query_phrase');
         console.log(input);
 
+
         function sendMessage() {
-            socket.send(JSON.stringify({
-                text: input.val(),
-                user_name: "{{ user.get_username}}"
-            }));
-            {#            input.val('');#}
+            setInterval(function () {
+                socket.send(JSON.stringify({
+                    text: input.val(),
+                    user_name: "{{ user.get_username}}"
+                }));
+            }, 3000);
         }
 
+
         $('#search-btn').click(sendMessage);
+
         input.keypress(function (e) {
             if (e.which == 13) {
-                sendMessage();
+{#                sendMessage();#}
+
+                {#                sendMessage();#}
             }
         });
         {#    console.log(window.location.host);#}
@@ -75,17 +81,6 @@
                 return $(this).data('username') == username;
             });
             $(".inner").append(username + '<br>');
-            {#        if (data['is_logged_in']) {#}
-            {#            user.html(username + ': Online');#}
-            {#            console.log('hi');#}
-            {#            $( ".inner" ).append( username );#}
-            {#        }#}
-            {#        else {#}
-            {#            user.html(username + ': Offline');#}
-            {#            console.log('hi2');#}
-            {#                        $( ".inner" ).append( username );#}
-
-            {#        }#}
         };
 
         if (socket.readyState == WebSocket.OPEN) {
