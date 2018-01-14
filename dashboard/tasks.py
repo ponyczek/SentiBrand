@@ -36,50 +36,28 @@ def hello_world(message, reply_channel):
     print("hi from task")
     print(message)
     if message is not None and reply_channel is not None:
-        # query_phrase = message['text']
-        # # group_name = message['user_name'] + "_search"
-        # tweets = api.search(q=query_phrase)
-        # status = tweets[0]
-        # # print(group_name)
-        # print(json.dumps(status._json))
-        #
-        # Channel(reply_channel).send({"text": json.dumps(status._json)})
-        # # print(status)
-        # test(message,reply_channel)
-        # while True:
+
         get_search_data(message,reply_channel)
-        # return True
-        # return True
-        # return True
 
-
-    # else:
-        # print("test")
-        # return True
-        # return True
 
 def get_search_data(message, reply_channel):
     # print("hi from task")
     # print(message)
     # if message is not None and reply_channel is not None:
-    query_phrase = message['text']
-    # group_name = message['user_name'] + "_search"
-    tweets = api.search(q=query_phrase)
-    status = tweets[0]
-    # print(group_name)
-    print(json.dumps(status._json))
+    print(type(message))
+    if message.get('last_tweet_id'):
+        print('test')
+        print(message['last_tweet_id'])
+        query_phrase = message['text']
+        # group_name = message['user_name'] + "_search"
+        temp_tweets = api.search(q=query_phrase, since_id=message['last_tweet_id'])
+        tweets = [tweet._json for tweet in temp_tweets ]
+        Channel(reply_channel).send({"text": json.dumps(tweets)})
+    else:
+        # print(message['last_tweet_date'])
+        query_phrase = message['text']
+        # group_name = message['user_name'] + "_search"
+        temp_tweets = api.search(q=query_phrase)
+        tweets = [tweet._json for tweet in temp_tweets ]
 
-    Channel(reply_channel).send({"text": json.dumps(status._json)})
-    # time.sleep(3)
-
-    # hello_world(message,reply_channel)
-    # return True
-
-    # return True
-
-    # print(status)
-    # time.sleep(3)
-    # hello_world(message,reply_channel)
-    # return True
-    # else:
-    #     return True
+        Channel(reply_channel).send({"text": json.dumps(tweets)})

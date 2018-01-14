@@ -17,7 +17,7 @@
                                 <input type="text" class="form-control search-input" name="query_phrase"
                                        id="query_phrase"
                                        placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
-                                <button class="btn btn-primary btn-round" id="search-btn" >Round</button>
+                                <button class="btn btn-primary btn-round" id="search-btn">Round</button>
                             </div>
                             {#                            </form>#}
                             <h2>Greetings</h2>
@@ -43,29 +43,38 @@
 
         var socket = new WebSocket(ws_scheme + '://' + window.location.host + '/dashboard/search');
         var input = $('#query_phrase');
-        console.log(input);
 
+        var calls_counter = 0;
+        var last_tweet_id;
 
         function sendMessage() {
+
             setInterval(function () {
-                socket.send(JSON.stringify({
-                    text: input.val(),
-                    user_name: "{{ user.get_username}}"
-                }));
+                //first time query
+                if (calls_counter === 0) {
+                    socket.send(JSON.stringify({
+                        text: input.val(),
+                        user_name: "{{ user.get_username}}"
+                    }));
+                }
+                else {
+                    console.log(last_tweet_id);
+                    socket.send(JSON.stringify({
+                        text: input.val(),
+                        user_name: "{{ user.get_username}}",
+                        last_tweet_id: last_tweet_id
+                    }));
+                }
             }, 3000);
         }
-
 
         $('#search-btn').click(sendMessage);
 
         input.keypress(function (e) {
             if (e.which == 13) {
-{#                sendMessage();#}
-
-                {#                sendMessage();#}
+                sendMessage();
             }
         });
-        {#    console.log(window.location.host);#}
 
         socket.onopen = function open() {
             console.log('WebSockets connection created.');
@@ -73,14 +82,22 @@
 
         socket.onmessage = function message(event) {
             var data = JSON.parse(event.data);
-            console.log(data.user.name);
-            // NOTE: We escape JavaScript to prevent XSS attacks.
-            var username = data.user.name;
-            console.log(username);
-            var user = $('li').filter(function () {
-                return $(this).data('username') == username;
-            });
-            $(".inner").append(username + '<br>');
+            if (data) {
+                if (last_tweet_id !== data[0].id) {
+                    last_tweet_id = data[0].id;
+                    data.forEach(function (tweet) {
+                        //console.log(tweet.user.name);
+                        // NOTE: We escape JavaScript to prevent XSS attacks.
+                        var username = tweet.user.name;
+                        {#                console.log(username);#}
+                        var user = $('li').filter(function () {
+                            return $(this).data('username') == username;
+                        });
+                        $(".inner").append(username + '<br>');
+                    });
+                    calls_counter++;
+                }
+            }
         };
 
         if (socket.readyState == WebSocket.OPEN) {
