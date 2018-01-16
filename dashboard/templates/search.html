@@ -87,9 +87,7 @@
                     last_tweet_id = data[0].id;
                     data.forEach(function (tweet) {
                         //console.log(tweet.user.name);
-                        // NOTE: We escape JavaScript to prevent XSS attacks.
                         var username = tweet.user.name;
-                        {#                console.log(username);#}
                         var user = $('li').filter(function () {
                             return $(this).data('username') == username;
                         });

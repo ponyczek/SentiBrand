@@ -13,7 +13,6 @@ from channels import Channel, Group
 # from celery.task import periodic_task
 
 
-log = logging.getLogger(__name__)
 
 consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
 consumer_secret = os.environ.get('SENTI_CONSUMER_SECRET')

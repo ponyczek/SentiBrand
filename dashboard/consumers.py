@@ -6,8 +6,15 @@ import tweepy
 from channels import Group
 from channels.auth import channel_session_user, channel_session_user_from_http
 from channels.generic.websockets import WebsocketDemultiplexer
-from .tasks import hello_world
+# from .tasks import hello_world
 from SentiBrand.celery import app
+
+# from __future__ import absolute_import
+import json
+import tweepy
+import os
+
+from channels import Channel, Group
 
 consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
 consumer_secret = os.environ.get('SENTI_CONSUMER_SECRET')
@@ -19,51 +26,6 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
-
-# class perpetualTimer():
-#     def __init__(self, t, hFunction, thread_name):
-#         self.t = t
-#         self.hFunction = hFunction
-#         self.thread_name = thread_name
-#         self.thread = threading.Timer(self.t, self.handle_function)
-#         print(thread_name)
-#         self.thread.setName(thread_name)
-#
-#     def handle_function(self):
-#         self.hFunction()
-#         self.thread = threading.Timer(self.t, self.handle_function)
-#         self.thread.start()
-#
-#     def start(self):
-#         self.thread.start()
-#
-#     def cancel(self):
-#         self.thread.cancel()
-
-
-# class WsThread(WebsocketDemultiplexer):
-#     http_user = True
-#
-#     def connection_groups(self, **kwargs):
-#         pass
-#
-#     def receive(self, message, **kwargs):
-#         try:
-#             thread_name = message['user_name'] + "_search"
-#             t = perpetualTimer(2, lambda: hello_world(message), thread_name )
-#             t.start()
-#         except ValueError:
-#             print("ws message isn't json text=%s", message['text'])
-#             return
-
-
-# def hello_world(message):
-#     query_phrase = message['text']
-#     group_name = message['user_name'] + "_search"
-#     tweets = api.search(q=query_phrase)
-#     status = tweets[0]
-#     Group(group_name).send({"text": json.dumps(status._json)})
-#     print(status)
 
 
 @channel_session_user_from_http
@@ -106,32 +68,27 @@ def ws_receive(message):
         return
 
     if data:
-        # reply_channel = message.reply_channel.name
-        #
-        # if data['action'] == "start_sec3":
-        print("call hello world")
         reply_channel = message.reply_channel.name
-        hello_world(data, reply_channel)
+        get_search_data(data, reply_channel)
 
 
-# def start_hello_world(message, reply_channel):
-    # print("hello from start")
 
-    # Start long running task here (using Celery)
-    # sec3_task = \
-    # hello_world(message)
+consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
+consumer_secret = os.environ.get('SENTI_CONSUMER_SECRET')
+access_token = os.environ.get('SENTI_ACCESS_TOKEN')
+access_token_secret = os.environ.get('SENTI_ACCESS_TOKEN_SECRET')
 
-    # Store the celery task id into the database if we wanted to
-    # do things like cancel the task in the future
-    # job.celery_id = sec3_task.id
-    # job.save()
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
 
-    # Tell client task has been started
-    # Channel(reply_channel).send({
-    #     "text": json.dumps({
-    #         "action": "started",
-    #         "job_id": job.id,
-    #         "job_name": job.name,
-    #         "job_status": job.status,
-    #     })
-    # })
+api = tweepy.API(auth)
+
+
+def get_search_data(message, reply_channel):
+    if message is not None and reply_channel is not None:
+        query_phrase = message['text']
+        last_id = message.get('last_tweet_id')
+        temp_tweets = api.search(q=query_phrase, since_id=last_id)
+        tweets = [tweet._json for tweet in temp_tweets ]
+
+        Channel(reply_channel).send({"text": json.dumps(tweets)})
