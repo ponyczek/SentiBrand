@@ -13,6 +13,7 @@ from SentiBrand.celery import app
 import json
 import tweepy
 import os
+from textblob import TextBlob
 
 from channels import Channel, Group
 
@@ -83,6 +84,25 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
+def serialise_data(tweets):
+    data = []
+    for tweet in tweets:
+        polarity = TextBlob(tweet.get('text'))
+        data.append({
+            'text': tweet.get('text'),
+            'user': tweet.get('user'),
+            'polarity': polarity.sentiment.polarity,
+            'geolocation': tweet.get('geo'),
+            'created_at': tweet.get('created_at'),
+            'profile_image_url' : tweet.get('profile_image_url'),
+            'id' : tweet.get('id')
+
+        })
+        print(tweet)
+
+    return data
+        # data.append
+
 
 def get_search_data(message, reply_channel):
     if message is not None and reply_channel is not None:
@@ -90,5 +110,5 @@ def get_search_data(message, reply_channel):
         last_id = message.get('last_tweet_id')
         temp_tweets = api.search(q=query_phrase, since_id=last_id)
         tweets = [tweet._json for tweet in temp_tweets ]
-
-        Channel(reply_channel).send({"text": json.dumps(tweets)})
+        data = serialise_data(tweets)
+        Channel(reply_channel).send({"text": json.dumps(data)})

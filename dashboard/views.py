@@ -19,7 +19,7 @@ def dashboard(request):
     user_phrases = User_Phrase.objects.filter(user_id=request.user)
     return render(request, 'dashboard.html', {'phrases': user_phrases, 'active':True })
 
-
+# @login_required(login_url="login/")
 def single_search(request):
 
     # return render(request, "search.html", context)

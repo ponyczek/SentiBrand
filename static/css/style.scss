@@ -126,6 +126,11 @@ $main-orange: #f96332;
         }
       }
     }
+
+    .timeline-container{
+      overflow-x: auto;
+      height:600px;
+    }
     .timeline {
       list-style: none;
       padding: 20px 0 20px;

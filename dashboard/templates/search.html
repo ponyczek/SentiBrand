@@ -19,19 +19,11 @@
                                        placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
                                 <button class="btn btn-primary btn-round" id="search-btn">Round</button>
                             </div>
-                            {#                            </form>#}
-                            <h2>Greetings</h2>
-                            <div class="container">
-                                <div class="inner">Hello</div>
 
+                            <div class="tab-pane" id="messages" role="tabpanel" aria-expanded="true">
+                                {% include 'phrase_map.html' %}
+                                {% include 'phrase_timeline.html' %}
                             </div>
-                            {% for tweet in tweets %}
-                                <div class="text-left">
-                                    <img src="{{ tweet.user.profile_image_url }}" alt="Thumbnail Image"
-                                         class="rounded-circle img-raised dashboard-profile-pic">
-                                </div><br>
-                                {{ tweet.user.name }}: {{ tweet.text }} <br><br>
-                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -85,13 +77,29 @@
             if (data) {
                 if (last_tweet_id !== data[0].id) {
                     last_tweet_id = data[0].id;
-                    data.forEach(function (tweet) {
+                    data.forEach(function (tweet, index) {
                         //console.log(tweet.user.name);
                         var username = tweet.user.name;
-                        var user = $('li').filter(function () {
-                            return $(this).data('username') == username;
-                        });
-                        $(".inner").append(username + '<br>');
+                        var content = tweet.text;
+                        var coordinates = tweet.geolocation;
+                        //should be negative left positive right ?
+                        var inverted = index % 2 === 0 ? "timeline-inverted" : "";
+                        if(coordinates){
+                                                    console.log(coordinates);
+
+                        }
+                        console.log(tweet);
+                        $(".timeline").append(
+                            '<li class =' + inverted + '> <div class=\"timeline-badge\"><i class=\"glyphicon glyphicon-check\"></i></div> <div class=\"timeline-panel\"> ' +
+                            '<div class=\"timeline-heading\"><h4 class=\"timeline-title\">' +
+                            username + '</h4> <p> <small class=\"text-muted\"><i class=\"glyphicon glyphicon-time\">' +
+                            '</i>11 hours ago via Twitter ' + coordinates +'</small> </p> </div> <div class=\"timeline-body\"> ' +
+                            '<p>' + content +
+                            '</p> ' +
+                            '</div> ' +
+                            '</div> ' +
+                            '</li>'
+                        );
                     });
                     calls_counter++;
                 }
