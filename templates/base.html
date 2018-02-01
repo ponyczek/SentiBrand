@@ -154,17 +154,18 @@
 </script>
 <script>
 
-    var map, heatmap;
+    var map, heatmap, points;
 
+    points = [];
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: {lat: 37.775, lng: -122.434},
+            zoom: 4,
+            center: {lat: 57.151871, lng: -2.096705},
             mapTypeId: 'satellite'
         });
 
         heatmap = new google.maps.visualization.HeatmapLayer({
-            data: getPoints(),
+            data: points,
             map: map
         });
     }
@@ -202,12 +203,12 @@
     }
 
     // Heatmap data: 500 Points
-    function getPoints() {
-        return [
-            new google.maps.LatLng(37.752986, -122.403112),
-            new google.maps.LatLng(37.751266, -122.403355)
-        ];
-    }
+{#    function getPoints() {#}
+{#        return [#}
+{#            new google.maps.LatLng(37.752986, -122.403112),#}
+{#            new google.maps.LatLng(37.751266, -122.403355)#}
+{#        ];#}
+{#    }#}
 
 </script>
 

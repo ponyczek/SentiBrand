@@ -92,13 +92,14 @@ def serialise_data(tweets):
             'text': tweet.get('text'),
             'user': tweet.get('user'),
             'polarity': polarity.sentiment.polarity,
-            'geolocation': tweet.get('geo'),
+            'geolocation': tweet.get('geo'), #exact location
             'created_at': tweet.get('created_at'),
             'profile_image_url' : tweet.get('profile_image_url'),
-            'id' : tweet.get('id')
+            'id' : tweet.get('id'),
+            'place': tweet.get('place'), #city country coordinates
 
         })
-        print(tweet)
+        print(tweet.get('place'))
 
     return data
         # data.append

@@ -17,7 +17,7 @@
                                 <input type="text" class="form-control search-input" name="query_phrase"
                                        id="query_phrase"
                                        placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
-                                <button class="btn btn-primary btn-round" id="search-btn">Round</button>
+                                <button class="btn btn-primary btn-round" id="search-btn">Search</button>
                             </div>
 
                             <div class="tab-pane" id="messages" role="tabpanel" aria-expanded="true">
@@ -50,14 +50,13 @@
                     }));
                 }
                 else {
-                    console.log(last_tweet_id);
                     socket.send(JSON.stringify({
                         text: input.val(),
                         user_name: "{{ user.get_username}}",
                         last_tweet_id: last_tweet_id
                     }));
                 }
-            }, 3000);
+            }, 10000);
         }
 
         $('#search-btn').click(sendMessage);
@@ -75,25 +74,41 @@
         socket.onmessage = function message(event) {
             var data = JSON.parse(event.data);
             if (data) {
-                if (last_tweet_id !== data[0].id) {
+                if (data[0] && last_tweet_id !== data[0].id) {
                     last_tweet_id = data[0].id;
                     data.forEach(function (tweet, index) {
                         //console.log(tweet.user.name);
                         var username = tweet.user.name;
                         var content = tweet.text;
                         var coordinates = tweet.geolocation;
+                        var place = tweet.place;
                         //should be negative left positive right ?
                         var inverted = index % 2 === 0 ? "timeline-inverted" : "";
-                        if(coordinates){
-                                                    console.log(coordinates);
+                        if (coordinates) {
+                            var lat = coordinates.coordinates[0];
+                            var lng = coordinates.coordinates[1];
+                            console.log(lat);
+                            points.push(new google.maps.LatLng(lat, lng));
 
                         }
-                        console.log(tweet);
+                        if (place) {
+                            var lat = place.bounding_box.coordinates[0][0][0];
+                            var lng = place.bounding_box.coordinates[0][0][1];
+                            points.push(new google.maps.LatLng(lat, lng));
+                            console.log(lat);
+
+                        }
+                        {#                        console#}
+                        console.log(points);
+
+                        {#                        toggleHeatmap();#}
+                        {#                        if(tweet.geolocation !== null){#}
+                        {#                        console.log(tweet);#}
                         $(".timeline").append(
                             '<li class =' + inverted + '> <div class=\"timeline-badge\"><i class=\"glyphicon glyphicon-check\"></i></div> <div class=\"timeline-panel\"> ' +
                             '<div class=\"timeline-heading\"><h4 class=\"timeline-title\">' +
                             username + '</h4> <p> <small class=\"text-muted\"><i class=\"glyphicon glyphicon-time\">' +
-                            '</i>11 hours ago via Twitter ' + coordinates +'</small> </p> </div> <div class=\"timeline-body\"> ' +
+                            '</i>11 hours ago via Twitter ' + coordinates + '</small> </p> </div> <div class=\"timeline-body\"> ' +
                             '<p>' + content +
                             '</p> ' +
                             '</div> ' +
@@ -101,6 +116,7 @@
                             '</li>'
                         );
                     });
+                    toggleHeatmap();
                     calls_counter++;
                 }
             }
