@@ -96,6 +96,8 @@
       list-style: none;
       padding: 20px 0 20px;
       position: relative; }
+      .dashboard-page .dashboard-main .timeline .timeline-heading .timeline-title .title-username {
+        padding-left: 25px; }
     .dashboard-page .dashboard-main .timeline:before {
       top: 0;
       bottom: 0;
@@ -159,9 +161,9 @@
     .dashboard-page .dashboard-main .timeline > li > .timeline-badge {
       color: #fff;
       width: 50px;
+      font-size: 1em;
       height: 50px;
       line-height: 50px;
-      font-size: 1.4em;
       text-align: center;
       position: absolute;
       top: 16px;

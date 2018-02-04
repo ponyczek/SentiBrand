@@ -10,14 +10,16 @@
                     <div class="dashboard-search">
                         <h2 class="text-center">Perform Single Search</h2>
                         <div class="col-sm-12">
-                            {#                            <form class="form" action='' method="" enctype="multipart/form-data">#}
-                            {#                                {% csrf_token %}#}
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                 <input type="text" class="form-control search-input" name="query_phrase"
                                        id="query_phrase"
                                        placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
                                 <button class="btn btn-primary btn-round" id="search-btn">Search</button>
+                                <button class="btn btn-default btn-round" onclick="pageReload()" disabled
+                                        id="new_search_btn">New
+                                    Search
+                                </button>
                             </div>
 
                             <div class="tab-pane" id="messages" role="tabpanel" aria-expanded="true">
@@ -34,38 +36,85 @@
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 
         var socket = new WebSocket(ws_scheme + '://' + window.location.host + '/dashboard/search');
-        var input = $('#query_phrase');
 
         var calls_counter = 0;
         var last_tweet_id;
+        var colours = [
+            "#FF0000",
+            "#FF1100",
+            "#FF3400",
+            "#FF4600",
+            "#FF6900",
+            "#FF7B00",
+            "#FF9E00",
+            "#FFAF00",
+            "#FFD300",
+            "#FFE400",
+            "#F7FF00",
+            "#FFFF00",
+            "#E5FF00",
+            "#C2FF00",
+            "#B0FF00",
+            "#8DFF00",
+            "#7CFF00",
+            "#58FF00",
+            "#47FF00",
+            "#24FF00",
+            "#12FF00",
+        ];
+
+        function getColor(polarity){
+            var roundedVal =  Math.round(polarity*10);
+            var positionOfYellow = 10;
+            if(roundedVal === 0 ) {
+                return colours[positionOfYellow];
+            }
+            else if( roundedVal < 0 ){
+                return colours[positionOfYellow +(roundedVal)];
+            }
+            else{
+                return colours[positionOfYellow+roundedVal];
+            }
+        }
+
+        function roundToTwoDecimal(polarity){
+            return Math.round(polarity *100 )/ 100;
+        }
 
         function sendMessage() {
+            var input = $('#query_phrase');
+            var newSearchBtn = $('#new_search_btn');
+            var searchBtn = $('#search-btn');
 
-            setInterval(function () {
-                //first time query
-                if (calls_counter === 0) {
-                    socket.send(JSON.stringify({
-                        text: input.val(),
-                        user_name: "{{ user.get_username}}"
-                    }));
-                }
-                else {
-                    socket.send(JSON.stringify({
-                        text: input.val(),
-                        user_name: "{{ user.get_username}}",
-                        last_tweet_id: last_tweet_id
-                    }));
-                }
+            input.prop('disabled', 'disabled');
+            searchBtn.prop('disabled', 'disabled');
+
+            newSearchBtn.removeClass('btn-default');
+            newSearchBtn.addClass('btn-primary');
+            newSearchBtn.prop('disabled', false);
+
+            clearInterval(getDataInterval);
+            socket.send(JSON.stringify({
+                text: input.val(),
+                user_name: "{{ user.get_username}}"
+            }));
+
+            var getDataInterval = setInterval(function () {
+                socket.send(JSON.stringify({
+                    text: input.val(),
+                    user_name: "{{ user.get_username}}",
+                    last_tweet_id: last_tweet_id
+                }));
             }, 10000);
         }
 
         $('#search-btn').click(sendMessage);
 
-        input.keypress(function (e) {
-            if (e.which == 13) {
-                sendMessage();
-            }
-        });
+        {#        input.keypress(function (e) {#}
+        {#            if (e.which == 13) {#}
+        {#                sendMessage();#}
+        {#            }#}
+        {#        });#}
 
         socket.onopen = function open() {
             console.log('WebSockets connection created.');
@@ -78,37 +127,37 @@
                     last_tweet_id = data[0].id;
                     data.forEach(function (tweet, index) {
                         //console.log(tweet.user.name);
-                        var username = tweet.user.name;
+                        var user = tweet.user;
+                        var username = user.name;
+                        var user_location = user.location;
                         var content = tweet.text;
                         var coordinates = tweet.geolocation;
                         var place = tweet.place;
+                        var date = moment(new Date(tweet.created_at)).format('MMMM Do YYYY, h:mm:ss a');
+                        var polarity = tweet.polarity;
+                        var color = getColor(polarity);
+
                         //should be negative left positive right ?
-                        var inverted = index % 2 === 0 ? "timeline-inverted" : "";
-                        if (coordinates) {
-                            var lat = coordinates.coordinates[0];
-                            var lng = coordinates.coordinates[1];
-                            console.log(lat);
+                        var inverted = polarity >= 0 ? "timeline-inverted" : "";
+                        if (coordinates || place) {
+                            var lat, lng;
+                            lat = coordinates ? coordinates.coordinates[0] : place.bounding_box.coordinates[0][0][1];
+                            lng = coordinates ? coordinates.coordinates[1] : place.bounding_box.coordinates[0][0][0];
                             points.push(new google.maps.LatLng(lat, lng));
-
+                            heatmap.setMap(map);
                         }
-                        if (place) {
-                            var lat = place.bounding_box.coordinates[0][0][0];
-                            var lng = place.bounding_box.coordinates[0][0][1];
-                            points.push(new google.maps.LatLng(lat, lng));
-                            console.log(lat);
 
-                        }
-                        {#                        console#}
-                        console.log(points);
+                        "<div class='col-sm-2'><img src='" + user.profile_image_url_https + "'alt='Thumbnail Image' class='rounded-circle img-raised'> </div>"
 
-                        {#                        toggleHeatmap();#}
-                        {#                        if(tweet.geolocation !== null){#}
-                        {#                        console.log(tweet);#}
                         $(".timeline").append(
-                            '<li class =' + inverted + '> <div class=\"timeline-badge\"><i class=\"glyphicon glyphicon-check\"></i></div> <div class=\"timeline-panel\"> ' +
+                            '<li class =' + inverted + '> <div class=\"timeline-badge\" style=\"color:gray; background-color: ' + color + ';\"><i class=\"glyphicon glyphicon-check\">'
+                            + roundToTwoDecimal(polarity) + '</i></div> <div class=\"timeline-panel\"> ' +
                             '<div class=\"timeline-heading\"><h4 class=\"timeline-title\">' +
-                            username + '</h4> <p> <small class=\"text-muted\"><i class=\"glyphicon glyphicon-time\">' +
-                            '</i>11 hours ago via Twitter ' + coordinates + '</small> </p> </div> <div class=\"timeline-body\"> ' +
+                            '<img src=\"' + user.profile_image_url_https + '\"alt=\"Thumbnail Image\" class=\"rounded-circle img-raised timeline-user-pic\">' +
+                            '<span class =\"title-username\">' + username + '</span></h4>' +
+                            '<p> <small class=\"text-muted\"><i class=\"glyphicon glyphicon-time\">' +
+                            '</i>'+
+                            (user_location ? 'Assigned user location: ' + user_location + ',  ' : '') + date + " " + '</small> </p> </div> <div class=\"timeline-body\"> ' +
                             '<p>' + content +
                             '</p> ' +
                             '</div> ' +
@@ -116,7 +165,6 @@
                             '</li>'
                         );
                     });
-                    toggleHeatmap();
                     calls_counter++;
                 }
             }
@@ -124,6 +172,10 @@
 
         if (socket.readyState == WebSocket.OPEN) {
             socket.onopen();
+        }
+
+        function pageReload() {
+            location.reload();
         }
     </script>
 {% endblock %}

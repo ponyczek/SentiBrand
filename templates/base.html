@@ -34,6 +34,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 
 
 </head>
@@ -157,6 +158,7 @@
     var map, heatmap, points;
 
     points = [];
+
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
@@ -165,13 +167,17 @@
         });
 
         heatmap = new google.maps.visualization.HeatmapLayer({
-            data: points,
+            data: getPoints(),
             map: map
         });
     }
 
     function toggleHeatmap() {
         heatmap.setMap(heatmap.getMap() ? null : map);
+    }
+
+    function mapOn() {
+        heatmap.setMap(heatmap.getMap());
     }
 
     function changeGradient() {
@@ -203,21 +209,19 @@
     }
 
     // Heatmap data: 500 Points
-{#    function getPoints() {#}
-{#        return [#}
-{#            new google.maps.LatLng(37.752986, -122.403112),#}
-{#            new google.maps.LatLng(37.751266, -122.403355)#}
-{#        ];#}
-{#    }#}
+        function getPoints() {
+            return points;
+        }
 
 </script>
 
 <script>
 
 
-{% block javascript %}
-{% endblock %}
+    {% block javascript %}
+    {% endblock %}
 
 
-</body>
-</html>
+    <
+    /body>
+    < /html>
