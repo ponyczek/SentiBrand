@@ -20,6 +20,11 @@
                                         id="new_search_btn">New
                                     Search
                                 </button>
+                                <div id="clockdiv">
+                                    <div>
+                                        <span class="seconds"></span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="tab-pane" id="messages" role="tabpanel" aria-expanded="true">
@@ -63,28 +68,32 @@
             "#12FF00",
         ];
 
-        function getColor(polarity){
-            var roundedVal =  Math.round(polarity*10);
+        function getColor(polarity) {
+            var roundedVal = Math.round(polarity * 10);
             var positionOfYellow = 10;
-            if(roundedVal === 0 ) {
+            if (roundedVal === 0) {
                 return colours[positionOfYellow];
             }
-            else if( roundedVal < 0 ){
-                return colours[positionOfYellow +(roundedVal)];
+            else if (roundedVal < 0) {
+                return colours[positionOfYellow + (roundedVal)];
             }
-            else{
-                return colours[positionOfYellow+roundedVal];
+            else {
+                return colours[positionOfYellow + roundedVal];
             }
         }
 
-        function roundToTwoDecimal(polarity){
-            return Math.round(polarity *100 )/ 100;
+        function roundToTwoDecimal(polarity) {
+            return Math.round(polarity * 100) / 100;
         }
 
         function sendMessage() {
+            deadline = new Date(Date.parse(new Date()) + 10 * 1000);
+            initializeClock('clockdiv', deadline);
+
             var input = $('#query_phrase');
             var newSearchBtn = $('#new_search_btn');
             var searchBtn = $('#search-btn');
+            initializeClock('clockdiv', deadline);
 
             input.prop('disabled', 'disabled');
             searchBtn.prop('disabled', 'disabled');
@@ -94,12 +103,15 @@
             newSearchBtn.prop('disabled', false);
 
             clearInterval(getDataInterval);
+
             socket.send(JSON.stringify({
                 text: input.val(),
                 user_name: "{{ user.get_username}}"
             }));
 
             var getDataInterval = setInterval(function () {
+                deadline = new Date(Date.parse(new Date()) + 10 * 1000);
+                initializeClock('clockdiv', deadline);
                 socket.send(JSON.stringify({
                     text: input.val(),
                     user_name: "{{ user.get_username}}",
@@ -156,7 +168,7 @@
                             '<img src=\"' + user.profile_image_url_https + '\"alt=\"Thumbnail Image\" class=\"rounded-circle img-raised timeline-user-pic\">' +
                             '<span class =\"title-username\">' + username + '</span></h4>' +
                             '<p> <small class=\"text-muted\"><i class=\"glyphicon glyphicon-time\">' +
-                            '</i>'+
+                            '</i>' +
                             (user_location ? 'Assigned user location: ' + user_location + ',  ' : '') + date + " " + '</small> </p> </div> <div class=\"timeline-body\"> ' +
                             '<p>' + content +
                             '</p> ' +

@@ -213,4 +213,22 @@
   margin-left: 5px;
   margin-right: 15px; }
 
+#clockdiv {
+  font-family: sans-serif;
+  color: #fff;
+  display: inline-block;
+  font-weight: 100;
+  text-align: center; }
+
+#clockdiv > div {
+  padding: 10px;
+  border-radius: 3px;
+  display: inline-block; }
+
+#clockdiv div > span {
+  padding: 10px;
+  border-radius: 3px;
+  color: #f96332;
+  display: inline-block; }
+
 /*# sourceMappingURL=style.css.map */
