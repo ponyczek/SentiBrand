@@ -34,6 +34,8 @@
       padding-bottom: 10px; }
       .dashboard-page .dashboard-left .dashboard-navigation .btn {
         display: block; }
+  .dashboard-page .extra-padding-top-30 {
+    padding-top: 30px !important; }
   .dashboard-page .extra-padding-top-60 {
     padding-top: 60px !important; }
   .dashboard-page .dashboard-main {
@@ -70,6 +72,29 @@
       padding-top: 15px; }
       .dashboard-page .dashboard-main .dashboard-search .add-phrase-title i, .dashboard-page .dashboard-main .dashboard-add-phrase .add-phrase-title i {
         color: #1da2ff; }
+      .dashboard-page .dashboard-main .dashboard-search .align-vertical, .dashboard-page .dashboard-main .dashboard-add-phrase .align-vertical {
+        vertical-align: middle; }
+      .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon {
+        padding: 15px 0px 15px 0px;
+        color: #f96332;
+        font-size: 1.0em; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon span, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon span {
+          font-size: 1.1em;
+          font-weight: 100; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon p, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon p {
+          color: #888;
+          padding-top: 15px;
+          font-size: 1.4em; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .most-tweet, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .most-tweet {
+          padding: 10px; }
+          .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .most-tweet p, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .most-tweet p {
+            font-size: 1em;
+            padding-top: 5px; }
+          .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .most-tweet img, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .most-tweet img {
+            width: 20%; }
+      .dashboard-page .dashboard-main .dashboard-search .icon-tweet, .dashboard-page .dashboard-main .dashboard-add-phrase .icon-tweet {
+        border: 1px solid #888;
+        min-height: 150px; }
       .dashboard-page .dashboard-main .dashboard-search .search-input, .dashboard-page .dashboard-main .dashboard-add-phrase .search-input {
         font-size: 1.3em;
         background-color: white;
