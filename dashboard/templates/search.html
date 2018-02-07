@@ -5,7 +5,7 @@
             <div class="col-sm-2 trim-right">
                 {% include 'dashboard_navigation.html' %}
             </div>
-            <div class="col-sm-10 trim-left">
+            <div class="col-sm-10 trim-left extra-padding-bottom-160">
                 <div class="dashboard-main card">
                     <div class="dashboard-search">
                         <h2 class="text-center">Perform Single Search</h2>
@@ -29,84 +29,10 @@
 
                             <div class="tab-pane" id="messages" role="tabpanel" aria-expanded="true">
                                 {% include 'phrase_map.html' %}
-                                <div class="row extra-padding-top-30">
-                                    <div class="col-md-3 text-center data-presentation-icon">
-                                        <span><i class="fab fa-twitter"></i></span>
-                                        <p class="data-content">
-                                            0
-                                        </p>
-                                        Number of analysed tweets
-                                    </div>
-                                    <div class="col-md-3 text-center data-presentation-icon">
-                                        <span><i class="fas fa-map-pin"></i></span>
-                                        <p class="data-content">
-                                            0
-                                        </p>
-                                        Number of collected locations
-                                    </div>
-                                    <div class="col-md-3 text-center data-presentation-icon">
-                                        <span><i class="fas fa-plus"></i> / <i class="fas fa-minus"></i></span>
-                                        <p class="data-content">
-                                            0
-                                        </p>
-                                        Average Polarity
-                                    </div>
-                                    <div class="col-md-3 text-center data-presentation-icon">
-                                        <span><i class="far fa-clock"></i></span>
-                                        <p class="data-content">
-                                            0
-                                        </p>
-                                        Pull interval
-                                    </div>
+                                <div class="statistics-holder">
+                                    {% include 'statistics.html' %}
+                                    {% include 'phrase_timeline.html' %}
                                 </div>
-                                <div class="row extra-padding-top-30">
-                                    <div class="col-md-5 text-center data-presentation-icon">
-                                        The most negative tweet
-                                        <div class="most-tweet">
-                                            <div class="timeline-panel">
-                                                <div class="timeline-heading"><h4 class="timeline-title"><span
-                                                        class="title-username">Amanda Scheutzow</span></h4>
-                                                    <img
-                                                            src="https://pbs.twimg.com/profile_images/885139738/1_10-18-09_0512_normal.jpg"
-                                                            alt="Thumbnail Image"
-                                                            class="rounded-circle img-raised timeline-user-pic">
-                                                    <p>
-                                                        <small class="text-muted">February
-                                                            6th 2018, 10:12:41 pm
-                                                        </small>
-                                                    </p>
-                                                </div>
-                                                <div class="content"><p>Falcon Heavy Test Flight
-                                                    https://t.co/JSSN0hXazH via @YouTube</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 text-center data-presentation-icon align-vertical">
-                                        <span><i class="fas fa-balance-scale "></i></span>
-                                    </div>
-                                    <div class="col-md-5 text-center data-presentation-icon">
-                                        The most negative tweet
-                                        <div class="most-tweet">
-                                            <div class="timeline-panel">
-                                                <div class="timeline-heading"><h4 class="timeline-title"><span
-                                                        class="title-username">Amanda Scheutzow</span></h4>
-                                                    <img
-                                                            src="https://pbs.twimg.com/profile_images/885139738/1_10-18-09_0512_normal.jpg"
-                                                            alt="Thumbnail Image"
-                                                            class="rounded-circle img-raised timeline-user-pic">
-                                                    <p>
-                                                        <small class="text-muted">February
-                                                            6th 2018, 10:12:41 pm
-                                                        </small>
-                                                    </p>
-                                                </div>
-                                                <div class="content"><p>Falcon Heavy Test Flight
-                                                    https://t.co/JSSN0hXazH via @YouTube</p></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% include 'phrase_timeline.html' %}
                             </div>
                         </div>
                     </div>
@@ -118,7 +44,15 @@
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 
         var socket = new WebSocket(ws_scheme + '://' + window.location.host + '/dashboard/search');
-
+        var total_tweets = null;
+        var total_locations = null;
+        var top_location = "";
+        var highest_polarity = -2;
+        var lowest_polarity = 2;
+        var polarity_sum = 0;
+        var most_negative_tweet = {}; //so big that it must be overwritten
+        var most_positive_tweet = {}; // so small that it must be overwritten
+        var most_negative_tweet = {}; //so big that it must be overwritten
         var calls_counter = 0;
         var last_tweet_id;
         var colours = [
@@ -163,7 +97,32 @@
             return Math.round(polarity * 100) / 100;
         }
 
+        function calcTotalAveragePolarity() {
+
+        }
+
+        function setStatistics(tweets_no, locations_no) {
+            $('.tweets-stat').text(tweets_no);
+            $('.locations-stat').text(locations_no);
+            $('.average-stat').text(countAverage());
+        }
+
+        function countAverage() {
+            return (polarity_sum / total_tweets).toFixed(2);
+        }
+
+        function setTopTweet(data, tag) {
+            var path = " .most-tweet .timeline-panel .timeline-heading ";
+            $(tag + path + ".timeline-title .polarity-stat").text(data.polarity);
+            $(tag + path + ".timeline-title .stat-author").text(data.user.name);
+            $(tag + path + " .stat-pic").prop('src', data.user.profile_image_url_https);
+            $(tag + path + " .stat-date").text(data.created_at);
+            $(tag + " .most-tweet .timeline-panel .stat-content").text(data.text);
+        }
+
         function sendMessage() {
+
+            $('.statistics-holder').show();
             deadline = new Date(Date.parse(new Date()) + 10 * 1000);
             initializeClock('clockdiv', deadline);
 
@@ -214,7 +173,8 @@
             if (data) {
                 if (data[0] && last_tweet_id !== data[0].id) {
                     last_tweet_id = data[0].id;
-                    data.forEach(function (tweet, index) {
+                    data.forEach(function (tweet) {
+                        total_tweets++;
                         //console.log(tweet.user.name);
                         var user = tweet.user;
                         var username = user.name;
@@ -225,6 +185,18 @@
                         var date = moment(new Date(tweet.created_at)).format('MMMM Do YYYY, h:mm:ss a');
                         var polarity = tweet.polarity;
                         var color = getColor(polarity);
+                        polarity_sum += polarity;
+
+                        if (polarity >= highest_polarity) {
+                            most_positive_tweet = tweet;
+                            highest_polarity = polarity;
+                        }
+
+                        if (polarity <= lowest_polarity) {
+                            most_negative_tweet = tweet;
+                            lowest_polarity = polarity;
+                        }
+
 
                         //should be negative left positive right ?
                         var inverted = polarity >= 0 ? "timeline-inverted" : "";
@@ -234,6 +206,7 @@
                             lng = coordinates ? coordinates.coordinates[1] : place.bounding_box.coordinates[0][0][0];
                             points.push(new google.maps.LatLng(lat, lng));
                             heatmap.setMap(map);
+                            total_locations++;
                         }
 
                         "<div class='col-sm-2'><img src='" + user.profile_image_url_https + "'alt='Thumbnail Image' class='rounded-circle img-raised'> </div>"
@@ -253,6 +226,10 @@
                             '</div> ' +
                             '</li>'
                         );
+                        setStatistics(total_tweets, total_locations);
+                        setTopTweet(most_positive_tweet, ".positive-tweet");
+                        setTopTweet(most_negative_tweet, ".negative-tweet");
+
                     });
                     calls_counter++;
                 }

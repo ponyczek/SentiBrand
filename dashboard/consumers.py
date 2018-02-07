@@ -98,7 +98,7 @@ def get_search_data(message, reply_channel):
     if message is not None and reply_channel is not None:
         query_phrase = message['text']
         last_id = message.get('last_tweet_id')
-        temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en')
+        temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100)
         tweets = [tweet._json for tweet in temp_tweets ]
         data = serialise_data(tweets)
         Channel(reply_channel).send({"text": json.dumps(data)})

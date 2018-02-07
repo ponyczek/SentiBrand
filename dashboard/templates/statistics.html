@@ -1,0 +1,45 @@
+<div class="statistics">
+    <div class="row extra-padding-top-30">
+        <div class="col-md-3 text-center data-presentation-icon">
+            <span><i class="fab fa-twitter"></i></span>
+            <p class="data-content tweets-stat">
+                0
+            </p>
+            Number of analysed tweets
+        </div>
+        <div class="col-md-3 text-center data-presentation-icon">
+            <span><i class="fas fa-map-pin"></i></span>
+            <p class="data-content locations-stat">
+                0
+            </p>
+            Number of collected locations
+        </div>
+        <div class="col-md-3 text-center data-presentation-icon">
+            <span><i class="fas fa-plus"></i> / <i class="fas fa-minus"></i></span>
+            <p class="data-content average-stat">
+                0
+            </p>
+            Average Polarity
+        </div>
+        <div class="col-md-3 text-center data-presentation-icon">
+            <span><i class="far fa-clock"></i></span>
+            <p class="data-content pull-interval">
+                10
+            </p>
+            Pull interval
+        </div>
+    </div>
+    <div class="row extra-padding-top-30">
+        <div class="col-md-5 text-center data-presentation-icon positive-tweet">
+            The most negative tweet
+            {% include 'most_tweet.html' %}
+        </div>
+        <div class="col-md-2 text-center data-presentation-icon align-vertical">
+            <span><i class="fas fa-balance-scale "></i></span>
+        </div>
+        <div class="col-md-5 text-center data-presentation-icon negative-tweet">
+            The most negative tweet
+            {% include 'most_tweet.html' %}
+        </div>
+    </div>
+</div>

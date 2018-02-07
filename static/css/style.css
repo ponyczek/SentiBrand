@@ -38,6 +38,8 @@
     padding-top: 30px !important; }
   .dashboard-page .extra-padding-top-60 {
     padding-top: 60px !important; }
+  .dashboard-page .extra-padding-bottom-160 {
+    padding-bottom: 165px; }
   .dashboard-page .dashboard-main {
     background-color: #f2f2f2;
     min-height: 600px;
@@ -255,5 +257,8 @@
   border-radius: 3px;
   color: #f96332;
   display: inline-block; }
+
+.statistics-holder {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */

@@ -56,6 +56,11 @@ $main-orange: #f96332;
   .extra-padding-top-60 {
     padding-top: 60px !important;
   }
+
+  .extra-padding-bottom-160{
+    padding-bottom: 165px;
+  }
+
   .dashboard-main {
     background-color: #f2f2f2;
     min-height: 600px;
@@ -365,3 +370,6 @@ $main-orange: #f96332;
   display: inline-block;
 }
 
+.statistics-holder{
+  display: none;
+}
