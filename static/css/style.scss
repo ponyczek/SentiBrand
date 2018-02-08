@@ -57,7 +57,7 @@ $main-orange: #f96332;
     padding-top: 60px !important;
   }
 
-  .extra-padding-bottom-160{
+  .extra-padding-bottom-160 {
     padding-bottom: 165px;
   }
 
@@ -111,6 +111,7 @@ $main-orange: #f96332;
       .align-vertical {
         vertical-align: middle;
       }
+
       .data-presentation-icon {
         padding: 15px 0px 15px 0px;
         color: $main-orange;
@@ -126,12 +127,28 @@ $main-orange: #f96332;
         }
         .most-tweet {
           padding: 10px;
-          p{
+          p {
             font-size: 1em;
             padding-top: 5px;
           }
-          img{
-            width:20%;
+          img {
+            width: 20%;
+          }
+        }
+
+        .pos-vs-neg-chart {
+          .ct-chart-donut {
+            .ct-series-a {
+              .ct-slice-donut-solid {
+                fill: blue !important;
+              }
+            }
+            .ct-series-b {
+              stroke: yellow;
+            }
+            .ct-series-c {
+              stroke: green;
+            }
           }
         }
       }
@@ -370,6 +387,22 @@ $main-orange: #f96332;
   display: inline-block;
 }
 
-.statistics-holder{
+.statistics-holder {
   display: none;
+}
+
+#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-a > path {
+  fill: #f44336 !important;
+}
+
+#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-b > path {
+  fill: #ffeb3b !important;
+}
+
+#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-c > path {
+  fill: #4caf50 !important;
+}
+
+#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg{
+  padding-top: 40px;
 }

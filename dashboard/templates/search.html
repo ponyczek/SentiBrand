@@ -53,6 +53,13 @@
         var most_negative_tweet = {}; //so big that it must be overwritten
         var most_positive_tweet = {}; // so small that it must be overwritten
         var most_negative_tweet = {}; //so big that it must be overwritten
+        var positive_tweets_count = 0;
+        var neutral_tweets_count = 0;
+        var negative_tweets_count = 0;
+        var average_polarity_list = [];
+
+
+
         var calls_counter = 0;
         var last_tweet_id;
         var colours = [
@@ -97,9 +104,6 @@
             return Math.round(polarity * 100) / 100;
         }
 
-        function calcTotalAveragePolarity() {
-
-        }
 
         function setStatistics(tweets_no, locations_no) {
             $('.tweets-stat').text(tweets_no);
@@ -187,6 +191,14 @@
                         var color = getColor(polarity);
                         polarity_sum += polarity;
 
+                        if(polarity>0){
+                            positive_tweets_count++;
+                        }else if(polarity<0){
+                            negative_tweets_count++;
+                        }else{
+                            neutral_tweets_count++;
+                        }
+
                         if (polarity >= highest_polarity) {
                             most_positive_tweet = tweet;
                             highest_polarity = polarity;
@@ -226,14 +238,26 @@
                             '</div> ' +
                             '</li>'
                         );
+
                         setStatistics(total_tweets, total_locations);
                         setTopTweet(most_positive_tweet, ".positive-tweet");
                         setTopTweet(most_negative_tweet, ".negative-tweet");
 
                     });
                     calls_counter++;
+                    average_polarity_list.push(countAverage());
                 }
             }
+                    new Chartist.Pie('.pos-vs-neg-chart', {
+            series: [negative_tweets_count, neutral_tweets_count, positive_tweets_count]
+        }, {
+            donut: true,
+            donutWidth: 60,
+            donutSolid: true,
+            startAngle: 270,
+            total: total_tweets*2,
+            showLabel: true
+        });
         };
 
         if (socket.readyState == WebSocket.OPEN) {
@@ -243,6 +267,11 @@
         function pageReload() {
             location.reload();
         }
+
+
+        // charts
+
+
     </script>
 {% endblock %}
 

@@ -85,10 +85,7 @@ def serialise_data(tweets):
             'profile_image_url' : tweet.get('profile_image_url'),
             'id' : tweet.get('id'),
             'place': tweet.get('place'), #city country coordinates
-
-
         })
-        print(tweet.get('place'))
 
     return data
         # data.append
