@@ -94,12 +94,22 @@
             padding-top: 5px; }
           .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .most-tweet img, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .most-tweet img {
             width: 20%; }
-        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-a .ct-slice-donut-solid, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-a .ct-slice-donut-solid {
-          fill: blue !important; }
-        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-b, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-b {
-          stroke: yellow; }
-        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-c, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-c {
-          stroke: green; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut {
+          padding-top: 40px; }
+          .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-a .ct-slice-donut-solid, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-a .ct-slice-donut-solid {
+            fill: #f44336 !important; }
+          .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-b .ct-slice-donut-solid, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-b .ct-slice-donut-solid {
+            fill: #ffeb3b !important; }
+          .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-c .ct-slice-donut-solid, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .pos-vs-neg-chart .ct-chart-donut .ct-series-c .ct-slice-donut-solid {
+            fill: #4caf50 !important; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .count-over-time .ct-chart-line .ct-series-a .ct-line, .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .count-over-time .ct-chart-line .ct-series-a .ct-point, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .count-over-time .ct-chart-line .ct-series-a .ct-line, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .count-over-time .ct-chart-line .ct-series-a .ct-point {
+          stroke: #f44336 !important; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .count-over-time .ct-chart-line .ct-series-b .ct-line, .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .count-over-time .ct-chart-line .ct-series-b .ct-point, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .count-over-time .ct-chart-line .ct-series-b .ct-line, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .count-over-time .ct-chart-line .ct-series-b .ct-point {
+          stroke: #ffeb3b !important; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .count-over-time .ct-chart-line .ct-series-c .ct-line, .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .count-over-time .ct-chart-line .ct-series-c .ct-point, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .count-over-time .ct-chart-line .ct-series-c .ct-line, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .count-over-time .ct-chart-line .ct-series-c .ct-point {
+          stroke: #4caf50 !important; }
+        .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .tweets-per-pull .ct-chart-line .ct-series-a .ct-line, .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .tweets-per-pull .ct-chart-line .ct-series-a .ct-point, .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .polarity-per-pull .ct-chart-line .ct-series-a .ct-line, .dashboard-page .dashboard-main .dashboard-search .data-presentation-icon .polarity-per-pull .ct-chart-line .ct-series-a .ct-point, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .tweets-per-pull .ct-chart-line .ct-series-a .ct-line, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .tweets-per-pull .ct-chart-line .ct-series-a .ct-point, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .polarity-per-pull .ct-chart-line .ct-series-a .ct-line, .dashboard-page .dashboard-main .dashboard-add-phrase .data-presentation-icon .polarity-per-pull .ct-chart-line .ct-series-a .ct-point {
+          stroke: #2196f3 !important; }
       .dashboard-page .dashboard-main .dashboard-search .icon-tweet, .dashboard-page .dashboard-main .dashboard-add-phrase .icon-tweet {
         border: 1px solid #888;
         min-height: 150px; }
@@ -266,15 +276,6 @@
 
 .statistics-holder {
   display: none; }
-
-#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-a > path {
-  fill: #f44336 !important; }
-
-#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-b > path {
-  fill: #ffeb3b !important; }
-
-#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-c > path {
-  fill: #4caf50 !important; }
 
 #messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg {
   padding-top: 40px; }

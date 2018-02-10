@@ -1,6 +1,10 @@
 //overwritten the css lib for me
 $toned-white: #f2f2f2;
 $main-orange: #f96332;
+$red: #f44336;
+$yellow: #ffeb3b;
+$green: #4caf50;
+$blue: #2196f3;
 
 .fixed-top {
   top: auto;
@@ -138,16 +142,51 @@ $main-orange: #f96332;
 
         .pos-vs-neg-chart {
           .ct-chart-donut {
+            padding-top: 40px;
             .ct-series-a {
               .ct-slice-donut-solid {
-                fill: blue !important;
+                fill: $red !important;
               }
             }
             .ct-series-b {
-              stroke: yellow;
+              .ct-slice-donut-solid {
+                fill: $yellow !important;
+              }
             }
             .ct-series-c {
-              stroke: green;
+              .ct-slice-donut-solid {
+                fill: $green !important;
+              }
+            }
+          }
+        }
+
+        .count-over-time {
+          .ct-chart-line {
+            .ct-series-a {
+              .ct-line, .ct-point {
+                stroke: $red !important;
+              }
+            }
+            .ct-series-b {
+              .ct-line, .ct-point {
+                stroke: $yellow !important;
+              }
+            }
+            .ct-series-c {
+              .ct-line, .ct-point {
+                stroke: $green !important;
+              }
+            }
+          }
+        }
+
+        .tweets-per-pull, .polarity-per-pull {
+          .ct-chart-line {
+            .ct-series-a {
+              .ct-line, .ct-point {
+                stroke: $blue !important;
+              }
             }
           }
         }
@@ -391,18 +430,6 @@ $main-orange: #f96332;
   display: none;
 }
 
-#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-a > path {
-  fill: #f44336 !important;
-}
-
-#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-b > path {
-  fill: #ffeb3b !important;
-}
-
-#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg > g.ct-series.ct-series-c > path {
-  fill: #4caf50 !important;
-}
-
-#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg{
+#messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg {
   padding-top: 40px;
 }

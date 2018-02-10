@@ -56,8 +56,12 @@
         var positive_tweets_count = 0;
         var neutral_tweets_count = 0;
         var negative_tweets_count = 0;
-        var average_polarity_list = [];
 
+        var average_polarity_list = [];
+        var tweets_per_pull_list = []; //list that contains number of tweets that came back from api
+        var negative_count_list = [];
+        var neutral_count_list = [];
+        var positive_count_list = [];
 
 
         var calls_counter = 0;
@@ -160,6 +164,14 @@
             }, 10000);
         }
 
+        function createArrayOfInts(howMany) {
+            var arr = [];
+            for (var i = 0; i < howMany; i++) {
+                arr.push((i + 1));
+            }
+            return arr;
+        }
+
         $('#search-btn').click(sendMessage);
 
         {#        input.keypress(function (e) {#}
@@ -177,6 +189,9 @@
             if (data) {
                 if (data[0] && last_tweet_id !== data[0].id) {
                     last_tweet_id = data[0].id;
+                    var positive_per_call = 0;
+                    var neutral_per_call = 0
+                    var negative_per_call = 0;
                     data.forEach(function (tweet) {
                         total_tweets++;
                         //console.log(tweet.user.name);
@@ -191,12 +206,15 @@
                         var color = getColor(polarity);
                         polarity_sum += polarity;
 
-                        if(polarity>0){
+                        if (polarity > 0) {
                             positive_tweets_count++;
-                        }else if(polarity<0){
+                            positive_per_call++;
+                        } else if (polarity < 0) {
                             negative_tweets_count++;
-                        }else{
+                            negative_per_call++;
+                        } else {
                             neutral_tweets_count++;
+                            neutral_per_call++;
                         }
 
                         if (polarity >= highest_polarity) {
@@ -245,19 +263,66 @@
 
                     });
                     calls_counter++;
+                    positive_count_list.push(positive_per_call);
+                    neutral_count_list.push(neutral_per_call);
+                    negative_count_list.push(negative_per_call);
+                    tweets_per_pull_list.push(positive_per_call + neutral_per_call + negative_per_call);
                     average_polarity_list.push(countAverage());
                 }
+                //half donut
+                new Chartist.Pie('.pos-vs-neg-chart', {
+                    series: [negative_tweets_count, neutral_tweets_count, positive_tweets_count]
+                }, {
+                    donut: true,
+                    donutWidth: 60,
+                    donutSolid: true,
+                    startAngle: 270,
+                    total: total_tweets * 2,
+                    showLabel: true
+                });
+
+
+                var listOfCalls = createArrayOfInts(calls_counter);
+
+                //how polarity
+                new Chartist.Line('.polarity-per-pull', {
+                    labels: listOfCalls,
+                    series: [average_polarity_list]
+
+                }, {
+                    low: -1,
+                    high: 1,
+                    fullWidth: true,
+                    chartPadding: {right: 40}
+                });
+
+                //how many tweets for each iteration
+                new Chartist.Line('.tweets-per-pull', {
+                    labels: listOfCalls,
+                    series: [tweets_per_pull_list]
+
+                }, {
+                    fullWidth: true,
+                    chartPadding: {right: 40}
+                });
+
+                new Chartist.Line('.count-over-time', {
+                    labels: listOfCalls,
+                    series: [
+                        negative_count_list,
+                        neutral_count_list,
+                        positive_count_list
+                    ]
+                }, {
+                    fullWidth: true,
+                    chartPadding: {
+                        right: 40
+                    }
+                });
+
+
             }
-                    new Chartist.Pie('.pos-vs-neg-chart', {
-            series: [negative_tweets_count, neutral_tweets_count, positive_tweets_count]
-        }, {
-            donut: true,
-            donutWidth: 60,
-            donutSolid: true,
-            startAngle: 270,
-            total: total_tweets*2,
-            showLabel: true
-        });
+
         };
 
         if (socket.readyState == WebSocket.OPEN) {
