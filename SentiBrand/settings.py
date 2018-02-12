@@ -125,6 +125,8 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = '/dashboard'  # It means home view
 LOGOUT_REDIRECT_URL = '/'
 
+LOGIN_URL = '/login/'
+
 CHANNEL_LAYERS = {
     "default": {
         'BACKEND': 'asgi_redis.RedisChannelLayer',

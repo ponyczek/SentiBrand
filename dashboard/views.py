@@ -19,12 +19,8 @@ def dashboard(request):
     user_phrases = User_Phrase.objects.filter(user_id=request.user)
     return render(request, 'dashboard.html', {'phrases': user_phrases, 'active':True })
 
-# @login_required(login_url="login/")
+@login_required()
 def single_search(request):
-
-    # return render(request, "search.html", context)
-
-    # form_class = SingleSearchForm
     template_name = 'search.html'
 
     # If this is a POST request then process the Form data
@@ -43,9 +39,7 @@ def single_search(request):
 def add_phrase(request):
     form = PhraseForm(request.POST or None)
 
-    print(form.errors)
     if request.method == 'POST':
-
         if form.is_valid():
             phrase = form.save(commit=False)
             phrase.user = request.user

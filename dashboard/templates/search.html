@@ -15,7 +15,7 @@
                                 <input type="text" class="form-control search-input" name="query_phrase"
                                        id="query_phrase"
                                        placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
-                                <button class="btn btn-primary btn-round" id="search-btn">Search</button>
+                                <button class="btn btn-primary btn-round" id="search-btn" disabled>Search</button>
                                 <button class="btn btn-default btn-round" onclick="pageReload()" disabled
                                         id="new_search_btn">New
                                     Search
@@ -115,6 +115,16 @@
             $('.average-stat').text(countAverage());
         }
 
+        $('#query_phrase').on("keyup", disableSearchBtn);
+
+        function disableSearchBtn() {
+            if ($('#query_phrase').val().length > 0) {
+                $('#search-btn').prop("disabled", false);
+            } else {
+                $('#search-btn').prop("disabled", true);
+            }
+        }
+
         function countAverage() {
             return (polarity_sum / total_tweets).toFixed(2);
         }
@@ -173,12 +183,6 @@
         }
 
         $('#search-btn').click(sendMessage);
-
-        {#        input.keypress(function (e) {#}
-        {#            if (e.which == 13) {#}
-        {#                sendMessage();#}
-        {#            }#}
-        {#        });#}
 
         socket.onopen = function open() {
             console.log('WebSockets connection created.');
@@ -319,8 +323,6 @@
                         right: 40
                     }
                 });
-
-
             }
 
         };
@@ -332,9 +334,6 @@
         function pageReload() {
             location.reload();
         }
-
-
-        // charts
 
 
     </script>
