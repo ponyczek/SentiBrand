@@ -131,7 +131,7 @@
 
         function setTopTweet(data, tag) {
             var path = " .most-tweet .timeline-panel .timeline-heading ";
-            $(tag + path + ".timeline-title .polarity-stat").text(data.polarity);
+            $(tag + path + ".timeline-title .polarity-stat").text(roundToTwoDecimal(data.polarity));
             $(tag + path + ".timeline-title .stat-author").text(data.user.name);
             $(tag + path + " .stat-pic").prop('src', data.user.profile_image_url_https);
             $(tag + path + " .stat-date").text(data.created_at);
@@ -180,6 +180,15 @@
                 arr.push((i + 1));
             }
             return arr;
+        }
+
+        function last18records(arr) {
+            if (arr.length > 18) {
+                return arr.slice(arr.length - 18);
+            }
+            else {
+                return arr;
+            }
         }
 
         $('#search-btn').click(sendMessage);
@@ -273,6 +282,8 @@
                     tweets_per_pull_list.push(positive_per_call + neutral_per_call + negative_per_call);
                     average_polarity_list.push(countAverage());
                 }
+
+                //overall
                 //half donut
                 new Chartist.Pie('.pos-vs-neg-chart', {
                     series: [negative_tweets_count, neutral_tweets_count, positive_tweets_count]
@@ -323,6 +334,60 @@
                         right: 40
                     }
                 });
+
+                //last 3 minutes
+
+                new Chartist.Pie('.pos-vs-neg-chart-last3', {
+                    series: [last18records(negative_tweets_count), last18records(neutral_tweets_count), last18records(positive_tweets_count)]
+                }, {
+                    donut: true,
+                    donutWidth: 60,
+                    donutSolid: true,
+                    startAngle: 270,
+                    total: total_tweets * 2,
+                    showLabel: true
+                });
+
+
+                var listOfCalls = createArrayOfInts(calls_counter);
+
+                //how polarity
+                new Chartist.Line('.polarity-per-pull-last3', {
+                    labels: last18records(listOfCalls),
+                    series: [last18records(average_polarity_list)]
+
+                }, {
+                    low: -1,
+                    high: 1,
+                    fullWidth: true,
+                    chartPadding: {right: 40}
+                });
+
+                //how many tweets for each iteration
+                new Chartist.Line('.tweets-per-pull-last3', {
+                    labels: last18records(listOfCalls),
+                    series: [last18records(tweets_per_pull_list)]
+
+                }, {
+                    fullWidth: true,
+                    chartPadding: {right: 40}
+                });
+
+                new Chartist.Line('.count-over-time-last3', {
+                    labels: last18records(listOfCalls),
+                    series: [
+                        last18records(negative_count_list),
+                        last18records(neutral_count_list),
+                        last18records(positive_count_list)
+                    ]
+                }, {
+                    fullWidth: true,
+                    chartPadding: {
+                        right: 40
+                    }
+                });
+
+
             }
 
         };

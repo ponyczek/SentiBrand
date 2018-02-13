@@ -140,7 +140,7 @@ $blue: #2196f3;
           }
         }
 
-        .pos-vs-neg-chart {
+        .pos-vs-neg-chart, .pos-vs-neg-chart-last3  {
           .ct-chart-donut {
             padding-top: 40px;
             .ct-series-a {
@@ -161,7 +161,7 @@ $blue: #2196f3;
           }
         }
 
-        .count-over-time {
+        .count-over-time , .count-over-time-last3{
           .ct-chart-line {
             .ct-series-a {
               .ct-line, .ct-point {
@@ -181,7 +181,7 @@ $blue: #2196f3;
           }
         }
 
-        .tweets-per-pull, .polarity-per-pull {
+        .tweets-per-pull, .polarity-per-pull, .tweets-per-pull-last3, .polarity-per-pull-last3 {
           .ct-chart-line {
             .ct-series-a {
               .ct-line, .ct-point {

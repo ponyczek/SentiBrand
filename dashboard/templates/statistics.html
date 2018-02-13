@@ -1,4 +1,6 @@
 <div class="statistics">
+    <h3 class="text-center">Overall statistics:</h3>
+
     <div class="row extra-padding-top-30">
         <div class="col-md-3 text-center data-presentation-icon">
             <span><i class="fab fa-twitter"></i></span>
@@ -31,36 +33,51 @@
     </div>
 
     <div class="row extra-padding-top-30">
-{#        <div class="col-md-4 text-center data-presentation-icon">#}
-{#            Average Polarity Over Pull#}
-{#            <div class="polarity-per-pull">#}
-{#            </div>#}
-{#        </div>#}
-        <div class="col-md-6 text-center data-presentation-icon align-vertical">
+        <div class="col-md-4 text-center data-presentation-icon align-vertical">
+            Tweets per Pull
+            <div class="tweets-per-pull"></div>
+        </div>
+        <div class="col-md-4 text-center data-presentation-icon align-vertical">
             Current Situation
-            <div class ="pos-vs-neg-chart"></div>
+            <div class="pos-vs-neg-chart"></div>
         </div>
-        <div class="col-md-6 text-center data-presentation-icon ">
-            Negative/Neutral/Positive Over Pull
-            <div class="count-over-time"></div>
-        </div>
-    </div>
-        <div class="row extra-padding-top-30">
         <div class="col-md-4 text-center data-presentation-icon">
             Average Polarity Over Pull
             <div class="polarity-per-pull">
             </div>
         </div>
-        <div class="col-md-4 text-center data-presentation-icon align-vertical">
-            Tweets per Pull
-            <div class ="tweets-per-pull"></div>
-        </div>
-        <div class="col-md-4 text-center data-presentation-icon ">
+    </div>
+    <div class="row extra-padding-top-30">
+        <div class="col-md-12 text-center data-presentation-icon ">
             Negative/Neutral/Positive Over Pull
             <div class="count-over-time"></div>
         </div>
     </div>
+    <h3 class="text-center">Statistics from last 3 minutes:</h3>
     <div class="row extra-padding-top-30">
+        <div class="col-md-4 text-center data-presentation-icon align-vertical">
+            Tweets per Pull
+            <div class="tweets-per-pull-last3"></div>
+        </div>
+        <div class="col-md-4 text-center data-presentation-icon align-vertical">
+            Current Situation
+            <div class="pos-vs-neg-chart-last3"></div>
+        </div>
+        <div class="col-md-4 text-center data-presentation-icon">
+            Average Polarity Over Pull
+            <div class="polarity-per-pull-last3">
+            </div>
+        </div>
+    </div>
+    <div class="row extra-padding-top-30">
+        <div class="col-md-12 text-center data-presentation-icon ">
+            Negative/Neutral/Positive Over Pull
+            <div class="count-over-time-last3"></div>
+        </div>
+    </div>
+    <h3 class="text-center">Top negative/positive tweets:</h3>
+    <div class="row extra-padding-top-30">
+
         <div class="col-md-6 text-center data-presentation-icon negative-tweet">
             The most negative tweet
             {% include 'most_tweet.html' %}
