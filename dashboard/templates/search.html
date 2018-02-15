@@ -174,12 +174,37 @@
             }, 10000);
         }
 
-        function createArrayOfInts(howMany) {
+        function createArrayOfInts(howMany, step) {
             var arr = [];
-            for (var i = 0; i < howMany; i++) {
-                arr.push((i + 1));
+            var incr = step ? step : 1;
+            for (var i = incr; i < howMany*incr; i+=incr) {
+                arr.push(i);
             }
             return arr;
+        }
+
+        function correctNoOfLabels(counter){
+            if(counter <= 18){
+                return createArrayOfInts(18);
+            }
+            //display 1h
+            else if(counter <= 360){
+                return createArrayOfInts(20, 3); // 1 step = 3
+            }
+            else if ( counter <= 8640) {
+                return createArrayOfInts(24); //display 1 day. 1 step 1h
+            }
+            else if(counter <= (8640*7)) {
+                return createArrayOfInts(7);
+            }
+            //no handle for longer yet.
+{#            else if(){#}
+{#                #}
+{#            }#}
+        }
+
+        function correctNoOfRecords(counter){
+
         }
 
         function last18records(arr) {
@@ -308,7 +333,12 @@
                     low: -1,
                     high: 1,
                     fullWidth: true,
-                    chartPadding: {right: 40}
+                    chartPadding: {right: 40},
+                    axisX: {
+                        showGrid: false,
+                        showLabel: false,
+                        offset: 0
+                    },
                 });
 
                 //how many tweets for each iteration
@@ -318,11 +348,16 @@
 
                 }, {
                     fullWidth: true,
-                    chartPadding: {right: 40}
+                    chartPadding: {right: 40},
+                    axisX: {
+                        showGrid: false,
+                        showLabel: false,
+                        offset: 0
+                    },
                 });
 
                 new Chartist.Line('.count-over-time', {
-                    labels: listOfCalls,
+                    labels: correctNoOfLabels(calls_counter),
                     series: [
                         negative_count_list,
                         neutral_count_list,
@@ -332,7 +367,12 @@
                     fullWidth: true,
                     chartPadding: {
                         right: 40
-                    }
+                    },
+                    axisX: {
+{#                        showGrid: false,#}
+{#                        showLabel: false,#}
+{#                        offset: 0#}
+                    },
                 });
 
                 //last 3 minutes
