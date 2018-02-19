@@ -107,57 +107,10 @@ function processTweets(event) {
 
 
         //last 3 minutes
-
-        new Chartist.Pie('.pos-vs-neg-chart-last3', {
-            series: [last18records(negative_tweets_count), last18records(neutral_tweets_count), last18records(positive_tweets_count)]
-        }, {
-            donut: true,
-            donutWidth: 60,
-            donutSolid: true,
-            startAngle: 270,
-            total: total_tweets * 2,
-            showLabel: true
-        });
-
-
+        drawCharistPosVsNegLast3Minutes(negative_tweets_count, neutral_tweets_count, positive_tweets_count, total_tweets);
         var listOfCalls = createArrayOfInts(calls_counter + 1);
-
-        //how polarity
-        new Chartist.Line('.polarity-per-pull-last3', {
-            labels: last18records(listOfCalls),
-            series: [last18records(average_polarity_list)]
-
-        }, {
-            low: -1,
-            high: 1,
-            fullWidth: true,
-            chartPadding: {right: 40}
-        });
-
-        //how many tweets for each iteration
-        new Chartist.Line('.tweets-per-pull-last3', {
-            labels: last18records(listOfCalls),
-            series: [last18records(tweets_per_pull_list)]
-
-        }, {
-            fullWidth: true,
-            chartPadding: {right: 40}
-        });
-
-        new Chartist.Line('.count-over-time-last3', {
-            labels: last18records(listOfCalls),
-            series: [
-                last18records(negative_count_list),
-                last18records(neutral_count_list),
-                last18records(positive_count_list)
-            ]
-        }, {
-            fullWidth: true,
-            chartPadding: {
-                right: 40
-            }
-        });
-
+        drawChartistPolarityLast3Minutes(listOfCalls, average_polarity_list);
+        drawChartistTweetsPerIterationLast3Minutes(listOfCalls, tweets_per_pull_list);
 
         var time_labels = [
             '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30',
