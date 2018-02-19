@@ -33,24 +33,26 @@
     </div>
 
     <div class="row extra-padding-top-30">
-        <div class="col-md-4 text-center data-presentation-icon align-vertical">
+        <div class="col-md-6 text-center data-presentation-icon align-vertical">
             Tweets per Pull
-            <div class="tweets-per-pull"></div>
+            <canvas id="all-tweets-per-pull"></canvas>
         </div>
-        <div class="col-md-4 text-center data-presentation-icon align-vertical">
+        <div class="col-md-6 text-center data-presentation-icon align-vertical">
             Current Situation
-            <div class="pos-vs-neg-chart"></div>
+            <canvas id="all-neg-neu-pos"></canvas>
         </div>
-        <div class="col-md-4 text-center data-presentation-icon">
-            Average Polarity Over Pull
-            <div class="polarity-per-pull">
-            </div>
+    </div>
+    <div class="row extra-padding-top-30">
+        <div class="col-md-12 text-center data-presentation-icon">
+            Average Polarity Over Time
+            <canvas id="all-average-polarity-timeline"></canvas>
         </div>
     </div>
     <div class="row extra-padding-top-30">
         <div class="col-md-12 text-center data-presentation-icon ">
             Negative/Neutral/Positive Over Pull
-            <div class="count-over-time"></div>
+            <canvas id="neg-neu-pos-timeline"></canvas>
+            {#            <div class="count-over-time"></div>#}
         </div>
     </div>
     <h3 class="text-center">Statistics from last 3 minutes:</h3>
