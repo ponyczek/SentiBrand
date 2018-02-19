@@ -176,9 +176,13 @@
 
         function createArrayOfInts(howMany, step) {
             var arr = [];
-            var incr = step ? step : 1;
-            for (var i = incr; i < howMany * incr; i += incr) {
-                arr.push(i);
+            if (howMany > 1) {
+                var incr = step ? step : 1;
+                for (var i = incr; i < howMany * incr; i += incr) {
+                    arr.push(i);
+                }
+            } else {
+                arr.push(1);
             }
             return arr;
         }
@@ -216,6 +220,10 @@
             }
         }
 
+        function classifyTweetsByDate() {
+
+        }
+
         $('#search-btn').click(sendMessage);
 
         socket.onopen = function open() {
@@ -228,7 +236,7 @@
                 if (data[0] && last_tweet_id !== data[0].id) {
                     last_tweet_id = data[0].id;
                     var positive_per_call = 0;
-                    var neutral_per_call = 0
+                    var neutral_per_call = 0;
                     var negative_per_call = 0;
                     data.forEach(function (tweet) {
                         total_tweets++;
@@ -389,7 +397,7 @@
                 });
 
 
-                var listOfCalls = createArrayOfInts(calls_counter);
+                var listOfCalls = createArrayOfInts(calls_counter+1);
 
                 //how polarity
                 new Chartist.Line('.polarity-per-pull-last3', {
@@ -559,23 +567,66 @@
                     options: {}
                 });
 
-                var ctx4 = document.getElementById('all-tweets-per-pull').getContext('2d');
 
-                var myBarChart = new Chart(ctx4, {
-                    type: 'bar',
-                    data: {
-                        labels: createArrayOfInts(calls_counter),
-                        datasets: [
-                            {
-                                label: "Number of tweets per pull",
-                                backgroundColor: 'transparent',
-                                borderColor: '#2196f3',
-                                data: tweets_per_pull_list
+                if (calls_counter > 0) {
+                    var labels = [];
+                    for (var i = 1; i <= calls_counter; i++) {
+                        labels.push(i);
+                    }
+                    var ctx4 = document.getElementById('all-tweets-per-pull').getContext('2d');
+                    ctx4.clearRect(0, 0, ctx4.width, ctx4.height);
+
+                    var myBarChart = new Chart(ctx4, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: "Number of tweets per pull",
+                                    backgroundColor: '#2196f3',
+                                    borderColor: '#2196f3',
+                                    data: tweets_per_pull_list
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        max: 100,
+                                        beginAtZero: true,
+                                    }
+                                }]
                             }
-                        ]
-                    },
-                    options: {}
-                });
+                        }
+                    });
+                }
+
+{#                var all_tweets_count = positive_tweets_count + neutral_tweets_count + negative_tweets_count;#}
+{##}
+{##}
+{#                var ctx5 = document.getElementById("all-negative-pie-percentage").getContext("2d");#}
+{##}
+{#                var myDoughnutChart = new Chart(ctx5, {#}
+{#                    type: 'doughnut',#}
+{#                    data: {#}
+{#                        labels: [#}
+{#                            "Negative",#}
+{#                            "All Tweets",#}
+{#                        ],#}
+{#                        datasets: [#}
+{#                            {#}
+{#                                data: [roundToTwoDecimal((negative_tweets_count / all_tweets_count) * 100), (100 - roundToTwoDecimal((negative_tweets_count / all_tweets_count) * 100))],#}
+{#                                backgroundColor: [#}
+{#                                    "#f44336",#}
+{#                                    "#888",#}
+{#                                ],#}
+{##}
+{#                            }]#}
+{#                    },#}
+{#                    options: {}#}
+{#                });#}
+
             }
 
         };
