@@ -16,6 +16,7 @@ var neutral_count_list = [];
 var positive_count_list = [];
 
 
+
 var calls_counter = 0;
 var last_tweet_id;
 
@@ -103,6 +104,8 @@ function processTweets(event) {
             negative_count_list.push(negative_per_call);
             tweets_per_pull_list.push(positive_per_call + neutral_per_call + negative_per_call);
             average_polarity_list.push(countAverage());
+            createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call);
+            createLabelsWithDate(calls_counter);
         }
 
 
@@ -112,18 +115,12 @@ function processTweets(event) {
         drawChartistPolarityLast3Minutes(listOfCalls, average_polarity_list);
         drawChartistTweetsPerIterationLast3Minutes(listOfCalls, tweets_per_pull_list);
 
-        var time_labels = [
-            '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30',
-            '06:00', '06:30', '07:00', '07:30',
-            '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
-            '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
-            '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30', '23:00', '23:30', '23:59'];
 
         //Timeline tweets per whole day
-        drawChartJsTweetsAllDay();
+        drawChartJsTweetsAllDay(all_neg_neu_pos_labels, negative_count_list, neutral_count_list, positive_count_list);
 
         //Timeline tweets per whole day
-        drawChartJsAveragePolarityAll();
+        drawChartJsAveragePolarityAll(average_polarity_list );
 
         // And for a doughnut chart
         drawChartJsDoughnutAll(negative_tweets_count, neutral_tweets_count, positive_tweets_count)

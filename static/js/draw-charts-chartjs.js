@@ -1,34 +1,50 @@
-var time_labels = [
-    '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30',
-    '06:00', '06:30', '07:00', '07:30',
-    '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
-    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
-    '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30', '23:00', '23:30', '23:59'];
+var all_neg_neu_pos_labels = [];
+var all_date_labels = [];
+
+function createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call) {
+    if (calls_counter > 0) {
+        var pull_date = moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
+        var pull_tweets_total = negative_per_call + neutral_per_call + positive_per_call;
+        var total_str = "Pulled " + pull_tweets_total + " tweets at " + pull_date;
+        all_neg_neu_pos_labels.push(total_str);
+    }
+}
+
+function createLabelsWithDate(calls_counter) {
+    if (calls_counter > 0) {
+        var pull_date = moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
+        var total_str = "Result taken from: " + pull_date;
+        all_date_labels.push(total_str);
+    }
+}
 
 //Timeline tweets per whole day
-function drawChartJsTweetsAllDay() {
+function drawChartJsTweetsAllDay(all_neg_neu_pos_labels, negative_count_list, neutral_count_list, positive_count_list) {
     var ctx = document.getElementById('neg-neu-pos-timeline').getContext('2d');
-    var chart = new Chart(ctx, {
+    if (window.chart && window.chart !== null) {
+        window.chart.destroy();
+    }
+    window.chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'bar',
 
         // The data for our dataset
         data: {
-            labels: time_labels,
+            labels: all_neg_neu_pos_labels,
             datasets: [
                 {
                     label: 'Negative',
-                    data: [67.8, 12, 11],
+                    data: negative_count_list,
                     backgroundColor: '#f44336'
                 },
                 {
                     label: 'Neutral',
-                    data: [20.7, 42, 23],
+                    data: neutral_count_list,
                     backgroundColor: '#ffeb3b'
                 },
                 {
                     label: 'Positive',
-                    data: [11.4, 23, 41],
+                    data: positive_count_list,
                     backgroundColor: '#4caf50'
                 }
             ]
@@ -36,42 +52,45 @@ function drawChartJsTweetsAllDay() {
 
         // Configuration options go here
         options: {
+            animation: {
+                duration: 0
+            },
             scales: {
                 xAxes: [{
-                    type: 'time',
+                    display: false,
                     stacked: true,
-                    time: {
-                        format: "HH:mm",
-                        unit: 'hour',
-                        unitStepSize: 1,
-                        displayFormats: {
-                            'minute': 'HH:mm',
-                            'hour': 'HH:mm',
-                            min: '00:00',
-                            max: '23:30'
-                        },
-                    }
+
                 }],
-                yAxes: [{stacked: true}]
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+                        max: 100,
+                        min: 0
+                    }
+                }]
             },
-        }
+        },
     });
 
 }
+
 //Timeline tweets per whole day
-function drawChartJsAveragePolarityAll() {
+function drawChartJsAveragePolarityAll(average_polarity_list) {
     var ctx2 = document.getElementById('all-average-polarity-timeline').getContext('2d');
-    var chart = new Chart(ctx2, {
+    if (window.averageListChart && window.averageListChart !== null) {
+        window.averageListChart.destroy();
+    }
+    window.averageListChart = new Chart(ctx2, {
         // The type of chart we want to create
         type: 'line',
 
         // The data for our dataset
         data: {
-            labels: time_labels,
+            labels: all_date_labels,
             datasets: [
                 {
                     label: 'Average Sentiment',
-                    data: [0.5, -0.1],
+                    data: average_polarity_list,
                     backgroundColor: 'transparent',
                     borderColor: '#2196f3'
                 },
@@ -82,18 +101,7 @@ function drawChartJsAveragePolarityAll() {
         options: {
             scales: {
                 xAxes: [{
-                    type: 'time',
-                    time: {
-                        format: "HH:mm",
-                        unit: 'hour',
-                        unitStepSize: 0.5,
-                        displayFormats: {
-                            'minute': 'HH:mm',
-                            'hour': 'HH:mm',
-                            min: '00:00',
-                            max: '23:30'
-                        },
-                    }
+                    display: false,
                 }],
                 yAxes: [{
                     ticks: {
@@ -110,7 +118,10 @@ function drawChartJsAveragePolarityAll() {
 function drawChartJsDoughnutAll(negative_tweets_count, neutral_tweets_count, positive_tweets_count) {
 // And for a doughnut chart
     var ctx3 = document.getElementById('all-neg-neu-pos').getContext('2d');
-    var myDoughnutChart = new Chart(ctx3, {
+    if (window.myDoughnutChart && window.myDoughnutChart !== null) {
+        window.myDoughnutChart.destroy();
+    }
+    window.myDoughnutChart = new Chart(ctx3, {
         type: 'doughnut',
         data: {
             labels: [
@@ -137,17 +148,16 @@ function drawChartJsDoughnutAll(negative_tweets_count, neutral_tweets_count, pos
 function drawChartJsTweetsPerPullAll(calls_counter, tweets_per_pull_list) {
 
     if (calls_counter > 0) {
-        var labels = [];
-        for (var i = 1; i <= calls_counter; i++) {
-            labels.push(i);
-        }
+
         var ctx4 = document.getElementById('all-tweets-per-pull').getContext('2d');
         ctx4.clearRect(0, 0, ctx4.width, ctx4.height);
-
-        var myBarChart = new Chart(ctx4, {
+        if (window.tweetsPerPullChart && window.tweetsPerPullChart !== null) {
+            window.tweetsPerPullChart.destroy();
+        }
+        window.tweetsPerPullChart = new Chart(ctx4, {
             type: 'bar',
             data: {
-                labels: labels,
+                labels: all_date_labels,
                 datasets: [
                     {
                         label: "Number of tweets per pull",
@@ -164,6 +174,9 @@ function drawChartJsTweetsPerPullAll(calls_counter, tweets_per_pull_list) {
                             max: 100,
                             beginAtZero: true,
                         }
+                    }],
+                    xAxes:[ {
+                        display: false,
                     }]
                 }
             }
