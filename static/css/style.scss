@@ -140,7 +140,7 @@ $blue: #2196f3;
           }
         }
 
-        .pos-vs-neg-chart, .pos-vs-neg-chart-last3  {
+        .pos-vs-neg-chart, .pos-vs-neg-chart-last3 {
           .ct-chart-donut {
             padding-top: 40px;
             .ct-series-a {
@@ -161,7 +161,7 @@ $blue: #2196f3;
           }
         }
 
-        .count-over-time , .count-over-time-last3{
+        .count-over-time, .count-over-time-last3 {
           .ct-chart-line {
             .ct-series-a {
               .ct-line, .ct-point {
@@ -432,4 +432,11 @@ $blue: #2196f3;
 
 #messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg {
   padding-top: 40px;
+}
+
+sup{
+  padding-left: 10px;
+  :hover{
+    color:$red;
+  }
 }

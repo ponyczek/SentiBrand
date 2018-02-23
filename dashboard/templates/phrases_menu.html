@@ -9,7 +9,7 @@
     {% for phrase in phrases %}
         <li class="nav-item">
             <a class="nav-link {% if active_phrase.id == phrase.id %}active{% endif %}"  href="{% url 'phrase_detail' phrase.id %}" role="">
-                <i class="fas fa-chart-bar" aria-hidden="true"></i> {{ phrase.name }}
+                <i class="fas fa-chart-bar" aria-hidden="true"></i> {{ phrase.name }}<sup><i class="fas fa-times"></i></sup>
             </a>
         </li>
     {% endfor %}

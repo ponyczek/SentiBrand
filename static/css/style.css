@@ -280,4 +280,9 @@
 #messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg {
   padding-top: 40px; }
 
+sup {
+  padding-left: 10px; }
+  sup :hover {
+    color: #f44336; }
+
 /*# sourceMappingURL=style.css.map */

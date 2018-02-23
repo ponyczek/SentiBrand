@@ -10,7 +10,7 @@ class SingleSearchForm(forms.Form):
     query_phrase = forms.CharField(max_length=200)
 
 
-class PhraseForm(forms.ModelForm):
+class PhraseForm(forms.Form):
     name = forms.CharField(
         max_length=50,
         widget=forms.TextInput(
@@ -31,15 +31,8 @@ class PhraseForm(forms.ModelForm):
                    'placeholder': 'Searched Phrase, person, tag'}),
         required=True)
 
-    interval_in_sec = forms.IntegerField(
-        initial=60,
-        widget=forms.TextInput(
-            attrs={'class': 'form-control',
-                   'placeholder':'How frequently would you like to pull the data in seconds.'}),
-        required=True
-    )
 
     #
     class Meta:
         model = User_Phrase
-        fields = ['name', 'start_date', 'interval_in_sec', 'phrase']
+        fields = ['name', 'start_date', 'phrase']

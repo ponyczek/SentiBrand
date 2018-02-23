@@ -1,10 +1,10 @@
 from django import template
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-
+from datetime import datetime
+from django.utils import timezone
 from scrapper.scrapper import get_tweets
 from .forms import SingleSearchForm, PhraseForm
-from .models import User_Phrase
+from .models import User_Phrase, Phrase
 from django.shortcuts import render, get_object_or_404
 
 
@@ -37,15 +37,32 @@ def single_search(request):
 
 @login_required(login_url="login/")
 def add_phrase(request):
-    form = PhraseForm(request.POST or None)
-
+    format = "%Y-%m-%d %H:%M:%S"
     if request.method == 'POST':
+        form = PhraseForm(request.POST or None)
         if form.is_valid():
-            phrase = form.save(commit=False)
-            phrase.user = request.user
-            phrase.save()
-            user_phrases = User_Phrase.objects.filter(user_id=request.user)
-            return render(request, 'dashboard.html', {'phrases': user_phrases})
+            if(form.cleaned_data['start_date'] > timezone.now()):
+                user_phrase = User_Phrase()
+                phrase_id = form.cleaned_data['phrase']
+                phrase, created= Phrase.objects.get_or_create(phrase=phrase_id)
+                if created:
+                    phrase.save()
+                # if form.is_valid():
+                # user_phrase = form.save(commit=False)
+                user_phrase.user = request.user
+                user_phrase.name = form.cleaned_data['name']
+                user_phrase.start_date = form.cleaned_data['start_date']
+                user_phrase.phrase = phrase
+                user_phrase.save()
+                user_phrases = User_Phrase.objects.filter(user_id=request.user)
+                return render(request, 'dashboard.html', {'phrases': user_phrases, 'success': True})
+            else:
+                form = PhraseForm()
+                context = {
+                    "form": form,
+                    "error_date": True
+                }
+                return render(request, 'add_phrase.html', context)
 
     else:
         form = PhraseForm()

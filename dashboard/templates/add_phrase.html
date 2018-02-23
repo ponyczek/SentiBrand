@@ -7,24 +7,44 @@
             </div>
             <div class="col-sm-10 trim-left">
                 <div class="dashboard-main">
+                    {% if error_date %}
+                        <div class="alert alert-danger" role="alert">
+                            <div class="container">
+                                <div class="alert-icon">
+                                    <i class="now-ui-icons objects_support-17"></i>
+                                </div>
+                                <strong>Oh snap!</strong> Provided date must start in the future.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </span>
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="">
+                        <span class="text-danger small">{{ field.errors }}</span>
+                    </div>
                     <div class="dashboard-add-phrase extra-padding-top-60 text-center">
                         <div class="col-sm-6 card add-phrase-card">
-                             <h2 class="text-center add-phrase-title">Add Search Phrase <i class="fab fa-twitter" aria-hidden="true"></i></h2>
+                            <h2 class="text-center add-phrase-title">Add Search Phrase <i class="fab fa-twitter"
+                                                                                          aria-hidden="true"></i></h2>
 
-                             <form class="form-horizontal add-phrase-form" role="form" action="{% url 'add_phrase' %} " method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal add-phrase-form" role="form" action="{% url 'add_phrase' %} "
+                                  method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                 {{bootstrap}}
+                                {{ bootstrap }}
                                 {% include 'add_phrase_form_template.html' %}
                                 <div class="form-group">
                                     <div class="text-center col-sm-12">
                                         <button type="submit" class="btn btn-primary">Add</button>
                                     </div>
                                 </div>
-                                 <div class="row">
-                                     <a href="{% url 'dashboard' %}" button class="btn btn-link">
-                                         <i class="fa fa-angle-left" aria-hidden="true"></i>    Go back to your dashboard
-                                     </a>
-                                 </div>
+                                <div class="row">
+                                    <a href="{% url 'dashboard' %}" button class="btn btn-link">
+                                        <i class="fa fa-angle-left" aria-hidden="true"></i> Go back to your dashboard
+                                    </a>
+                                </div>
                             </form>
                         </div>
                     </div>
