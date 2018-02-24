@@ -79,3 +79,4 @@ def phrase_detail(request, user_phrase_id):
         user_phrase = get_object_or_404(User_Phrase, pk=user_phrase_id)
         user_phrases = User_Phrase.objects.filter(user_id=request.user)
         return render(request, 'phrase_detail.html', {'active_phrase': user_phrase, 'phrases':user_phrases})
+

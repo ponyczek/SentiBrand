@@ -434,9 +434,25 @@ $blue: #2196f3;
   padding-top: 40px;
 }
 
-sup{
-  padding-left: 10px;
-  :hover{
-    color:$red;
+sup {
+  //padding-left: 10px;
+  :hover {
+    color: $red;
   }
+}
+
+.nav-tabs > .nav-item > .nav-link {
+  float: left !important;
+}
+
+.cancel-icon {
+color: #888 !important;
+}
+
+.orange{
+  color: $main-orange;
+}
+
+.gray{
+  color: #888;
 }

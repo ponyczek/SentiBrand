@@ -280,9 +280,19 @@
 #messages > div.statistics-holder > div.statistics > div:nth-child(2) > div.col-md-4.text-center.data-presentation-icon.align-vertical.pos-vs-neg-chart > svg {
   padding-top: 40px; }
 
-sup {
-  padding-left: 10px; }
-  sup :hover {
-    color: #f44336; }
+sup :hover {
+  color: #f44336; }
+
+.nav-tabs > .nav-item > .nav-link {
+  float: left !important; }
+
+.cancel-icon {
+  color: #888 !important; }
+
+.orange {
+  color: #f96332; }
+
+.gray {
+  color: #888; }
 
 /*# sourceMappingURL=style.css.map */

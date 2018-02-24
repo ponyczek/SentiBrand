@@ -8,9 +8,31 @@
     </li>
     {% for phrase in phrases %}
         <li class="nav-item">
-            <a class="nav-link {% if active_phrase.id == phrase.id %}active{% endif %}"  href="{% url 'phrase_detail' phrase.id %}" role="">
-                <i class="fas fa-chart-bar" aria-hidden="true"></i> {{ phrase.name }}<sup><i class="fas fa-times"></i></sup>
+            <a class="nav-link {% if active_phrase.id == phrase.id %}active{% endif %}"
+               href="{% url 'phrase_detail' phrase.id %}" role="" style="float:left; color:#888!important;">
+                <i class="fas fa-chart-bar" aria-hidden="true"></i> {{ phrase.name }}
             </a>
+{#            <a data-toggle="modal" data-target="#myModal1"><sup><i class="fas fa-times">#}
+{#            </i></sup></a>#}
         </li>
+        <div class="modal fade modal-mini modal-primary" id="myModal1" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="modal-profile">
+                            <i class="now-ui-icons users_circle-08"></i>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete that phrase?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link btn-neutral">Yes</button>
+                        <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endfor %}
 </ul>
