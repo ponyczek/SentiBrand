@@ -42,7 +42,7 @@
                                 phrase "{{ phrase.phrase.phrase }}"?</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-link btn-neutral">Yes</button>
+                            <a  class="btn btn-link btn-neutral"  href="{% url 'delete_phrase' phrase.id %}">Yes</a>
                             <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
                         </div>
                     </div>
