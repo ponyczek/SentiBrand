@@ -1,0 +1,15 @@
+<form class="form-horizontal add-phrase-form" role="form" action="{% url 'edit_phrase' user_phrase_id=id %}"
+      method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'add_phrase_form_template.html' %}
+    <div class="form-group">
+        <div class="text-center col-sm-12">
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+    </div>
+    <div class="row">
+        <a href="{% url 'dashboard' %}" button class="btn btn-link">
+            <i class="fa fa-angle-left" aria-hidden="true"></i> Go back to your dashboard
+        </a>
+    </div>
+</form>

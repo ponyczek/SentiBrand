@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^dashboard/add_phrase$', views.add_phrase, name='add_phrase'),
     url(r'^dashboard/phrase/(?P<user_phrase_id>[0-9]+)/$', views.phrase_detail, name='phrase_detail'),
     url(r'^dashboard/phrase/(?P<user_phrase_id>[0-9]+)/delete$', views.delete_phrase, name='delete_phrase'),
+    url(r'^dashboard/phrase/(?P<user_phrase_id>[0-9]+)/edit$', views.edit_phrase, name='edit_phrase'),
+
 ]

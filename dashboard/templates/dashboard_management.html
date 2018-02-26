@@ -21,7 +21,7 @@
                 <td>{{ phrase.phrase.phrase }}</td>
                 <td>{{ phrase.start_date }}</td>
                 <td>
-                    <button class="btn btn-info">Edit</button>
+                    <a  class="btn btn-info"  href="{% url 'edit_phrase' phrase.id %}">Edit</a>
                 </td>
                 <td>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ phrase.id }}">Delete
