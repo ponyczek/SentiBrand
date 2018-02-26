@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render_to_response
 from django.utils import timezone
+from django.template import RequestContext
+
 
 from scrapper.scrapper import get_tweets
 from .forms import PhraseForm
@@ -112,4 +114,4 @@ def edit_phrase(request, user_phrase_id):
         start_date = user_phrase.start_date.strftime("%Y-%m-%dT%H:%M")
         data = {'name': user_phrase.name, 'start_date': start_date, 'phrase': user_phrase.phrase.phrase}
         form = PhraseForm(initial=data)
-        return render_to_response('add_phrase.html', {'form': form, 'edit': True, 'id': user_phrase.id})
+        return render(request, 'add_phrase.html', {'form': form, 'edit': True, 'id': user_phrase.id})

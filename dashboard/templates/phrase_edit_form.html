@@ -1,4 +1,4 @@
-<form class="form-horizontal add-phrase-form" role="form" action="{% url 'edit_phrase' user_phrase_id=id %}"
+<form class="form-horizontal add-phrase-form" role="form" action="{% url 'edit_phrase' id %}"
       method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% include 'add_phrase_form_template.html' %}
