@@ -18,28 +18,27 @@
                                            id="query_phrase"
                                            placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
                                 </div>
-                                <div class="input-group col-md-2">
-                                    <select class="custom-select" id="inputGroupSelect01">
-                                        <option selected>Time Interval</option>
-                                        <option value="10000">10 seconds</option>
-                                        <option value="20000">20 seconds</option>
-                                        <option value="30000">30 seconds</option>
-                                        <option value="40000">40 seconds</option>
-                                        <option value="50000">50 seconds</option>
-                                        <option value="60000">60 seconds</option>
+                                <div class="input-group col-md-3">
+                                    <select class="custom-select" id="intervalSelect">
+                                        <option selected="selected" value="10000">10 seconds interval</option>
+                                        <option value="20000">20 seconds interval</option>
+                                        <option value="30000">30 seconds interval</option>
+                                        <option value="40000">40 seconds interval</option>
+                                        <option value="50000">50 seconds interval</option>
+                                        <option value="60000">60 seconds interval</option>
                                     </select>
-                                </div>
-                                <div class="input-group col-md-4">
-                                    <button class="btn btn-primary btn-round" id="search-btn" disabled>Search</button>
-                                    <button class="btn btn-default btn-round" onclick="pageReload()" disabled
-                                            id="new_search_btn">New
-                                        Search
-                                    </button>
                                     <div id="clockdiv">
                                         <div>
                                             <span class="seconds"></span>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="input-group col-md-3">
+                                    <button class="btn btn-primary btn-round" id="search-btn" disabled>Search</button>
+                                    <button class="btn btn-default btn-round" onclick="pageReload()" disabled
+                                            id="new_search_btn">New
+                                        Search
+                                    </button>
                                 </div>
                             </div>
 

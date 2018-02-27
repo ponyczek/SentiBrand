@@ -25,12 +25,15 @@ function setTopTweet(data, tag) {
 function sendMessage() {
 
     $('.statistics-holder').show();
-    deadline = new Date(Date.parse(new Date()) + 10 * 1000);
-    initializeClock('clockdiv', deadline);
 
     var input = $('#query_phrase');
     var newSearchBtn = $('#new_search_btn');
+    var selectComponent = $('#intervalSelect');
+    var intervalValue = Number(selectComponent.val());
     var searchBtn = $('#search-btn');
+    deadline = new Date(Date.parse(new Date()) + intervalValue);
+    var pullText = $('#pullInterval');
+    pullText.text(selectComponent.find(":selected").text());
     initializeClock('clockdiv', deadline);
 
     input.prop('disabled', 'disabled');
@@ -48,14 +51,15 @@ function sendMessage() {
     }));
 
     var getDataInterval = setInterval(function () {
-        deadline = new Date(Date.parse(new Date()) + 10 * 1000);
+        deadline = new Date(Date.parse(new Date()) + intervalValue);
         initializeClock('clockdiv', deadline);
         socket.send(JSON.stringify({
             text: input.val(),
             user_name: "{{ user.get_username}}",
             last_tweet_id: last_tweet_id
         }));
-    }, 10000);
+    }, intervalValue);
+    selectComponent.prop('disabled', true)
 }
 
 $('#query_phrase').on("keyup", disableSearchBtn);

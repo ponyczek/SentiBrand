@@ -2,8 +2,6 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from .models import UserProfile
-
-from dashboard.models import User_Phrase
 from .forms import UserForm, EditProfileForm, EditProfileAvatarForm
 
 

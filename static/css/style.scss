@@ -105,9 +105,10 @@ $blue: #2196f3;
       color: $main-orange !important;
       border: $main-orange solid 1px;
     }
-    .dashboard-search, .dashboard-add-phrase {
+    .dashboard-search, .dashboard-add-phrase, .edit-profile {
       padding-top: 15px;
-      .add-phrase-title {
+
+      .add-phrase-title, edit-profile-title {
         i {
           color: #1da2ff;
         }
@@ -215,8 +216,21 @@ $blue: #2196f3;
         background-color: white;
         color: $main-orange;
       }
-      .add-phrase-card {
+      .add-phrase-card, .edit-profile-card {
         padding: 40px 20px 20px 20px;
+        .edit-profile-form {
+          .image-upload {
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+          }
+          .image-upload input {
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+          }
+        }
         .form-group {
           .input-group {
             ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -411,6 +425,7 @@ $blue: #2196f3;
   display: inline-block;
   font-weight: 100;
   text-align: center;
+  margin-top: -6px;
 }
 
 #clockdiv > div {
@@ -446,13 +461,18 @@ sup {
 }
 
 .cancel-icon {
-color: #888 !important;
+  color: #888 !important;
 }
 
-.orange{
+.orange {
   color: $main-orange !important;
 }
 
-.gray{
+.gray {
   color: #888;
 }
+
+#intervalSelect {
+  margin-top: 6px;
+}
+

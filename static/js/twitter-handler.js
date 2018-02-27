@@ -10,6 +10,7 @@ var neutral_tweets_count = 0;
 var negative_tweets_count = 0;
 
 var average_polarity_list = [];
+var average_polarity_list_pos_neg = [];
 var tweets_per_pull_list = []; //list that contains number of tweets that came back from api
 var negative_count_list = [];
 var neutral_count_list = [];
@@ -30,7 +31,6 @@ function processTweets(event) {
             var negative_per_call = 0;
             data.forEach(function (tweet) {
                 total_tweets++;
-                //console.log(tweet.user.name);
                 var user = tweet.user;
                 var username = user.name;
                 var user_location = user.location;
@@ -104,6 +104,9 @@ function processTweets(event) {
             negative_count_list.push(negative_per_call);
             tweets_per_pull_list.push(positive_per_call + neutral_per_call + negative_per_call);
             average_polarity_list.push(countAverage());
+            //might not be necessary.
+            average_polarity_list_pos_neg.push((polarity_sum/(positive_tweets_count+negative_tweets_count)).toFixed(3));
+            $('.average-stat-posneg').text((polarity_sum/(positive_tweets_count+negative_tweets_count)).toFixed(3));
             createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call);
             createLabelsWithDate(calls_counter);
         }
@@ -121,6 +124,9 @@ function processTweets(event) {
 
         //Timeline tweets per whole day
         drawChartJsAveragePolarityAll(average_polarity_list );
+
+        //Excluding neutral
+        drawChartJsAveragePolarityPosNeg(average_polarity_list_pos_neg);
 
         // And for a doughnut chart
         drawChartJsDoughnutAll(negative_tweets_count, neutral_tweets_count, positive_tweets_count)

@@ -115,6 +115,46 @@ function drawChartJsAveragePolarityAll(average_polarity_list) {
     });
 }
 
+function drawChartJsAveragePolarityPosNeg(average_polarity_list_pos_neg) {
+    var averagePosNegChart = document.getElementById('posneg-average-polarity-timeline').getContext('2d');
+    if (window.averageListChartPosNeg && window.averageListChartPosNeg !== null) {
+        window.averageListChartPosNeg.destroy();
+    }
+    window.averageListChartPosNeg = new Chart(averagePosNegChart, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: all_date_labels,
+            datasets: [
+                {
+                    label: 'Average Sentiment Excl. Neutral',
+                    data: average_polarity_list_pos_neg,
+                    backgroundColor: 'transparent',
+                    borderColor: '#2196f3'
+                },
+            ]
+        },
+
+        // Configuration options go here
+        options: {
+            scales: {
+                xAxes: [{
+                    display: false,
+                }],
+                yAxes: [{
+                    ticks: {
+                        max: 1,
+                        min: -1
+                    }
+                }]
+
+            },
+        }
+    });
+}
+
 function drawChartJsDoughnutAll(negative_tweets_count, neutral_tweets_count, positive_tweets_count) {
 // And for a doughnut chart
     var ctx3 = document.getElementById('all-neg-neu-pos').getContext('2d');

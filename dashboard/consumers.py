@@ -53,7 +53,6 @@ def ws_receive(message):
         data = json.loads(message['text'])
         print(data)
     except ValueError:
-        # log.debug("ws message isn't json text=%s", message['text'])
         return
 
     if data:
@@ -61,23 +60,20 @@ def ws_receive(message):
         get_search_data(data, reply_channel)
 
 
-
 consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
 consumer_secret = os.environ.get('SENTI_CONSUMER_SECRET')
 access_token = os.environ.get('SENTI_ACCESS_TOKEN')
 access_token_secret = os.environ.get('SENTI_ACCESS_TOKEN_SECRET')
-
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
-
 api = tweepy.API(auth)
 
 def serialise_data(tweets):
     data = []
     for tweet in tweets:
-        polarity = TextBlob(tweet.get('text'))
+        polarity = TextBlob(tweet.get('full_text'))
         data.append({
-            'text': tweet.get('text'),
+            'text': tweet.get('full_text'),
             'user': tweet.get('user'),
             'polarity': polarity.sentiment.polarity,
             'geolocation': tweet.get('geo'), #exact location
@@ -86,16 +82,14 @@ def serialise_data(tweets):
             'id' : tweet.get('id'),
             'place': tweet.get('place'), #city country coordinates
         })
-
     return data
-        # data.append
 
 
 def get_search_data(message, reply_channel):
     if message is not None and reply_channel is not None:
         query_phrase = message['text']
         last_id = message.get('last_tweet_id')
-        temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100)
+        temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100, tweet_mode='extended')
         tweets = [tweet._json for tweet in temp_tweets ]
         data = serialise_data(tweets)
         Channel(reply_channel).send({"text": json.dumps(data)})

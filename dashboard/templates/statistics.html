@@ -2,50 +2,43 @@
     <h3 class="text-center">Overall statistics:</h3>
 
     <div class="row extra-padding-top-30">
-        <div class="col-md-3 text-center data-presentation-icon">
+        <div class="col text-center data-presentation-icon">
             <span><i class="fab fa-twitter"></i></span>
             <p class="data-content tweets-stat">
                 0
             </p>
             Number of analysed tweets
         </div>
-        <div class="col-md-3 text-center data-presentation-icon">
+        <div class="col text-center data-presentation-icon">
             <span><i class="fas fa-map-pin"></i></span>
             <p class="data-content locations-stat">
                 0
             </p>
             Number of collected locations
         </div>
-        <div class="col-md-3 text-center data-presentation-icon">
+        <div class="col text-center data-presentation-icon">
             <span><i class="fas fa-plus"></i> / <i class="fas fa-minus"></i></span>
             <p class="data-content average-stat">
                 0
             </p>
             Average Polarity
         </div>
-        <div class="col-md-3 text-center data-presentation-icon">
+        <div class="col text-center data-presentation-icon">
+            <span><i class="fas fa-plus"></i> / <i class="fas fa-minus"></i></span>
+            <p class="data-content average-stat-posneg">
+                0
+            </p>
+            Average Polarity excl. Neutral
+        </div>
+        <div class="col text-center data-presentation-icon">
             <span><i class="far fa-clock"></i></span>
-            <p class="data-content pull-interval">
+            <p class="data-content pull-interval" id="pullInterval">
                 10
             </p>
             Pull interval
         </div>
     </div>
 
-{#    <div class="row extra-padding-top-30">#}
-{#        <div class="col-md-4 text-center data-presentation-icon align-vertical">#}
-{#            Percentage of Negative Tweets#}
-{#            <canvas id="all-negative-pie-percentage"></canvas>#}
-{#        </div>#}
-{#        <div class="col-md-4 text-center data-presentation-icon align-vertical">#}
-{#            Percentage of Neutral Tweets#}
-{#            <canvas id="all-neutral-pie-percentage"></canvas>#}
-{#        </div>#}
-{#        <div class="col-md-4 text-center data-presentation-icon align-vertical">#}
-{#            Percentage of Positive Tweets#}
-{#            <canvas id="all-positive-pie-percentage"></canvas>#}
-{#        </div>#}
-{#    </div>#}
     <div class="row extra-padding-top-30">
         <div class="col-md-6 text-center data-presentation-icon align-vertical">
             Tweets per Pull
@@ -57,9 +50,13 @@
         </div>
     </div>
     <div class="row extra-padding-top-30">
-        <div class="col-md-12 text-center data-presentation-icon">
+        <div class="col-md-6 text-center data-presentation-icon">
             Average Polarity Over Time
             <canvas id="all-average-polarity-timeline"></canvas>
+        </div>
+        <div class="col-md-6 text-center data-presentation-icon">
+            Average Polarity Over Time
+            <canvas id="posneg-average-polarity-timeline"></canvas>
         </div>
     </div>
     <div class="row extra-padding-top-30">
