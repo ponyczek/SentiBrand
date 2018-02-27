@@ -1,14 +1,12 @@
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from django.shortcuts import render_to_response
 from django.utils import timezone
-from django.template import RequestContext
-
-
 from scrapper.scrapper import get_tweets
 from .forms import PhraseForm
 from .models import User_Phrase, Phrase
+from accounts.models import UserProfile
+
 
 register = template.Library()
 
@@ -16,7 +14,8 @@ register = template.Library()
 @login_required(login_url="login/")
 def dashboard(request):
     user_phrases = User_Phrase.objects.filter(user_id=request.user)
-    return render(request, 'dashboard.html', {'phrases': user_phrases, 'active': True})
+    user_avatar = UserProfile.objects.get(user_id=request.user.id)
+    return render(request, 'dashboard.html', {'phrases': user_phrases, 'avatar': user_avatar, 'active': True})
 
 
 @login_required()
@@ -27,7 +26,9 @@ def single_search(request):
         context = {'tweets': tweets}
         return render(request, template_name, context)
     else:
-        return render(request, template_name)
+        user_avatar = UserProfile.objects.get(user_id=request.user.id)
+        context = {'avatar': user_avatar}
+        return render(request, template_name,context)
 
 
 @login_required(login_url="login/")

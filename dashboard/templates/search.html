@@ -11,19 +11,34 @@
                     <div class="dashboard-search">
                         <h2 class="text-center">Perform Single Search</h2>
                         <div class="col-sm-12">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                <input type="text" class="form-control search-input" name="query_phrase"
-                                       id="query_phrase"
-                                       placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
-                                <button class="btn btn-primary btn-round" id="search-btn" disabled>Search</button>
-                                <button class="btn btn-default btn-round" onclick="pageReload()" disabled
-                                        id="new_search_btn">New
-                                    Search
-                                </button>
-                                <div id="clockdiv">
-                                    <div>
-                                        <span class="seconds"></span>
+                            <div class=row>
+                                <div class="input-group col-md-6">
+                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    <input type="text" class="form-control search-input" name="query_phrase"
+                                           id="query_phrase"
+                                           placeholder="Type the keyword, hashtag, phrase, user that you want to look for on Twitter">
+                                </div>
+                                <div class="input-group col-md-2">
+                                    <select class="custom-select" id="inputGroupSelect01">
+                                        <option selected>Time Interval</option>
+                                        <option value="10000">10 seconds</option>
+                                        <option value="20000">20 seconds</option>
+                                        <option value="30000">30 seconds</option>
+                                        <option value="40000">40 seconds</option>
+                                        <option value="50000">50 seconds</option>
+                                        <option value="60000">60 seconds</option>
+                                    </select>
+                                </div>
+                                <div class="input-group col-md-4">
+                                    <button class="btn btn-primary btn-round" id="search-btn" disabled>Search</button>
+                                    <button class="btn btn-default btn-round" onclick="pageReload()" disabled
+                                            id="new_search_btn">New
+                                        Search
+                                    </button>
+                                    <div id="clockdiv">
+                                        <div>
+                                            <span class="seconds"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sass_processor',
     'dashboard',
-    'channels'
+    'channels',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -117,6 +118,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/static/images/upload/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/upload/')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

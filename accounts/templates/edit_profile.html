@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="dashboard-page">
+        <div class="row equal-sides">
+            <div class="col-sm-2 trim-right">
+                {% include 'dashboard_navigation.html' %}
+            </div>
+            <div class="col-sm-10 trim-left">
+                <div class="dashboard-main card">
+                    {% include 'edit_profile_error.html' %}
+                    <div class="container">
+                        <div class="dashboard-add-phrase extra-padding-top-60 text-center">
+                            <div class="col-sm-6 card add-phrase-card">
+                                <h2 class="text-center add-phrase-title">Edit Profile<br><i class="fas fa-user"></i>
+                                </h2>
+                                {% include 'edit_profile_form.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

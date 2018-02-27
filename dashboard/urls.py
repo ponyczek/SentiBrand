@@ -1,8 +1,8 @@
 from django.conf.urls import url
 
 from . import views
-from accounts.views import UserFormView
-from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^dashboard$', views.dashboard, name='dashboard'),
@@ -12,4 +12,4 @@ urlpatterns = [
     url(r'^dashboard/phrase/(?P<user_phrase_id>[0-9]+)/delete$', views.delete_phrase, name='delete_phrase'),
     url(r'^dashboard/phrase/(?P<user_phrase_id>[0-9]+)/edit$', views.edit_phrase, name='edit_phrase'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

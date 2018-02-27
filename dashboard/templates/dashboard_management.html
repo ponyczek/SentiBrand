@@ -1,5 +1,4 @@
 <div class="tab-pane active" id="search_management" role="tabpanel" aria-expanded="false">
-    <a href="{% url 'add_phrase' %}" button class="btn btn-link">Add Search Phrase</a>
     <table class="table management-table">
         <thead class="thead-dark">
         <tr>
@@ -21,7 +20,7 @@
                 <td>{{ phrase.phrase.phrase }}</td>
                 <td>{{ phrase.start_date }}</td>
                 <td>
-                    <a  class="btn btn-info"  href="{% url 'edit_phrase' phrase.id %}">Edit</a>
+                    <a class="btn btn-info" href="{% url 'edit_phrase' phrase.id %}">Edit</a>
                 </td>
                 <td>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ phrase.id }}">Delete
@@ -42,7 +41,7 @@
                                 phrase "{{ phrase.phrase.phrase }}"?</p>
                         </div>
                         <div class="modal-footer">
-                            <a  class="btn btn-link btn-neutral"  href="{% url 'delete_phrase' phrase.id %}">Yes</a>
+                            <a class="btn btn-link btn-neutral" href="{% url 'delete_phrase' phrase.id %}">Yes</a>
                             <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -52,5 +51,6 @@
 
         </tbody>
     </table>
+    <div class="pull-right"><a href="{% url 'add_phrase' %}" button class="btn btn-link orange">Add Search Phrase</a></div>
 
 </div>
