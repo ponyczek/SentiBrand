@@ -55,16 +55,18 @@ def edit_profile(request):
                 context = {'form': form, 'avatar_form': avatar_form, 'success': 'Profile information has been updated.', 'avatar': user_avatar}
                 return render(request, 'edit_profile.html', context)
             else:
-                context = {'form': form, 'error': 'No request.file'}
+                context = {'form': form, 'error': 'Image deleted.'}
                 return render(request, 'edit_profile.html', context)
         else:
             context = {'form': form, 'error': 'Something went wrong with your submission'}
             return render(request, 'dashboard.html', context)
     else:
         form = EditProfileForm(instance=request.user)
-        user_avatar = UserProfile.objects.get(user_id=request.user.id)
         avatar_form = EditProfileAvatarForm()
-        if(user_avatar):
+        try:
+            user_avatar = UserProfile.objects.get(user_id=request.user.id)
             avatar_form = EditProfileAvatarForm(instance=user_avatar)
-        context = {'form': form, 'avatar_form': avatar_form, 'avatar': user_avatar}
+            context = {'form': form, 'avatar_form': avatar_form, 'avatar': user_avatar}
+        except  UserProfile.DoesNotExist:
+            context = {'form': form, 'avatar_form': avatar_form }
         return render(request, 'edit_profile.html', context)

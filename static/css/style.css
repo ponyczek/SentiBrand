@@ -26,6 +26,8 @@
     background-color: #f2f2f2;
     padding: 5px;
     min-height: 400px; }
+    .dashboard-page .dashboard-left .user-pic svg {
+      font-size: 4em; }
     .dashboard-page .dashboard-left .dashboard-profile-pic {
       width: 150px; }
     .dashboard-page .dashboard-left .dashboard-navigation {

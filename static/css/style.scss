@@ -42,6 +42,9 @@ $gray: #888;
     //border: 1px solid #7F7F7F;
     padding: 5px;
     min-height: 400px;
+    .user-pic svg{
+      font-size: 4em;
+    }
     .dashboard-profile-pic {
       width: 150px;
     }

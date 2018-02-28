@@ -1,8 +1,12 @@
 <div class="dashboard-left card">
     <h2 class="text-center">{{ user.get_username }}</h2>
-    <div class="text-center">
-        <img src="{{ MEDIA_URL }}{{ avatar.avatar.url }}" alt="Thumbnail Image"
-             class="rounded-circle img-raised dashboard-profile-pic">
+    <div class="text-center user-pic">
+        {% if avatar.avatar.url %}
+            <img src="{{ MEDIA_URL }}{{ avatar.avatar.url }}" alt="Thumbnail Image"
+                 class="rounded-circle img-raised dashboard-profile-pic">
+        {% else %}
+            <i class="fas fa-user"></i>
+        {% endif %}
     </div>
     <div class="dashboard-navigation">
         <a href="{% url 'dashboard' %}" class="btn btn-link">Dashboard</a>

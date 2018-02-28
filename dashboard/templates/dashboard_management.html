@@ -5,7 +5,9 @@
             <th scope="col" class="text-left gray">Id</th>
             <th scope="col" class="text-center gray">Given name</th>
             <th scope="col" class="text-center gray">Searched Phrase</th>
-            <th scope="col" class="text-center gray">Started date</th>
+            <th scope="col" class="text-center gray">Start date</th>
+            <th scope="col" class="text-center gray">End date</th>
+            <th scope="col" class="text-center gray">Active</th>
             <th scope="col" class="text-center gray">Edit</th>
             <th scope="col" class="text-center gray">Delete</th>
         </tr>
@@ -19,6 +21,9 @@
                 <td>{{ phrase.name }}</td>
                 <td>{{ phrase.phrase.phrase }}</td>
                 <td>{{ phrase.start_date }}</td>
+                <td>{{ phrase.end_date }}</td>
+{#                <td>{% if phrase.end_date < timezon %} </td>#}
+
                 <td>
                     <a class="btn btn-info" href="{% url 'edit_phrase' phrase.id %}">Edit</a>
                 </td>
@@ -51,6 +56,7 @@
 
         </tbody>
     </table>
-    <div class="pull-right"><a href="{% url 'add_phrase' %}" button class="btn btn-link orange">Add Search Phrase</a></div>
+    <div class="pull-right"><a href="{% url 'add_phrase' %}" button class="btn btn-link orange">Add Search Phrase</a>
+    </div>
 
 </div>

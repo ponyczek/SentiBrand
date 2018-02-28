@@ -24,6 +24,13 @@ class PhraseForm(forms.Form):
                  'placeholder': 'Tracking start date'}),
         input_formats=['%Y-%m-%dT%H:%M'])
 
+    end_date = forms.DateTimeField(
+        widget=forms.widgets.DateInput(
+            attrs={'type': 'datetime-local',
+                'class': 'form-control',
+                 'placeholder': 'Tracking end date'}),
+        input_formats=['%Y-%m-%dT%H:%M'])
+
     phrase = forms.CharField(
         max_length=250,
         widget=forms.TextInput(
@@ -35,4 +42,4 @@ class PhraseForm(forms.Form):
     #
     class Meta:
         model = User_Phrase
-        fields = ['name', 'start_date', 'phrase']
+        fields = ['name', 'start_date', 'end_date', 'phrase']
