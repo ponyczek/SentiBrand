@@ -59,14 +59,14 @@ def add_phrase(request):
                     errors.append("Provided date must start in the future.")
                 if (count_error):
                     errors.append("You have reached the maximum amount of tags (5)")
-                return render(request, 'add_phrase.html',
+                return render(request, 'add_edit_phrase.html',
                               {'phrases': user_phrases, 'errors': errors, 'form': form, 'edit': False})
 
     else:
         context = {
             "form": form,
         }
-        return render(request, 'add_phrase.html', context)
+        return render(request, 'add_edit_phrase.html', context)
 
 
 def phrase_detail(request, user_phrase_id):
@@ -110,9 +110,9 @@ def edit_phrase(request, user_phrase_id):
                 errors = []
                 if (date_error):
                     errors.append("Provided date must start in the future.")
-                return render(request, 'add_phrase.html', {'phrases': user_phrases, 'errors': errors, 'form': form, 'edit': False})
+                return render(request, 'add_edit_phrase.html', {'phrases': user_phrases, 'errors': errors, 'form': form, 'edit': False})
     else:
         start_date = user_phrase.start_date.strftime("%Y-%m-%dT%H:%M")
         data = {'name': user_phrase.name, 'start_date': start_date, 'phrase': user_phrase.phrase.phrase}
         form = PhraseForm(initial=data)
-        return render(request, 'add_phrase.html', {'form': form, 'edit': True, 'id': user_phrase.id})
+        return render(request, 'add_edit_phrase.html', {'form': form, 'edit': True, 'id': user_phrase.id})

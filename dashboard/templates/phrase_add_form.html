@@ -1,7 +1,7 @@
 <form class="form-horizontal add-phrase-form" role="form" action="{% url 'add_phrase' %}"
       method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {% include 'add_phrase_form_template.html' %}
+    {% include 'add_edit_phrase_form_template.html' %}
     <div class="form-group">
         <div class="text-center col-sm-12">
             <button type="submit" class="btn btn-primary">Add</button>

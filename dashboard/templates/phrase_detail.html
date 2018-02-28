@@ -9,43 +9,18 @@
                 <div class="dashboard-main card">
                     {% include 'phrases_menu.html' %}
                     <div class="card-body">
-                        <div class="search-tools">
-                            <h4>Select vales from the the slider or the date picker</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5>Range Picker</h5>
-                                    <b>Start Date</b> <input id="ex2" type="text" class="span2" value=""
-                                                             data-slider-min="10"
-                                                             data-slider-max="1000" data-slider-step="5"
-                                                             data-slider-value="[250,450]"/>
-                                    <b>End Date</b>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="datepicker-container">
-                                        <h5>Date Picker</h5>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control date-picker" value="10/05/2016"
-                                                   data-datepicker-color="primary">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <h5>&nbsp;</h5>
-                                    <button class="btn btn-primary btn-round get-data-btn" id="search-btn" disabled>Get data</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-content text-center">
-                            <div class="" id="" role="" aria-expanded="true">
-                                {% include 'phrase_map.html' %}
-                                {% include 'phrase_timeline.html' %}
-                            </div>
+                        {% include 'search-tools.html' %}>
+                    </div>
+                    <div class="tab-content text-center">
+                        <div class="" id="" role="" aria-expanded="true">
+                            {% include 'phrase_map.html' %}
+                            {% include 'phrase_timeline.html' %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script>$("#ex2").slider({tooltip: 'show'});</script>
+    </div>
+    <script>$("#ex2").slider({tooltip: 'show'});</script>
     </div>
 {% endblock %}
