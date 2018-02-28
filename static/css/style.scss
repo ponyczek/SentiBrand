@@ -5,6 +5,7 @@ $red: #f44336;
 $yellow: #ffeb3b;
 $green: #4caf50;
 $blue: #2196f3;
+$gray: #888;
 
 .fixed-top {
   top: auto;
@@ -70,6 +71,32 @@ $blue: #2196f3;
     min-height: 600px;
     padding: 10px;
 
+    .search-tools {
+      text-align: center;
+      border-top: solid 1px $gray;
+      border-left: solid 1px $gray;
+      border-right: solid 1px $gray;
+      padding-bottom: 10px;
+      .slider.slider-horizontal:hover, .slider.slider-vertical:hover {
+        .tooltip.tooltip-main {
+          opacity: 0.7 !important;
+        }
+        .tooltip-inner {
+          font-size: 90%;
+          width: auto;
+        }
+      }
+      .slider-handle {
+        background-color: $main-orange;
+        background-image: none;
+      }
+      .slider.slider-horizontal {
+        width: 80%;
+      }
+      .get-data-btn{
+        margin-top: -2px;
+      }
+    }
     /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
     .map {
