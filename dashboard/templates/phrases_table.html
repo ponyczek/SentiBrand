@@ -1,0 +1,61 @@
+<table class="table management-table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col" class="text-left gray">Id</th>
+        <th scope="col" class="text-center gray">Given name</th>
+        <th scope="col" class="text-center gray">Searched Phrase</th>
+        <th scope="col" class="text-center gray">Start date</th>
+        <th scope="col" class="text-center gray">End date</th>
+        <th scope="col" class="text-center gray">Status</th>
+        <th scope="col" class="text-center gray">Edit</th>
+        <th scope="col" class="text-center gray">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for phrase in phrases %}
+        <tr>
+            <th scope="row">
+                <div class="gray">{{ phrase.id }}</div>
+            </th>
+            <td>{{ phrase.name }}</td>
+            <td>{{ phrase.phrase.phrase }}</td>
+            <td>{{ phrase.start_date }}</td>
+            <td>{{ phrase.end_date }}</td>
+            {% if  phrase.is_active %}
+                <td class="green-bold">ACTIVE</td>
+            {% else %}
+                <td class="red-bold">INACTIVE</td>
+            {% endif %}
+
+            <td>
+                <a class="btn btn-info" href="{% url 'edit_phrase' phrase.id %}">Edit</a>
+            </td>
+            <td>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ phrase.id }}">Delete
+                </button>
+            </td>
+        </tr>
+        <div class="modal fade modal-mini modal-primary" id="deleteModal{{ phrase.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <div class="modal-profile">
+                            <i class="now-ui-icons design_scissors"></i>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete "{{ phrase.name }}" with a searched
+                            phrase "{{ phrase.phrase.phrase }}"?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-link btn-neutral" href="{% url 'delete_phrase' phrase.id %}">Yes</a>
+                        <button type="button" class="btn btn-link btn-neutral" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    </tbody>
+</table>

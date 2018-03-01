@@ -87,7 +87,12 @@ def phrase_detail(request, user_phrase_id):
     else:
         user_phrase = get_object_or_404(User_Phrase, pk=user_phrase_id)
         user_phrases = User_Phrase.objects.filter(user_id=request.user)
-        return render(request, 'phrase_detail.html', {'active_phrase': user_phrase, 'phrases': user_phrases})
+        try:
+            user_avatar = UserProfile.objects.get(user_id=request.user.id)
+            context = {'active_phrase': user_phrase, 'phrases': user_phrases, 'avatar': user_avatar}
+        except  UserProfile.DoesNotExist:
+            context = {'active_phrase': user_phrase, 'phrases': user_phrases}
+        return render(request, 'phrase_detail.html', context)
 
 
 @login_required()

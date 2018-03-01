@@ -49,6 +49,8 @@
    /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
     /* Optional: Makes the sample page fill the window. */ }
+    .dashboard-page .dashboard-main #search_management > table > tbody > tr > td, .dashboard-page .dashboard-main th {
+      vertical-align: middle !important; }
     .dashboard-page .dashboard-main .search-tools {
       text-align: center;
       border-top: solid 1px #888;
@@ -324,6 +326,14 @@ sup :hover {
 
 .gray {
   color: #888; }
+
+.red-bold {
+  color: #f44336;
+  font-weight: 500; }
+
+.green-bold {
+  color: #4caf50;
+  font-weight: 500; }
 
 #intervalSelect {
   margin-top: 6px; }

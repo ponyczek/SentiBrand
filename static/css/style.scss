@@ -42,7 +42,7 @@ $gray: #888;
     //border: 1px solid #7F7F7F;
     padding: 5px;
     min-height: 400px;
-    .user-pic svg{
+    .user-pic svg {
       font-size: 4em;
     }
     .dashboard-profile-pic {
@@ -74,6 +74,10 @@ $gray: #888;
     min-height: 600px;
     padding: 10px;
 
+    #search_management > table > tbody > tr > td, th {
+      vertical-align: middle !important;
+    }
+
     .search-tools {
       text-align: center;
       border-top: solid 1px $gray;
@@ -96,7 +100,7 @@ $gray: #888;
       .slider.slider-horizontal {
         width: 80%;
       }
-      .get-data-btn{
+      .get-data-btn {
         margin-top: -2px;
       }
     }
@@ -500,6 +504,16 @@ sup {
 
 .gray {
   color: #888;
+}
+
+.red-bold {
+  color: $red;
+  font-weight: 500;
+}
+
+.green-bold {
+  color: $green;
+  font-weight: 500;
 }
 
 #intervalSelect {

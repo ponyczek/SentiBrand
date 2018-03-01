@@ -9,18 +9,17 @@
                 <div class="dashboard-main card">
                     {% include 'phrases_menu.html' %}
                     <div class="card-body">
-                        {% include 'search-tools.html' %}>
-                    </div>
-                    <div class="tab-content text-center">
-                        <div class="" id="" role="" aria-expanded="true">
-                            {% include 'phrase_map.html' %}
-                            {% include 'phrase_timeline.html' %}
+                        {% include 'search-tools.html' %}
+                        <div class="tab-content text-center">
+                            <div class="" id="" role="" aria-expanded="true">
+                                {% include 'phrase_map.html' %}
+                                {% include 'phrase_timeline.html' %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>$("#ex2").slider({tooltip: 'show'});</script>
+        <script>$("#ex2").slider({tooltip: 'show'});</script>
     </div>
 {% endblock %}
