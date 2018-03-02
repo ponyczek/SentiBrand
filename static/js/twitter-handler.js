@@ -35,8 +35,8 @@ function processTweets(event) {
                 var username = user.name;
                 var user_location = user.location;
                 var content = tweet.text;
-                var coordinates = tweet.geolocation;
-                var place = tweet.place;
+                var lat = tweet.lat;
+                var lng = tweet.lng;
                 var date = moment(new Date(tweet.created_at)).format('MMMM Do YYYY, h:mm:ss a');
                 var polarity = tweet.polarity;
                 var color = getColor(polarity);
@@ -66,10 +66,10 @@ function processTweets(event) {
 
                 //should be negative left positive right ?
                 var inverted = polarity >= 0 ? "timeline-inverted" : "";
-                if (coordinates || place) {
-                    var lat, lng;
-                    lat = coordinates ? coordinates.coordinates[0] : place.bounding_box.coordinates[0][0][1];
-                    lng = coordinates ? coordinates.coordinates[1] : place.bounding_box.coordinates[0][0][0];
+                if (lat && lng) {
+                    // var lat, lng;
+                    // lat = coordinates ? coordinates.coordinates[0] : place.bounding_box.coordinates[0][0][1];
+                    // lng = coordinates ? coordinates.coordinates[1] : place.bounding_box.coordinates[0][0][0];
                     points.push(new google.maps.LatLng(lat, lng));
                     heatmap.setMap(map);
                     total_locations++;

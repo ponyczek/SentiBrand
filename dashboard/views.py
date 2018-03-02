@@ -2,9 +2,7 @@ from django import template
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-
 from accounts.models import UserProfile
-from scrapper.scrapper import get_tweets
 from .forms import PhraseForm
 from .models import User_Phrase, Phrase
 
@@ -24,17 +22,13 @@ def dashboard(request):
 @login_required()
 def single_search(request):
     template_name = 'search.html'
-    if request.method == 'POST':
-        tweets = get_tweets(request.POST['query_phrase'])
-        context = {'tweets': tweets}
+    #handling only get
+    try:
+        user_avatar = UserProfile.objects.get(user_id=request.user.id)
+        context = {'avatar': user_avatar}
         return render(request, template_name, context)
-    else:
-        try:
-            user_avatar = UserProfile.objects.get(user_id=request.user.id)
-            context = {'avatar': user_avatar}
-            return render(request, template_name, context)
-        except  UserProfile.DoesNotExist:
-            return render(request, template_name)
+    except  UserProfile.DoesNotExist:
+        return render(request, template_name)
 
 
 @login_required(login_url="login/")

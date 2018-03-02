@@ -12,6 +12,7 @@ class User_Phrase(models.Model):
     start_date = models.DateTimeField(default=datetime.now, editable=True, null=False, blank=False)
     end_date = models.DateTimeField(editable=True, null=False, blank=False)
     phrase = models.ForeignKey(Phrase)
+    last_tweet_id = models.BigIntegerField(default=0)
 
     @property
     def is_active(self):

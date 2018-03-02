@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'sass_processor',
     'dashboard',
     'channels',
-    'accounts'
+    'accounts',
+    'scrapper'
 ]
 
 MIDDLEWARE = [
