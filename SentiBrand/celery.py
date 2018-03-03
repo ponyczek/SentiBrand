@@ -1,22 +1,19 @@
-from __future__ import absolute_import, unicode_literals
-import os
+from __future__ import absolute_import
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
+from django.apps import apps
+from datetime import timedelta
 from celery import Celery
-
-# set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SentiBrand.settings')
-
-app = Celery('SentiBrand')
-
-# Using a string here means the worker doesn't have to serialize
-# the configuration object to child processes.
-# - namespace='CELERY' means all celery-related configuration keys
-#   should have a `CELERY_` prefix.
-app.config_from_object('django.conf:settings', namespace='CELERY')
-
-# Load task modules from all registered Django app configs.
-app.autodiscover_tasks()
+from celery.task.base import periodic_task
 
 
-@app.task(bind=True)
-def debug_task(self):
-    print('Request: {0!r}'.format(self.request))
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+app = Celery('taskscheduler', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
+
+
+app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
+
+
+@periodic_task(run_every=timedelta(seconds=5))
+def just_print():
+    print("Print from celery task")
