@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'dashboard',
     'channels',
     'accounts',
-    'scrapper'
+    'scrapper',
+    'taskscheduler'
 ]
 
 MIDDLEWARE = [
