@@ -29,13 +29,16 @@ def serialise_data(tweets):
         })
     return data
 
+def handle_api_call(query_phrase, last_id):
+    temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100, tweet_mode='extended')
+    return [tweet._json for tweet in temp_tweets]
+
 
 def get_search_data(message, reply_channel):
     if message is not None and reply_channel is not None:
         query_phrase = message['text']
         last_id = message.get('last_tweet_id')
-        temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100, tweet_mode='extended')
-        tweets = [tweet._json for tweet in temp_tweets ]
+        tweets = handle_api_call(query_phrase, last_id)
         data = serialise_data(tweets)
         Channel(reply_channel).send({"text": json.dumps(data)})
 
@@ -44,7 +47,7 @@ def get_lat_len(tweet):
         geo = tweet.get('geo')
         return geo.get('coordinates')[0], geo.get('coordinates')[1]
     elif tweet.get('place'):
-        place = tweet.get('place');
+        place = tweet.get('place')
         return place.get('bounding_box').get('coordinates')[0][0][1], place.get('bounding_box').get('coordinates')[0][0][0]
     else:
         return None, None
