@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'channels',
     'accounts',
     'scrapper',
-    'taskscheduler'
+    'taskscheduler',
+    'djcelery',
 ]
 
 MIDDLEWARE = [
