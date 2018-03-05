@@ -1,27 +1,18 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
     <div class="wrapper">
-        <div class="page-header page-header-small">
-            <div class="page-header-image" data-parallax="true" style="background-image: url('http://paperzip.co.uk/wp-content/uploads/2016/03/lego-heads-emojis.jpg');">
-            </div>
-            <div class="container">
-                <div class="content-center">
-                    <h1 class="title">This is SentiBrand</h1>
-                </div>
-            </div>
-        </div>
         <div class="section section-about-us">
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 ml-auto mr-auto text-center">
 
                         <h2 class="title">About SentiBrand</h2>
-                        <h5 class="description">According to the National Oceanic and Atmospheric Administration, Ted,
-                            Scambos, NSIDClead scentist, puts the potentially record low maximum sea ice extent tihs
-                            year down to low ice extent in the Pacific and a late drop in ice extent in the Barents
-                            Sea.</h5>
+                        <h5 class="description">SentiBrand is a modern software tool that provides a real time
+                            sentimental analysis
+                            of small and large number of Tweets. Type the phrase and watch the tweets as they
+                            happen!</h5>
                     </div>
                 </div>
                 <div class="separator separator-primary"></div>
@@ -29,43 +20,41 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="image-container image-left"
-                                 style="background-image: url('../assets/img/login.jpg')">
+                                 style="background-image: url({% static 'img/diagrams.png' %})">
                                 <!-- First image on the left side -->
-                                <p class="blockquote blockquote-primary">"Over the span of the satellite record, Arctic
-                                    sea ice has been declining significantly, while sea ice in the Antarctichas
-                                    increased very slightly"
+                                <p class="blockquote blockquote-primary">"I wasn't expecting that so much is happening
+                                    in the world as w speak"
                                     <br>
                                     <br>
-                                    <small>-NOAA</small>
+                                    <small>-Mom</small>
                                 </p>
                             </div>
                             <!-- Second image on the left side of the article -->
-                            <div class="image-container" style="background-image: url('../assets/img/bg3.jpg')"></div>
+                            <div class="image-container"
+                                 style="background-image: url({% static 'img/dashboard.png' %})"></div>
                         </div>
                         <div class="col-md-5">
                             <!-- First image on the right side, above the article -->
                             <div class="image-container image-right"
-                                 style="background-image: url('../assets/img/bg1.jpg')"></div>
-                            <h3>So what does the new record for the lowest level of winter ice actually mean</h3>
-                            <p>The Arctic Ocean freezes every winter and much of the sea-ice then thaws every summer,
-                                and that process will continue whatever happens with climate change. Even if the Arctic
-                                continues to be one of the fastest-warming regions of the world, it will always be
-                                plunged into bitterly cold polar dark every winter. And year-by-year, for all kinds of
-                                natural reasons, there’s huge variety of the state of the ice.
+                                 style="background-image: url({% static 'img/live-map.png' %})"></div>
+                            <h3>So what does the Real Time Sentiment Analysis mean, and why is it so important to
+                                marketers?</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                mollit anim id est laborum.
                             </p>
                             <p>
-                                For a start, it does not automatically follow that a record amount of ice will melt this
-                                summer. More important for determining the size of the annual thaw is the state of the
-                                weather as the midnight sun approaches and temperatures rise. But over the more than 30
-                                years of satellite records, scientists have observed a clear pattern of decline,
-                                decade-by-decade.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.
                             </p>
-                            <p>The Arctic Ocean freezes every winter and much of the sea-ice then thaws every summer,
-                                and that process will continue whatever happens with climate change. Even if the Arctic
-                                continues to be one of the fastest-warming regions of the world, it will always be
-                                plunged into bitterly cold polar dark every winter. And year-by-year, for all kinds of
-                                natural reasons, there’s huge variety of the state of the ice.
-                            </p>
+                            <p>Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                mollit anim id est laborum.
                         </div>
                     </div>
                 </div>

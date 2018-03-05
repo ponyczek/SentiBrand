@@ -36,7 +36,7 @@ $gray: #888;
 .dashboard-page {
   background-color: #f96332;
   padding-top: 100px;
-  min-height: 840px;
+  min-height: 914px;
   .dashboard-left {
     background-color: #f2f2f2;
     //border: 1px solid #7F7F7F;
@@ -520,3 +520,12 @@ sup {
   margin-top: 6px;
 }
 
+.section-about-us{
+  .container{
+    padding-top: 40px;
+  }
+}
+
+.section-story-overview .image-container{
+  background-position: inherit !important;
+}

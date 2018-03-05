@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg bg-primary fixed-top ">
+    <div class="container">
+        <div class="dropdown button-dropdown">
+            <a href="#pablo" class="dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">
+                <span class="button-bar"></span>
+                <span class="button-bar"></span>
+                <span class="button-bar"></span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-header">Navigation</a>
+                <a class="dropdown-item" href="{% url 'home' %}">Home</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="dropdown-item" href="{% url 'search' %}">Single Search</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'edit_profile' %}">Your Profile</a>
+            </div>
+        </div>
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="#" rel="tooltip"
+               title="SentiBrand" data-placement="bottom">
+                SentiBrand
+            </a>
+            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                    aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" data-nav-image="/static/img/blurred-image-1.jpg">
+            <ul class="navbar-nav">
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="Profile" data-placement="bottom"
+                           href="{% url 'dashboard' %}">
+                            <i class="fa fa-user-circle"></i>
+                            <p class="d-lg-none d-xl-none">Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="Logout" data-placement="bottom"
+                           href="{% url 'logout' %}">
+                            <i class="fa fa-key"></i>
+                            <p class="d-lg-none d-xl-none">Logout</p>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="Login" data-placement="bottom"
+                           href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                            <p class="d-lg-none d-xl-none">Home</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" rel="tooltip" title="Login" data-placement="bottom"
+                           href="{% url 'login' %}">
+                            <i class="fa fa-user-circle"></i>
+                            <p class="d-lg-none d-xl-none">Login</p>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
