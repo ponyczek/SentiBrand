@@ -4,6 +4,7 @@ import os
 from textblob import TextBlob
 from channels import Channel
 from scrapper.models import Tweet, Search
+from dateutil import parser
 
 
 consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
@@ -44,18 +45,16 @@ def create_tweet_records(tweets, search_record):
             print(result.polarity)
             result.lat, result.lng = get_lat_len(tweet)
             result.content = tweet.get('full_text')
-            result.created_at = tweet.get('created_at')
-            result.profile_image_url = tweet.get('profile_image_url')
+            result.created_at = parser.parse(tweet.get('created_at'))
+            result.profile_image_url = tweet.get('user').get('profile_image_url_https')
             result.username = tweet.get('user').get('name')
             result.search_id.add(search_record.id)
             result.save()
-
     return tweets[0].get('id')
 
 def handle_api_call(query_phrase, last_id):
     temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100, tweet_mode='extended')
     return [tweet._json for tweet in temp_tweets]
-
 
 def get_search_data(message, reply_channel):
     if message is not None and reply_channel is not None:
