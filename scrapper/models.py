@@ -1,9 +1,12 @@
 from django.db import models
+
 from dashboard.models import User_Phrase
 
+
 class Search(models.Model):
-    user_phrase_id = models.ForeignKey(User_Phrase, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add= True)
+    user_phrase_id = models.ForeignKey(User_Phrase, on_delete=models.CASCADE)  # must be changed to user_phrase
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
 class Tweet(models.Model):
     search_id = models.ManyToManyField(Search)
@@ -15,3 +18,4 @@ class Tweet(models.Model):
     lat = models.DecimalField(max_digits=12, decimal_places=8)
     lng = models.DecimalField(max_digits=12, decimal_places=8)
     created_at = models.DateTimeField()
+    content = models.CharField(max_length=140)

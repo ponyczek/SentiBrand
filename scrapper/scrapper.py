@@ -3,6 +3,8 @@ import tweepy
 import os
 from textblob import TextBlob
 from channels import Channel
+from scrapper.models import Tweet, Search
+
 
 consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
 consumer_secret = os.environ.get('SENTI_CONSUMER_SECRET')
@@ -29,13 +31,37 @@ def serialise_data(tweets):
         })
     return data
 
+def create_tweet_records(tweets, search_record):
+    for tweet in tweets:
+        result = Tweet()
+        result.tweet_id = tweet.get('id')
+        try:
+            Tweet.objects.get(tweet_id=result.tweet_id)
+        except Tweet.DoesNotExist:
+            polarity = TextBlob(tweet.get('full_text'))
+            s = Search.objects.filter(pk=search_record.id)
+            result.polarity = polarity.sentiment.polarity
+            print(result.polarity)
+            result.lat, result.lng = get_lat_len(tweet)
+            result.content = tweet.get('full_text')
+            result.created_at = tweet.get('created_at')
+            result.profile_image_url = tweet.get('profile_image_url')
+            result.username = tweet.get('user').get('name')
+            result.search_id.add(search_record.id)
+            result.save()
+
+    return tweets[0].get('id')
+
+def handle_api_call(query_phrase, last_id):
+    temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100, tweet_mode='extended')
+    return [tweet._json for tweet in temp_tweets]
+
 
 def get_search_data(message, reply_channel):
     if message is not None and reply_channel is not None:
         query_phrase = message['text']
         last_id = message.get('last_tweet_id')
-        temp_tweets = api.search(q=query_phrase, since_id=last_id, lang='en', count=100, tweet_mode='extended')
-        tweets = [tweet._json for tweet in temp_tweets ]
+        tweets = handle_api_call(query_phrase, last_id)
         data = serialise_data(tweets)
         Channel(reply_channel).send({"text": json.dumps(data)})
 
@@ -44,7 +70,7 @@ def get_lat_len(tweet):
         geo = tweet.get('geo')
         return geo.get('coordinates')[0], geo.get('coordinates')[1]
     elif tweet.get('place'):
-        place = tweet.get('place');
+        place = tweet.get('place')
         return place.get('bounding_box').get('coordinates')[0][0][1], place.get('bounding_box').get('coordinates')[0][0][0]
     else:
         return None, None
