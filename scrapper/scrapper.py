@@ -6,7 +6,6 @@ from channels import Channel
 from scrapper.models import Tweet, Search
 from dateutil import parser
 
-
 consumer_key = os.environ.get('SENTI_CONSUMER_KEY')
 consumer_secret = os.environ.get('SENTI_CONSUMER_SECRET')
 access_token = os.environ.get('SENTI_ACCESS_TOKEN')
