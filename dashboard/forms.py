@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import User_Phrase
+from .models import UserPhrase
 
 
 # for checking renewal date range.
@@ -41,5 +41,5 @@ class PhraseForm(forms.Form):
 
     #
     class Meta:
-        model = User_Phrase
+        model = UserPhrase
         fields = ['name', 'start_date', 'end_date', 'phrase']

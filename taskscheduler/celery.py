@@ -9,7 +9,7 @@ import django
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SentiBrand.settings")
 django.setup()
-from dashboard.models import User_Phrase
+from dashboard.models import UserPhrase
 from scrapper.models import Search, Tweet
 import datetime
 from scrapper.scrapper import handle_api_call, create_tweet_records
@@ -24,7 +24,7 @@ app = Celery('taskscheduler', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BA
 @periodic_task(run_every=timedelta(seconds=10))
 def just_print():
 
-    user_phrases = User_Phrase.objects.all() #This can be improved bt using action manager
+    user_phrases = UserPhrase.objects.all() #This can be improved bt using action manager
     search_date = datetime.datetime.now()
     for user_phrase in user_phrases:
         if user_phrase.is_active:

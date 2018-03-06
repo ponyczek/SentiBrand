@@ -4,14 +4,14 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from accounts.models import UserProfile
 from .forms import PhraseForm
-from .models import User_Phrase, Phrase
+from .models import UserPhrase, Phrase
 
 register = template.Library()
 
 
 @login_required(login_url="login/")
 def dashboard(request):
-    user_phrases = User_Phrase.objects.filter(user_id=request.user)
+    user_phrases = UserPhrase.objects.filter(user_id=request.user)
     try:
         user_avatar = UserProfile.objects.get(user_id=request.user.id)
         return render(request, 'dashboard.html', {'phrases': user_phrases, 'avatar': user_avatar, 'active': True})
@@ -36,13 +36,13 @@ def add_phrase(request):
     form = PhraseForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            user_phrases = User_Phrase.objects.filter(user_id=request.user)
+            user_phrases = UserPhrase.objects.filter(user_id=request.user)
             count_error = (user_phrases.count() >= 5)
             date_error = form.cleaned_data['start_date'] < timezone.now()
             start_end_error = form.cleaned_data['start_date'] > form.cleaned_data['end_date']
 
             if not count_error and not date_error and not start_end_error:
-                user_phrase = User_Phrase()
+                user_phrase = UserPhrase()
                 phrase_id = form.cleaned_data['phrase']
                 phrase, created = Phrase.objects.get_or_create(phrase=phrase_id)
                 if created:
@@ -79,8 +79,8 @@ def phrase_detail(request, user_phrase_id):
     if not request.user.is_authenticated():
         return render(request, 'login.html')
     else:
-        user_phrase = get_object_or_404(User_Phrase, pk=user_phrase_id)
-        user_phrases = User_Phrase.objects.filter(user_id=request.user)
+        user_phrase = get_object_or_404(UserPhrase, pk=user_phrase_id)
+        user_phrases = UserPhrase.objects.filter(user_id=request.user)
         try:
             user_avatar = UserProfile.objects.get(user_id=request.user.id)
             context = {'active_phrase': user_phrase, 'phrases': user_phrases, 'avatar': user_avatar}
@@ -91,20 +91,20 @@ def phrase_detail(request, user_phrase_id):
 
 @login_required()
 def delete_phrase(request, user_phrase_id):
-    user_phrase = User_Phrase.objects.get(id=user_phrase_id)
+    user_phrase = UserPhrase.objects.get(id=user_phrase_id)
     user_phrase.delete()
-    user_phrases = User_Phrase.objects.filter(user_id=request.user)
+    user_phrases = UserPhrase.objects.filter(user_id=request.user)
     return render(request, 'dashboard.html', {'phrases': user_phrases, 'success': 'Phrase has been deleted.'})
 
 
 @login_required()
 def edit_phrase(request, user_phrase_id):
-    user_phrase = User_Phrase.objects.get(id=user_phrase_id)
+    user_phrase = UserPhrase.objects.get(id=user_phrase_id)
 
     form = PhraseForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            user_phrases = User_Phrase.objects.filter(user_id=request.user)
+            user_phrases = UserPhrase.objects.filter(user_id=request.user)
             date_error = form.cleaned_data['start_date'] < timezone.now()
             if not date_error:
                 phrase_id = form.cleaned_data['phrase']

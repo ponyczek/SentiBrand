@@ -1,10 +1,10 @@
 from django.db import models
 
-from dashboard.models import User_Phrase
+from dashboard.models import UserPhrase
 
 
 class Search(models.Model):
-    user_phrase_id = models.ForeignKey(User_Phrase, on_delete=models.CASCADE)  # must be changed to user_phrase
+    user_phrase = models.ForeignKey(UserPhrase, on_delete=models.CASCADE)  # must be changed to user_phrase
     created_at = models.DateTimeField(auto_now_add=True)
 
 
