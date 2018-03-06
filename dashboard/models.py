@@ -16,7 +16,7 @@ class UserPhrase(models.Model):
 
     @property
     def is_active(self):
-        if self.end_date < timezone.now():
-            return False
-        else:
+        if self.end_date > timezone.now() and timezone.now() > self.start_date:
             return True
+        else:
+            return False
