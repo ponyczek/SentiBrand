@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <div class="dashboard-page">
         <div class="row equal-sides">
             <div class="col-sm-2 trim-right">
                 {% include 'dashboard_navigation.html' %}
             </div>
+            {% for search in search_records %}
+                <b>{{ search }} </b>
+            {% endfor %}
             <div class="col-sm-10 trim-left">
                 <div class="dashboard-main card">
                     {% include 'phrases_menu.html' %}
                     <div class="card-body">
+                        <h2 class="text-center">Analysis of collected data</h2>
+
                         {% include 'search-tools.html' %}
-                        <div class="tab-content text-center">
-                            <div class="" id="" role="" aria-expanded="true">
-                                {% include 'phrase_map.html' %}
+                        <div class="tab-content text-center ">
+                            {% include 'phrase_map.html' %}
+                            <div class="statistics-holder">
+                                {% include 'statistics.html' %}
                                 {% include 'phrase_timeline.html' %}
                             </div>
                         </div>
@@ -20,6 +27,12 @@
                 </div>
             </div>
         </div>
-        <script>$("#ex2").slider({tooltip: 'show'});</script>
+        <script>$("#date-range-slider").slider({tooltip: 'show'});</script>
+        <script src="{% static 'js/helper-functions.js' %}"></script>
+        <script src="{% static 'js/deal-with-ui.js' %}"></script>
+        <script src="{% static 'js/draw-charts-chartist.js' %}"></script>
+        <script src="{% static 'js/draw-charts-chartjs.js' %}"></script>
+        <script src="{% static 'js/twitter-handler.js' %}"></script>
+        <script src="{% static 'js/sockets.js' %}"></script>
     </div>
 {% endblock %}

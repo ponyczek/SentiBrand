@@ -39,16 +39,15 @@ def create_tweet_records(tweets, search_record):
             Tweet.objects.get(tweet_id=result.tweet_id)
         except Tweet.DoesNotExist:
             polarity = TextBlob(tweet.get('full_text'))
-            s = Search.objects.filter(pk=search_record.id)
             result.polarity = polarity.sentiment.polarity
-            print(result.polarity)
             result.lat, result.lng = get_lat_len(tweet)
             result.content = tweet.get('full_text')
             result.created_at = parser.parse(tweet.get('created_at'))
             result.profile_image_url = tweet.get('user').get('profile_image_url_https')
             result.username = tweet.get('user').get('name')
-            result.search_id.add(search_record.id)
             result.save()
+            result.search_id.add(search_record)
+
     return tweets[0].get('id')
 
 def handle_api_call(query_phrase, last_id):

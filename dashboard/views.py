@@ -1,10 +1,14 @@
 from django import template
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.utils import timezone
 from accounts.models import UserProfile
 from .forms import PhraseForm
 from .models import UserPhrase, Phrase
+from django.http import HttpResponseRedirect
+from scrapper.models import Search, Tweet
+from django.urls import reverse
+
 
 register = template.Library()
 
@@ -53,8 +57,7 @@ def add_phrase(request):
                 user_phrase.end_date = form.cleaned_data['end_date']
                 user_phrase.phrase = phrase
                 user_phrase.save()
-                return render(request, 'dashboard.html',
-                              {'phrases': user_phrases, 'success': 'You successfully added the search phrase.'})
+                return HttpResponseRedirect(reverse('dashboard'))
             else:
                 errors = []
                 if (date_error):
@@ -81,11 +84,12 @@ def phrase_detail(request, user_phrase_id):
     else:
         user_phrase = get_object_or_404(UserPhrase, pk=user_phrase_id)
         user_phrases = UserPhrase.objects.filter(user_id=request.user)
+        search_records = Search.objects.filter(user_phrase=user_phrase_id);
         try:
             user_avatar = UserProfile.objects.get(user_id=request.user.id)
-            context = {'active_phrase': user_phrase, 'phrases': user_phrases, 'avatar': user_avatar}
+            context = {'active_phrase': user_phrase, 'phrases': user_phrases, 'search_records': search_records, 'avatar': user_avatar}
         except  UserProfile.DoesNotExist:
-            context = {'active_phrase': user_phrase, 'phrases': user_phrases}
+            context = {'active_phrase': user_phrase, 'search_records': search_records, 'phrases': user_phrases}
         return render(request, 'phrase_detail.html', context)
 
 
@@ -93,9 +97,7 @@ def phrase_detail(request, user_phrase_id):
 def delete_phrase(request, user_phrase_id):
     user_phrase = UserPhrase.objects.get(id=user_phrase_id)
     user_phrase.delete()
-    user_phrases = UserPhrase.objects.filter(user_id=request.user)
-    return render(request, 'dashboard.html', {'phrases': user_phrases, 'success': 'Phrase has been deleted.'})
-
+    return HttpResponseRedirect(reverse('dashboard'))
 
 @login_required()
 def edit_phrase(request, user_phrase_id):
@@ -105,8 +107,10 @@ def edit_phrase(request, user_phrase_id):
     if request.method == 'POST':
         if form.is_valid():
             user_phrases = UserPhrase.objects.filter(user_id=request.user)
-            date_error = form.cleaned_data['start_date'] < timezone.now()
-            if not date_error:
+            start_date_error = form.cleaned_data['start_date'] < timezone.now()
+            end_date_start_error = form.cleaned_data['end_date'] > form.cleaned_data['start_date']
+            end_date_now_error = form.cleaned_data['end_date'] < timezone.now()
+            if not start_date_error:
                 phrase_id = form.cleaned_data['phrase']
                 phrase, created = Phrase.objects.get_or_create(phrase=phrase_id)
                 if created:
@@ -114,18 +118,23 @@ def edit_phrase(request, user_phrase_id):
                 user_phrase.user = request.user
                 user_phrase.name = form.cleaned_data['name']
                 user_phrase.start_date = form.cleaned_data['start_date']
+                user_phrase.end_date = form.cleaned_data['end_date']
                 user_phrase.phrase = phrase
                 user_phrase.save()
-                return render(request, 'dashboard.html',
-                              {'phrases': user_phrases, 'success': 'You successfully added the search phrase.'})
+                return HttpResponseRedirect(reverse('dashboard'))
             else:
                 errors = []
-                if (date_error):
+                if (start_date_error):
                     errors.append("Provided date must start in the future.")
+                if (end_date_start_error):
+                    errors.append("End date must be greater than start date.")
+                if (end_date_now_error):
+                    errors.append("End date must start in the future.")
                 return render(request, 'add_edit_phrase.html',
                               {'phrases': user_phrases, 'errors': errors, 'form': form, 'edit': False})
     else:
         start_date = user_phrase.start_date.strftime("%Y-%m-%dT%H:%M")
-        data = {'name': user_phrase.name, 'start_date': start_date, 'phrase': user_phrase.phrase.phrase}
+        end_date = user_phrase.end_date.strftime("%Y-%m-%dT%H:%M")
+        data = {'name': user_phrase.name, 'start_date': start_date, 'end_date': end_date, 'phrase': user_phrase.phrase.phrase}
         form = PhraseForm(initial=data)
         return render(request, 'add_edit_phrase.html', {'form': form, 'edit': True, 'id': user_phrase.id})
