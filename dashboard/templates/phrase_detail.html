@@ -6,11 +6,6 @@
             <div class="col-sm-2 trim-right">
                 {% include 'dashboard_navigation.html' %}
             </div>
-            {#            {{ search_records.first }}#}
-            {#                        {% for search in search_records %}#}
-            {#                            <b>{{ search.id }} || {{ search.created_at }} </b><br>#}
-            {#                            <br>#}
-            {#                        {% endfor %}#}
             <div class="col-sm-10 trim-left">
                 <div class="dashboard-main card">
                     {% include 'phrases_menu.html' %}
@@ -30,18 +25,16 @@
             </div>
         </div>
         <script>
-            var range_start = ({{search_records.first.created_at |date:"U"}}) * 1000;
-            var range_end = ({{ search_records.last.created_at |date:"U"}}) * 1000;
+            var search_records = {{ search_records |safe }};
+            var range_start = {{ first_search_date |safe }} * 1000;
+            var range_end = {{ last_search_date |safe}} * 1000;
+
             $("#date-range-slider").slider({
                 tooltip: 'show',
                 range: true,
                 min: range_start,
                 max: range_end,
                 step: 60000,
-                    set: function( event, ui ) {
-        /*the below will work */
-        console.log("test");
-      },
                 formatter: function (value) {
                     if (typeof (value) === "number") {
                         return moment(value).format("YYYY-MM-DD HH:mm");
@@ -54,7 +47,6 @@
                         return output;
                     }
                 },
-
             });
         </script>
         <script src="{% static 'js/helper-functions.js' %}"></script>

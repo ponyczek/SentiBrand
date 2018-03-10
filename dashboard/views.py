@@ -8,6 +8,8 @@ from .models import UserPhrase, Phrase
 from django.http import HttpResponseRedirect
 from scrapper.models import Search, Tweet
 from django.urls import reverse
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 
 register = template.Library()
@@ -85,11 +87,25 @@ def phrase_detail(request, user_phrase_id):
         user_phrase = get_object_or_404(UserPhrase, pk=user_phrase_id)
         user_phrases = UserPhrase.objects.filter(user_id=request.user)
         search_records = Search.objects.filter(user_phrase=user_phrase_id)
+        print(search_records)
+        js_list = [];
+        for search_record in search_records:
+            timestamp_in_sec = int(search_record.created_at.timestamp())
+            js_list.append({'search_id': search_record.id, 'created_at': timestamp_in_sec})
         try:
             user_avatar = UserProfile.objects.get(user_id=request.user.id)
-            context = {'active_phrase': user_phrase, 'phrases': user_phrases, 'search_records': search_records, 'avatar': user_avatar}
+            context = {'active_phrase': user_phrase, 'phrases': user_phrases,
+                       'search_records': json.dumps(js_list),
+                       'avatar': user_avatar,
+                       'first_search_date': js_list[0]['created_at'],
+                       'last_search_date': js_list[-1]['created_at']}
         except  UserProfile.DoesNotExist:
-            context = {'active_phrase': user_phrase, 'search_records': search_records, 'phrases': user_phrases}
+            context = {'active_phrase': user_phrase,
+                       'search_records': json.dumps(js_list),
+                       'phrases': user_phrases,
+                       'first_search_date': js_list[0]['created_at'],
+                       'last_search_date': js_list[-1]['created_at']
+                       }
         return render(request, 'phrase_detail.html', context)
 
 

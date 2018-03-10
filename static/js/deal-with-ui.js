@@ -68,12 +68,17 @@ $('#query_phrase').on("keyup", disableSearchBtn);
 $('#search-btn').click(sendMessage);
 
 
-console.log($('#date-range-slider'));
-// $('#date-range-slider').on('slidestop', onScrollChange);
-$('#date-range-slider').on("ondragleave", function (e, ui) {
-onScrollChange();
+$('#date-range-slider').on("slideStop", function (e) {
+    var start = e.value[0];
+    var end = e.value[1];
+
+    getTweetsFromRange();
 });
 
-function onScrollChange(event, bla){
+function getIdOfStart(){
+
+}
+
+function getTweetsFromRange(event, bla){
     console.log('changed');
 }
