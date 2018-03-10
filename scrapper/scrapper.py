@@ -41,7 +41,7 @@ def create_tweet_records(tweets, search_record):
             polarity = TextBlob(tweet.get('full_text'))
             result.polarity = polarity.sentiment.polarity
             result.lat, result.lng = get_lat_len(tweet)
-            result.content = tweet.get('full_text')
+            result.content = tweet_size_helper(tweet.get('full_text'))
             result.created_at = parser.parse(tweet.get('created_at'))
             result.profile_image_url = tweet.get('user').get('profile_image_url_https')
             result.username = tweet.get('user').get('name')
@@ -71,3 +71,9 @@ def get_lat_len(tweet):
         return place.get('bounding_box').get('coordinates')[0][0][1], place.get('bounding_box').get('coordinates')[0][0][0]
     else:
         return None, None
+
+def tweet_size_helper(str):
+    if len(str)>330:
+        return str[:330]
+    else:
+        return str

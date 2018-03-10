@@ -84,7 +84,7 @@ def phrase_detail(request, user_phrase_id):
     else:
         user_phrase = get_object_or_404(UserPhrase, pk=user_phrase_id)
         user_phrases = UserPhrase.objects.filter(user_id=request.user)
-        search_records = Search.objects.filter(user_phrase=user_phrase_id);
+        search_records = Search.objects.filter(user_phrase=user_phrase_id)
         try:
             user_avatar = UserProfile.objects.get(user_id=request.user.id)
             context = {'active_phrase': user_phrase, 'phrases': user_phrases, 'search_records': search_records, 'avatar': user_avatar}

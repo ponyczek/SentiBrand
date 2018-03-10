@@ -59,8 +59,21 @@ function sendMessage() {
             last_tweet_id: last_tweet_id
         }));
     }, intervalValue);
-    selectComponent.prop('disabled', true)
+    selectComponent.prop('disabled', true);
 }
+
+
 
 $('#query_phrase').on("keyup", disableSearchBtn);
 $('#search-btn').click(sendMessage);
+
+
+console.log($('#date-range-slider'));
+// $('#date-range-slider').on('slidestop', onScrollChange);
+$('#date-range-slider').on("ondragleave", function (e, ui) {
+onScrollChange();
+});
+
+function onScrollChange(event, bla){
+    console.log('changed');
+}

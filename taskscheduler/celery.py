@@ -15,27 +15,26 @@ import datetime
 from scrapper.scrapper import handle_api_call, create_tweet_records
 
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+CELERY_ALWAYS_EAGER = True
 app = Celery('taskscheduler', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
 
 
 # app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
 
 
-@periodic_task(run_every=timedelta(seconds=10))
-def just_print():
+@periodic_task(run_every=timedelta(seconds=60))
+def get_tweets():
 
     user_phrases = UserPhrase.objects.all() #This can be improved bt using action manager
     search_date = datetime.datetime.now()
     for user_phrase in user_phrases:
         if user_phrase.is_active:
-            search_record = Search(user_phrase_id=user_phrase, created_at=search_date) #must be changed to user_phrase
+            search_record = Search(user_phrase=user_phrase, created_at=search_date) #must be changed to user_phrase
             search_record.save() #created search Record
-
             searched_phrase = user_phrase.phrase.phrase
             tweets = handle_api_call(searched_phrase, user_phrase.last_tweet_id)
 
             user_phrase.last_tweet_id =  create_tweet_records(tweets, search_record) #this function that creates all tweets and returns the last tweet id
             user_phrase.save()
-            #remember to save search and to assign last id to it
 
             print(tweets)
