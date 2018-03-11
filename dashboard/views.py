@@ -5,12 +5,15 @@ from django.utils import timezone
 from accounts.models import UserProfile
 from .forms import PhraseForm
 from .models import UserPhrase, Phrase
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from scrapper.models import Search, Tweet
 from django.urls import reverse
-from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
 import json
-
+import datetime
+import numpy as np
+from scrapper.scrapper import  serialise_data
+from django.core.serializers.json import DjangoJSONEncoder
 
 register = template.Library()
 
@@ -87,8 +90,7 @@ def phrase_detail(request, user_phrase_id):
         user_phrase = get_object_or_404(UserPhrase, pk=user_phrase_id)
         user_phrases = UserPhrase.objects.filter(user_id=request.user)
         search_records = Search.objects.filter(user_phrase=user_phrase_id)
-        print(search_records)
-        js_list = [];
+        js_list = []
         for search_record in search_records:
             timestamp_in_sec = int(search_record.created_at.timestamp())
             js_list.append({'search_id': search_record.id, 'created_at': timestamp_in_sec})
@@ -154,3 +156,35 @@ def edit_phrase(request, user_phrase_id):
         data = {'name': user_phrase.name, 'start_date': start_date, 'end_date': end_date, 'phrase': user_phrase.phrase.phrase}
         form = PhraseForm(initial=data)
         return render(request, 'add_edit_phrase.html', {'form': form, 'edit': True, 'id': user_phrase.id})
+
+@login_required()
+def phrase_detail_range(request,user_phrase_id):
+    search_ids = np.array(json.loads(request.GET['search_ids']))
+    print(search_ids)
+    tweets = Tweet.objects.filter(search_id__in=search_ids)
+    print(tweets)
+    serialised_tweets = serialise_tweets(tweets)
+    # data = serializers.serialize('json', tweets)
+    return JsonResponse(dict(tweets=list(serialised_tweets)))
+    # pass
+
+@login_required()
+def phrase_detail_day(request, user_phrase_id, start_date):
+    print(user_phrase_id, start_date)
+    return render(request, 'login.html')
+    pass
+
+def serialise_tweets(tweets):
+    data = []
+    for tweet in tweets:
+        data.append({
+            'text': tweet.content,
+            'user': tweet.username,
+            'polarity': tweet.polarity,
+            'lat': tweet.lat,
+            'lng': tweet.lng,
+            'created_at': tweet.created_at,
+            'profile_image_url' : tweet.profile_image_url,
+            'id' : tweet.tweet_id,
+        })
+    return data

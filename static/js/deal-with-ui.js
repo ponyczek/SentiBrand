@@ -63,7 +63,6 @@ function sendMessage() {
 }
 
 
-
 $('#query_phrase').on("keyup", disableSearchBtn);
 $('#search-btn').click(sendMessage);
 
@@ -71,14 +70,31 @@ $('#search-btn').click(sendMessage);
 $('#date-range-slider').on("slideStop", function (e) {
     var start = e.value[0];
     var end = e.value[1];
+    var search_ids = [];
+    search_records.forEach(function (search_record) {
+        if ((search_record.created_at * 1000) >= start && (search_record.created_at * 1000) <= end) {
+            search_ids.push(search_record.search_id);
+        }
+    });
 
+    $.get(window.location.href+'range', {search_ids: JSON.stringify(search_ids)
+    }, function(result){
+        console.log(result)
+    })
     getTweetsFromRange();
 });
 
-function getIdOfStart(){
+function getIdOfStart() {
 
 }
 
-function getTweetsFromRange(event, bla){
+function getTweetsFromRange(event, bla) {
     console.log('changed');
 }
+
+
+
+// $('#date-picker').datepicker({
+//     "setDate": new Date(),
+//     "autoclose": true
+// });
