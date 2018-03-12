@@ -9,7 +9,7 @@ class Search(models.Model):
 
 
 class Tweet(models.Model):
-    search_id = models.ManyToManyField(Search)
+    search_id = models.ForeignKey(Search, on_delete=models.CASCADE)
     username = models.CharField(max_length=50, null=False)
     polarity = models.DecimalField(decimal_places=3, max_digits=6)
     tweet_id = models.BigIntegerField(primary_key=True, null=False)

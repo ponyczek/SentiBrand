@@ -76,12 +76,19 @@ $('#date-range-slider').on("slideStop", function (e) {
             search_ids.push(search_record.search_id);
         }
     });
-
-    $.get(window.location.href+'range', {search_ids: JSON.stringify(search_ids)
-    }, function(result){
-        console.log(result)
-    })
-    getTweetsFromRange();
+    $('.statistics-holder').show();
+    $.ajax({
+        url: window.location.href + 'range',
+        type: 'GET',
+        data: {search_ids: JSON.stringify(search_ids)},
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            processTweets(response.tweets, false);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
 });
 
 function getIdOfStart() {
@@ -92,9 +99,3 @@ function getTweetsFromRange(event, bla) {
     console.log('changed');
 }
 
-
-
-// $('#date-picker').datepicker({
-//     "setDate": new Date(),
-//     "autoclose": true
-// });

@@ -162,9 +162,10 @@ def phrase_detail_range(request,user_phrase_id):
     search_ids = np.array(json.loads(request.GET['search_ids']))
     print(search_ids)
     tweets = Tweet.objects.filter(search_id__in=search_ids)
-    print(tweets)
+    # for tweet in tweets:
+
+
     serialised_tweets = serialise_tweets(tweets)
-    # data = serializers.serialize('json', tweets)
     return JsonResponse(dict(tweets=list(serialised_tweets)))
     # pass
 
@@ -186,5 +187,7 @@ def serialise_tweets(tweets):
             'created_at': tweet.created_at,
             'profile_image_url' : tweet.profile_image_url,
             'id' : tweet.tweet_id,
+            # 'search_id
         })
+        print(tweet.search_id)
     return data

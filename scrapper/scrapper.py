@@ -45,8 +45,8 @@ def create_tweet_records(tweets, search_record):
             result.created_at = parser.parse(tweet.get('created_at'))
             result.profile_image_url = tweet.get('user').get('profile_image_url_https')
             result.username = tweet.get('user').get('name')
+            result.search_id = search_record
             result.save()
-            result.search_id.add(search_record)
 
     return tweets[0].get('id')
 

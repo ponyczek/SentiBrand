@@ -6,8 +6,8 @@ socket.onopen = function open() {
     console.log('WebSockets connection created.');
 };
 
-socket.onmessage = function(event){
-    processTweets(event);
+socket.onmessage = function (event) {
+    processTweets(JSON.parse(event.data), true);
 };
 
 if (socket.readyState == WebSocket.OPEN) {
