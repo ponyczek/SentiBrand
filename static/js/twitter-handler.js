@@ -110,85 +110,95 @@ function processTweets(data, single_search) {
     }
 }
 
+function groupBy(arr, property) { //this returns x arrays sorted by keys.
+  return arr.reduce(function(memo, x) {
+    if (!memo[x[property]]) {
+        memo[x[property]] = [];
+    }
+    memo[x[property]].push(x);
+    return memo;
+  }, {});
+}
+
 function processSavedTweets(data) {
     if (data) {
         //save search id iterate till it changes
 
         //split data into sub arrays each array split by search id
+        console.log(groupBy(data, 'search_id'));
+        var first_search_id = data[data.length - 1].search_id;
+        // for( var i = data.length, )
+        var arrays_of_tweets = groupBy(data, 'search_id');
+        for (var key in arrays_of_tweets) {
+            var positive_per_call = 0;
+            var neutral_per_call = 0;
+            var negative_per_call = 0;
+            arrays_of_tweets[key].forEach(function (tweet) {
+                total_tweets++;
+                var username = tweet.user;
+                var content = tweet.text;
+                var lat = tweet.lat;
+                var lng = tweet.lng;
+                var date = moment(new Date(tweet.created_at)).format('MMMM Do YYYY, h:mm:ss a');
+                var polarity = Number(tweet.polarity);
+                var color = getColor(polarity);
+                var user_profile_image = tweet.profile_image_url;
+                polarity_sum += polarity;
 
-        var current_search_id = data[0].search_id;
+                if (polarity > 0) {
+                    positive_tweets_count++;
+                    positive_per_call++;
+                } else if (polarity < 0) {
+                    negative_tweets_count++;
+                    negative_per_call++;
+                } else {
+                    neutral_tweets_count++;
+                    neutral_per_call++;
+                }
 
-        var positive_per_call = 0;
-        var neutral_per_call = 0;
-        var negative_per_call = 0;
-        data.forEach(function (tweet) {
-            total_tweets++;
-            var user = tweet.user;
-            var username = tweet.username;
-            // var user_location = user.location;
-            var content = tweet.text;
-            var lat = tweet.lat;
-            var lng = tweet.lng;
-            var date = moment(new Date(tweet.created_at)).format('MMMM Do YYYY, h:mm:ss a');
-            var polarity = tweet.polarity;
-            var color = getColor(polarity);
-            var user_profile_image = tweet.profile_image_url;
-            polarity_sum += polarity;
+                if (polarity >= highest_polarity) {
+                    most_positive_tweet = tweet;
+                    highest_polarity = polarity;
+                }
 
-            if (polarity > 0) {
-                positive_tweets_count++;
-                positive_per_call++;
-            } else if (polarity < 0) {
-                negative_tweets_count++;
-                negative_per_call++;
-            } else {
-                neutral_tweets_count++;
-                neutral_per_call++;
-            }
-
-            if (polarity >= highest_polarity) {
-                most_positive_tweet = tweet;
-                highest_polarity = polarity;
-            }
-
-            if (polarity <= lowest_polarity) {
-                most_negative_tweet = tweet;
-                lowest_polarity = polarity;
-            }
+                if (polarity <= lowest_polarity) {
+                    most_negative_tweet = tweet;
+                    lowest_polarity = polarity;
+                }
 
 
-            //should be negative left positive right ?
-            var inverted = polarity >= 0 ? "timeline-inverted" : "";
-            if (lat && lng) {
-                points.push(new google.maps.LatLng(lat, lng));
-                heatmap.setMap(map);
-                total_locations++;
-            }
+                //should be negative left positive right ?
+                var inverted = polarity >= 0 ? "timeline-inverted" : "";
+                if (lat && lng) {
+                    points.push(new google.maps.LatLng(lat, lng));
+                    heatmap.setMap(map);
+                    total_locations++;
+                }
 
-            appendToTimeline(inverted, color, polarity, user_profile_image, username, "", date, content);
-            setStatistics(total_tweets, total_locations);
-            setTopTweet(most_positive_tweet, ".positive-tweet");
-            setTopTweet(most_negative_tweet, ".negative-tweet");
+                appendToTimeline(inverted, color, polarity, user_profile_image, username, "", date, content);
+                setStatistics(total_tweets, total_locations);
+                setTopTweet(most_positive_tweet, ".positive-tweet");
+                setTopTweet(most_negative_tweet, ".negative-tweet");
 
-        });
-        calls_counter++;
-        positive_count_list.push(positive_per_call);
-        neutral_count_list.push(neutral_per_call);
-        negative_count_list.push(negative_per_call);
-        tweets_per_pull_list.push(positive_per_call + neutral_per_call + negative_per_call);
-        average_polarity_list.push(countAverage());
-        //might not be necessary.
-        average_polarity_list_pos_neg.push((polarity_sum / (positive_tweets_count + negative_tweets_count)).toFixed(3));
-        $('.average-stat-posneg').text((polarity_sum / (positive_tweets_count + negative_tweets_count)).toFixed(3));
-        createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call);
-        createLabelsWithDate(calls_counter);
+            });
+            calls_counter++;
+            positive_count_list.push(positive_per_call);
+            neutral_count_list.push(neutral_per_call);
+            negative_count_list.push(negative_per_call);
+            tweets_per_pull_list.push(positive_per_call + neutral_per_call + negative_per_call);
+            average_polarity_list.push(countAverage());
+            //might not be necessary.
+            average_polarity_list_pos_neg.push((polarity_sum / (positive_tweets_count + negative_tweets_count)).toFixed(3));
+            $('.average-stat-posneg').text((polarity_sum / (positive_tweets_count + negative_tweets_count)).toFixed(3));
+            var label_date = Date.parse(arrays_of_tweets[key][0].created_at);
+            createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call, label_date);
+            createLabelsWithHistoricDates(calls_counter, Date.parse(label_date));
+        }
     }
 
     //last 3 minutes
-    drawCharistPosVsNegLast3Minutes(negative_tweets_count, neutral_tweets_count, positive_tweets_count, total_tweets);
+    // drawCharistPosVsNegLast3Minutes(negative_tweets_count, neutral_tweets_count, positive_tweets_count, total_tweets);
     var listOfCalls = createArrayOfInts(calls_counter + 1);
-    drawChartistPolarityLast3Minutes(listOfCalls, average_polarity_list);
-    drawChartistTweetsPerIterationLast3Minutes(listOfCalls, tweets_per_pull_list);
     //Timeline tweets per whole day
     drawChartJsTweetsAllDay(all_neg_neu_pos_labels, negative_count_list, neutral_count_list, positive_count_list);
     //Timeline tweets per whole day

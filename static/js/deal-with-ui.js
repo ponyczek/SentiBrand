@@ -83,7 +83,7 @@ $('#date-range-slider').on("slideStop", function (e) {
         data: {search_ids: JSON.stringify(search_ids)},
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
-            processTweets(response.tweets, false);
+            processSavedTweets(response.tweets);
         },
         error: function () {
             alert("error");

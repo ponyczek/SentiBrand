@@ -1,9 +1,10 @@
 var all_neg_neu_pos_labels = [];
 var all_date_labels = [];
 
-function createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call) {
+function createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call, date) {
     if (calls_counter > 0) {
-        var pull_date = moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
+        var d = date ? new Date(date) : new Date();
+        var pull_date = moment(d).format('MMMM Do YYYY, h:mm:ss a');
         var pull_tweets_total = negative_per_call + neutral_per_call + positive_per_call;
         var total_str = "Pulled " + pull_tweets_total + " tweets at " + pull_date;
         all_neg_neu_pos_labels.push(total_str);
@@ -13,6 +14,14 @@ function createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_pe
 function createLabelsWithDate(calls_counter) {
     if (calls_counter > 0) {
         var pull_date = moment(new Date()).format('MMMM Do YYYY, h:mm:ss a');
+        var total_str = "Result taken from: " + pull_date;
+        all_date_labels.push(total_str);
+    }
+}
+
+function createLabelsWithHistoricDates(calls_counter, date) {
+    if (calls_counter > 0) {
+        var pull_date = moment(new Date(date)).format('MMMM Do YYYY, h:mm:ss a');
         var total_str = "Result taken from: " + pull_date;
         all_date_labels.push(total_str);
     }

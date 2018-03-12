@@ -187,7 +187,8 @@ def serialise_tweets(tweets):
             'created_at': tweet.created_at,
             'profile_image_url' : tweet.profile_image_url,
             'id' : tweet.tweet_id,
-            # 'search_id
+            'search_id' : tweet.search_id.id,
+            'search_date': tweet.search_id.created_at
         })
         print(tweet.search_id)
     return data
