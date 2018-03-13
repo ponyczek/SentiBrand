@@ -28,6 +28,7 @@
             var search_records = {{ search_records |safe }};
             var range_start = {{ first_search_date |safe }} * 1000;
             var range_end = {{ last_search_date |safe}} * 1000;
+            var search_ids = [];
 
             $("#date-range-slider").slider({
                 tooltip: 'show',

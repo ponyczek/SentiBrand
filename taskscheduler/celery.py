@@ -19,9 +19,6 @@ CELERY_ALWAYS_EAGER = True
 app = Celery('taskscheduler', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
 
 
-# app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
-
-
 @periodic_task(run_every=timedelta(seconds=60))
 def get_tweets():
 
@@ -33,8 +30,6 @@ def get_tweets():
             search_record.save() #created search Record
             searched_phrase = user_phrase.phrase.phrase
             tweets = handle_api_call(searched_phrase, user_phrase.last_tweet_id)
-
-            user_phrase.last_tweet_id =  create_tweet_records(tweets, search_record) #this function that creates all tweets and returns the last tweet id
-            user_phrase.save()
-
-            print(tweets)
+            if(len(tweets) > 0):
+                user_phrase.last_tweet_id =  create_tweet_records(tweets, search_record) #this function that creates all tweets and returns the last tweet id
+                user_phrase.save()

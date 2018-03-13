@@ -66,16 +66,20 @@ function sendMessage() {
 $('#query_phrase').on("keyup", disableSearchBtn);
 $('#search-btn').click(sendMessage);
 
-
-$('#date-range-slider').on("slideStop", function (e) {
-    var start = e.value[0];
-    var end = e.value[1];
+function getSearchIds(search_records, start, end) {
     var search_ids = [];
     search_records.forEach(function (search_record) {
         if ((search_record.created_at * 1000) >= start && (search_record.created_at * 1000) <= end) {
             search_ids.push(search_record.search_id);
         }
     });
+    return search_ids;
+}
+
+$('#date-range-slider').on("slideStop", function (e) {
+    var start = e.value[0];
+    var end = e.value[1];
+    search_ids = getSearchIds(search_records, start, end);
     $('.statistics-holder').show();
     $.ajax({
         url: window.location.href + 'range',

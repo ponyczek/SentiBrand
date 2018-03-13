@@ -111,29 +111,83 @@ function processTweets(data, single_search) {
 }
 
 function groupBy(arr, property) { //this returns x arrays sorted by keys.
-  return arr.reduce(function(memo, x) {
-    if (!memo[x[property]]) {
-        memo[x[property]] = [];
-    }
-    memo[x[property]].push(x);
-    return memo;
-  }, {});
+    return arr.reduce(function (memo, x) {
+        if (!memo[x[property]]) {
+            memo[x[property]] = [];
+        }
+        memo[x[property]].push(x);
+        return memo;
+    }, {});
 }
 
-function processSavedTweets(data) {
-    if (data) {
-        //save search id iterate till it changes
+// function addEmptyKeysIfNeeded(data, search_ids) {
+//     var arr = data;
+//     var idsFromQuery = {};
+//     for (var i in data) {
+//         idsFromQuery[data[i].search_id] = null;
+//     }
+//     idsFromQuery = Object.keys(idsFromQuery).map(Number);
+//     var ids_from_query_set = new Set(idsFromQuery);
+//     var difference = [...new Set([...search_ids].filter(x => !ids_from_query_set.has(x)))];
+//     console.log(difference);
+//     difference.forEach(function () {
+//         arr.push({"search_id": search_ids[i], "id": 1});
+//     })
+// }
 
-        //split data into sub arrays each array split by search id
-        console.log(groupBy(data, 'search_id'));
-        var first_search_id = data[data.length - 1].search_id;
+function processSavedTweets(data) {
+    total_tweets = null;
+    total_locations = null;
+    highest_polarity = -2;
+    lowest_polarity = 2;
+    polarity_sum = 0;
+    most_positive_tweet = {};
+    most_negative_tweet = {};
+    positive_tweets_count = 0;
+    neutral_tweets_count = 0;
+    negative_tweets_count = 0;
+
+    average_polarity_list = [];
+    average_polarity_list_pos_neg = [];
+    tweets_per_pull_list = []; //list that contains number of tweets that came back from api
+    negative_count_list = [];
+    neutral_count_list = [];
+    positive_count_list = [];
+    all_date_labels = [];
+    all_neg_neu_pos_labels = [];
+    points = [];
+    heatmap.setData([]);
+    heatmap.setMap(null);
+    // heatmap.data.b = [];
+
+    // heatmap = new google.maps.visualization.HeatmapLayer({
+    //     data: getPoints(),
+    //     map: map
+    // });
+
+    // heatmap.setData([]);
+    // initMap();
+    //         heatmap = new google.maps.visualization.HeatmapLayer({
+    //         data: [],
+    //         map: map
+    //     });
+    // heatmap.setMap(map);
+
+    calls_counter = 0;
+    last_tweet_id;
+    $('.timeline').empty();
+    if (data) {
+
         // for( var i = data.length, )
+        // addEmptyKeysIfNeeded(data, search_ids)
+
         var arrays_of_tweets = groupBy(data, 'search_id');
         for (var key in arrays_of_tweets) {
             var positive_per_call = 0;
             var neutral_per_call = 0;
             var negative_per_call = 0;
             arrays_of_tweets[key].forEach(function (tweet) {
+                // if(tweet.id !== 1) {
                 total_tweets++;
                 var username = tweet.user;
                 var content = tweet.text;
@@ -180,6 +234,7 @@ function processSavedTweets(data) {
                 setTopTweet(most_positive_tweet, ".positive-tweet");
                 setTopTweet(most_negative_tweet, ".negative-tweet");
 
+
             });
             calls_counter++;
             positive_count_list.push(positive_per_call);
@@ -192,7 +247,10 @@ function processSavedTweets(data) {
             $('.average-stat-posneg').text((polarity_sum / (positive_tweets_count + negative_tweets_count)).toFixed(3));
             var label_date = Date.parse(arrays_of_tweets[key][0].created_at);
             createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call, label_date);
-            createLabelsWithHistoricDates(calls_counter, Date.parse(label_date));
+            createLabelsWithHistoricDates(calls_counter, label_date);
+            // }
+
+
         }
     }
 
@@ -200,6 +258,8 @@ function processSavedTweets(data) {
     // drawCharistPosVsNegLast3Minutes(negative_tweets_count, neutral_tweets_count, positive_tweets_count, total_tweets);
     var listOfCalls = createArrayOfInts(calls_counter + 1);
     //Timeline tweets per whole day
+    heatmap.setData(points);
+
     drawChartJsTweetsAllDay(all_neg_neu_pos_labels, negative_count_list, neutral_count_list, positive_count_list);
     //Timeline tweets per whole day
     drawChartJsAveragePolarityAll(average_polarity_list);

@@ -3,7 +3,7 @@ var all_date_labels = [];
 
 function createLabelForNegNeuPosAll(calls_counter, negative_per_call, neutral_per_call, positive_per_call, date) {
     if (calls_counter > 0) {
-        var d = date ? new Date(date) : new Date();
+        var d = date ? date : new Date();
         var pull_date = moment(d).format('MMMM Do YYYY, h:mm:ss a');
         var pull_tweets_total = negative_per_call + neutral_per_call + positive_per_call;
         var total_str = "Pulled " + pull_tweets_total + " tweets at " + pull_date;
@@ -21,7 +21,7 @@ function createLabelsWithDate(calls_counter) {
 
 function createLabelsWithHistoricDates(calls_counter, date) {
     if (calls_counter > 0) {
-        var pull_date = moment(new Date(date)).format('MMMM Do YYYY, h:mm:ss a');
+        var pull_date = moment(date).format('MMMM Do YYYY, h:mm:ss a');
         var total_str = "Result taken from: " + pull_date;
         all_date_labels.push(total_str);
     }
