@@ -158,22 +158,13 @@ def edit_phrase(request, user_phrase_id):
         return render(request, 'add_edit_phrase.html', {'form': form, 'edit': True, 'id': user_phrase.id})
 
 @login_required()
-def phrase_detail_range(request,user_phrase_id):
+def phrase_detail_analysis(request,user_phrase_id):
     search_ids = np.array(json.loads(request.GET['search_ids']))
     print(search_ids)
     tweets = Tweet.objects.filter(search_id__in=search_ids)
-    # for tweet in tweets:
-
-
     serialised_tweets = serialise_tweets(tweets)
     return JsonResponse(dict(tweets=list(serialised_tweets)))
-    # pass
 
-@login_required()
-def phrase_detail_day(request, user_phrase_id, start_date):
-    print(user_phrase_id, start_date)
-    return render(request, 'login.html')
-    pass
 
 def serialise_tweets(tweets):
     data = []

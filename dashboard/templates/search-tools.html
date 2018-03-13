@@ -4,18 +4,34 @@
         <div class="col-md-8">
             <h5>Range Picker</h5>
             <b>Start Date</b>
-            <input id="date-range-slider" type="text" class="span2" />
+            <input id="date-range-slider" type="text" class="span2"/>
             <b>End Date</b>
         </div>
         <div class="col-md-4">
             <div class="datepicker-container">
                 <h5>Date Picker</h5>
                 <div class="form-group">
-                    <input type="text" class="form-control date-picker" id='date-picker' value="10/05/2016"
-                           data-datepicker-color="primary">
+                    <input type="text" class="form-control date-picker" id='datepicker'
+                           data-datepicker-color="primary" data-date-format="dd/mm/yyyy">
                 </div>
             </div>
         </div>
 
     </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Sorry!</h4>
+      </div>
+      <div class="modal-body">
+          No results found for the requested day.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

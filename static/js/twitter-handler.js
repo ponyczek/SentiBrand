@@ -120,20 +120,6 @@ function groupBy(arr, property) { //this returns x arrays sorted by keys.
     }, {});
 }
 
-// function addEmptyKeysIfNeeded(data, search_ids) {
-//     var arr = data;
-//     var idsFromQuery = {};
-//     for (var i in data) {
-//         idsFromQuery[data[i].search_id] = null;
-//     }
-//     idsFromQuery = Object.keys(idsFromQuery).map(Number);
-//     var ids_from_query_set = new Set(idsFromQuery);
-//     var difference = [...new Set([...search_ids].filter(x => !ids_from_query_set.has(x)))];
-//     console.log(difference);
-//     difference.forEach(function () {
-//         arr.push({"search_id": search_ids[i], "id": 1});
-//     })
-// }
 
 function processSavedTweets(data) {
     total_tweets = null;

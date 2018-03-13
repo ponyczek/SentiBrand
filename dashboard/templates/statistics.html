@@ -1,5 +1,8 @@
 <div class="statistics">
-    <h3 class="text-center">Overall statistics:</h3>
+    {% if request.get_full_path != "/dashboard/search" %}
+        <h3 class="text-center" id="dates-header"></h3>
+    {% endif %}
+    <h4 class="text-center">Overall statistics:</h4>
 
     <div class="row extra-padding-top-30">
         <div class="col text-center data-presentation-icon">

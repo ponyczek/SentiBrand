@@ -33,6 +33,11 @@ $gray: #888;
   border: white solid 1px !important;
 }
 
+.datepicker .day div,
+.datepicker th {
+  z-index: -1 !important;
+}
+
 .dashboard-page {
   background-color: #f96332;
   padding-top: 100px;

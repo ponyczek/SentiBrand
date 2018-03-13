@@ -742,7 +742,8 @@
   font-size: 14px;
   border: none;
   position: relative;
-  cursor: pointer; }
+  cursor: pointer;
+  z-index: -1; }
 
 .datepicker th {
   color: #f96332; }
