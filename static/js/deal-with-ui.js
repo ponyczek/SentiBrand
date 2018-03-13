@@ -23,7 +23,6 @@ function setTopTweet(data, tag) {
 }
 
 function sendMessage() {
-
     $('.statistics-holder').show();
 
     var input = $('#query_phrase');
