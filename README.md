@@ -1,7 +1,7 @@
 # Honours - Project - Sentibrand 
 This repository contains all the code and data used for the honours project:
 
-** A real-time web application for brand analysis, that provides a visual sentiment analysis of Twitter’s content. ** 
+**A real-time web application for brand analysis, that provides a visual sentiment analysis of Twitter’s content.** 
 
 ## Functional Requirements that have been satisfied by the project:
 
